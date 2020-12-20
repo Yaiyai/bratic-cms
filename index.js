@@ -21,6 +21,7 @@ app.use(express.json())
 
 //Rutas
 app.use('/api/auth', require('./routes/auth.routes'))
+app.use('/api/company', require('./routes/company.routes'))
 
 //Escuchar peticiones
 app.listen(process.env.PORT, () => console.log(`Servidor establecido en puerto ${process.env.PORT}`))
