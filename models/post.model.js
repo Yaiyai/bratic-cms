@@ -3,7 +3,10 @@ const Schema = mongoose.Schema
 const postModel = new Schema(
 	{
 		title: String,
-		author: String,
+		subtitle: String,
+		author: { type: Schema.Types.ObjectId, ref: 'User' },
+		text: String,
+		parsedText: Object,
 	},
 	{
 		timestamps: true,

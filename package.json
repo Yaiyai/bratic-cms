@@ -1,7 +1,7 @@
 {
   "name": "bratic-cms",
   "version": "1.0.0",
-  "description": "CMS to brartic.es",
+  "description": "CMS to bratic.es",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",

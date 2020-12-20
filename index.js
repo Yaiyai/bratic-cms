@@ -22,10 +22,11 @@ app.use(express.json())
 //Rutas
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/company', require('./routes/company.routes'))
+app.use('/api/section', require('./routes/section.routes'))
 
 //Escuchar peticiones
 app.listen(process.env.PORT, () => console.log(`Servidor establecido en puerto ${process.env.PORT}`))
 
-// app.use((req, res) => {
-// 	res.sendFile(__dirname + '/public/index.html')
-// })
+app.use((req, res) => {
+	res.sendFile(__dirname + '/public/index.html')
+})
