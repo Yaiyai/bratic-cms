@@ -1,0 +1,32 @@
+@import './styles/styles';
+
+body {
+	font-family: $font;
+	margin: 0;
+	color: map-get($theme-colors, 'text');
+}
+nav {
+	ul {
+		margin: 0;
+		padding: 0;
+		li {
+			list-style-type: none;
+			a {
+				display: block;
+			}
+		}
+	}
+}
+main {
+	padding: $module;
+}
+img {
+	display: block;
+	width: 100%;
+}
+small {
+	font-weight: $weight-light;
+	@include font-line-height(10px);
+	text-align: center;
+	display: block;
+}
