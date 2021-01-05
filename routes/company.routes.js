@@ -5,7 +5,7 @@ const formValidator = require('../middlewares/formValidator')
 const { getCompany, addCompany, updateCompany, deleteCompany } = require('./controllers/company.controller')
 const router = express.Router()
 
-///api/company
+///api/companies
 
 router.get('/', getCompany)
 
@@ -13,7 +13,7 @@ router.get('/', getCompany)
 router.use(tokenValidator) //Poniendolo aqui, todas las rutas que estén por debajo, solo podrán accederse si se está validado
 
 router.post(
-	'/new',
+	'/',
 	[
 		check('name', 'el name de la empresa es obligatorio').not().isEmpty(),
 		check('phone', 'el phone de la empresa es obligatorio').not().isEmpty(),
@@ -23,7 +23,7 @@ router.post(
 	],
 	addCompany
 )
-router.post('/update/:companyID', updateCompany)
-router.post('/delete/:companyID', deleteCompany)
+router.put('/:companyID', updateCompany)
+router.delete('/:companyID', deleteCompany)
 
 module.exports = router

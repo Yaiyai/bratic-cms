@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const galleryModel = new Schema(
 	{
-		post: { type: Schema.Types.ObjectId, ref: 'myCV' },
+		post: { type: Schema.Types.ObjectId, ref: 'Post' },
 		gallery: Array,
 	},
 	{

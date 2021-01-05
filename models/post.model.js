@@ -7,6 +7,11 @@ const postModel = new Schema(
 		author: { type: Schema.Types.ObjectId, ref: 'User' },
 		text: String,
 		parsedText: Object,
+		content: [
+			{ type: Schema.Types.ObjectId, ref: 'Slider' },
+			{ type: Schema.Types.ObjectId, ref: 'Gallery' },
+			{ type: Schema.Types.ObjectId, ref: 'Video' },
+		],
 	},
 	{
 		timestamps: true,
