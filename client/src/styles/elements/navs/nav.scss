@@ -1,5 +1,5 @@
 .login-nav {
-	background-color: map-get($theme-colors, 'primary');
+	background-color: map-get($theme-colors, 'third');
 	padding: calc(#{$module} / 4) calc(#{$module} * 1);
 	.container {
 		display: flex;
