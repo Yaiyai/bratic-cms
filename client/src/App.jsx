@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useRef } from 'react'
 import { AuthContext } from './reducers/auth/AuthContext'
 import { AuthReducer } from './reducers/auth/authReducer'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './global.scss'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
