@@ -5,12 +5,11 @@ const postModel = new Schema(
 		title: String,
 		subtitle: String,
 		author: { type: Schema.Types.ObjectId, ref: 'User' },
-		text: String,
-		parsedText: Object,
 		content: [
 			{ type: Schema.Types.ObjectId, ref: 'Slider' },
 			{ type: Schema.Types.ObjectId, ref: 'Gallery' },
 			{ type: Schema.Types.ObjectId, ref: 'Video' },
+			{ type: Schema.Types.ObjectId, ref: 'Text' },
 		],
 	},
 	{
