@@ -4,4 +4,8 @@ export const types = {
 	logout: '[auth] logout',
 	hasToken: '[auth] hastoken',
 
+	getCompany: '[company] getCompany',
+	addCompany: '[company] addCompany',
+	companyUpdate: '[company] companyUpdate',
+	companyDelete: '[company] companyDelete',
 }

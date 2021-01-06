@@ -1,29 +1,54 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useReducer, useRef } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import LoginScreen from '../components/auth/LoginScreen'
 import SignupScreen from '../components/auth/SignupScreen'
+import { CompanyScreen } from '../components/CompanyScreen'
 import { DashboardScreen } from '../components/DashboardScreen'
+import { fetchSinToken } from '../helpers/fetch'
 import { AuthContext } from '../reducers/auth/AuthContext'
+import { CompanyContext } from '../reducers/CompanyContext'
+import { CompanyReducer } from '../reducers/CompanyReducer'
 import { DashboardNav } from '../ui/DashboardNav'
 import { Navbar } from '../ui/Navbar'
+import { types } from '../types/types'
 
 const AppRouter = () => {
+	const isMounted = useRef(true)
 	const { user } = useContext(AuthContext)
+	const [company, dispatchCompany] = useReducer(CompanyReducer, {})
+
+	useEffect(() => {
+		return () => {
+			isMounted.current = false
+		}
+	})
+
+	useEffect(() => {
+		if (isMounted.current) {
+			fetchSinToken(`companies`)
+				.then((data) => data.json())
+				.then((data) => dispatchCompany({ type: types.getCompany, payload: data.company[0] }))
+				.catch((err) => new Error(err))
+		}
+	}, [])
 
 	return (
 		<Router>
 			<div>
 				{user.token ? (
-					<div className='dashboard-container'>
-						<DashboardNav />
+					<CompanyContext.Provider value={{ company, dispatchCompany }}>
+						<div className='dashboard-container'>
+							<DashboardNav />
 
-						<main>
-							<Switch>
-								<Route exact path='/bratic' component={DashboardScreen} />
-								<Redirect to='/bratic' />
-							</Switch>
-						</main>
-					</div>
+							<main>
+								<Switch>
+									<Route exact path='/bratic' component={DashboardScreen} />
+									<Route exact path='/bratic/empresa' component={CompanyScreen} />
+									<Redirect to='/bratic' />
+								</Switch>
+							</main>
+						</div>
+					</CompanyContext.Provider>
 				) : (
 					<>
 						<Navbar />

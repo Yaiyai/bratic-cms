@@ -24,10 +24,11 @@
 	&.secondary {
 		background-color: white;
 		color: map-get($theme-colors, 'primary');
-		border: 1px solid map-get($theme-colors, 'primary');
+		border: none;
+		border-bottom: 3px solid map-get($theme-colors, 'primary');
 		&:hover {
 			color: map-get($theme-colors, 'secondary');
-			border: 1px solid map-get($theme-colors, 'secondary');
+			border-bottom: 3px solid map-get($theme-colors, 'secondary');
 		}
 	}
 	&.third {

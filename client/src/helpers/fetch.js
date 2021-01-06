@@ -17,7 +17,7 @@ export const fetchSinToken = (endpoint, data = {}, method = 'GET') => {
 
 export const fetchConToken = (endpoint, data = {}, method = 'GET') => {
 	const url = `${baseURL}/${endpoint}`
-	const token = localStorage.getItem('mbr-token') || ''
+	const token = localStorage.getItem('bratic-token') || ''
 	if (method === 'GET') {
 		return fetch(url, {
 			method,
