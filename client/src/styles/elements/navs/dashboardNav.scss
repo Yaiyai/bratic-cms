@@ -6,7 +6,7 @@
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
-	background-color: map-get($theme-colors, 'primary');
+	background-color: map-get($theme-colors, 'third');
 	height: 100vh;
 	padding: $module;
 	ul {
