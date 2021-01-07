@@ -9,6 +9,15 @@ export const getUserPosts = async (user) => {
 		return userPosts
 	}
 }
+export const getThisPost = async (id) => {
+	const resp = await fetchSinToken(`posts/post/${id}`, 'GET')
+	const body = await resp.json()
+	if (body.ok) {
+		const thePost = body.post
+		console.log(body)
+		return thePost
+	}
+}
 
 export const addPost = async (post) => {
 	const resp = await fetchConToken(`posts/`, post, 'POST')

@@ -8,9 +8,9 @@ const getPosts = async (req, res) => {
 
 const getPost = async (req, res) => {
 	const postID = req.params.postID
-
 	await Post.findById(postID)
-		.populate('content')
+		.populate('content[0]')
+		.populate('author')
 		.then((post) => res.status(201).json({ ok: true, msg: 'Post encontrado', post }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'Post no encontrado', err }))
 }

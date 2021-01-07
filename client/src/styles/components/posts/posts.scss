@@ -16,3 +16,17 @@
 	color: map-get($theme-colors, 'text');
 	border-radius: 5px;
 }
+
+.all-posts {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	margin-top: calc(#{$module} * 2);
+	.each-post {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: calc(#{$module} * 1) 0;
+		border-bottom: 1px solid map-get($theme-colors, 'light-grey');
+	}
+}

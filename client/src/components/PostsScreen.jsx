@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 import { addPost, deletePost, getUserPosts, updatePost } from '../actions/posts.action'
 import { AuthContext } from '../reducers/auth/AuthContext'
 import AddPost from './posts/AddPost'
+import PostElement from './posts/PostElement'
 
 const PostsScreen = () => {
 	const isMounted = useRef(true)
@@ -107,16 +108,11 @@ const PostsScreen = () => {
 			</button>
 
 			{posts ? (
-				<article>
+				<section className='all-posts'>
 					{posts?.map((elm) => (
-						<div key={elm._id}>
-							{elm._id}
-							<button className='my-btn mini secondary' onClick={() => askIfDelete(elm._id)}>
-								Borrar
-							</button>
-						</div>
+						<PostElement askIfDelete={askIfDelete} post={elm} key={elm._id} />
 					))}
-				</article>
+				</section>
 			) : (
 				<article className='empty-posts'>No tienes entradas del blog</article>
 			)}

@@ -8,7 +8,7 @@ const { getPosts, getPost, addPost, deletePost, updatePost, getUserPosts } = req
 // api/posts
 router.get('/', getPosts)
 router.get('/:userID', getUserPosts)
-router.get('/:postID', getPost)
+router.get('/post/:postID', getPost)
 
 //Solo usuarios logeados pueden añadir, borrar o editar la info de la empresa
 router.use(tokenValidator) //Poniendolo aqui, todas las rutas que estén por debajo, solo podrán accederse si se está validado

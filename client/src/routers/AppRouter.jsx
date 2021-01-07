@@ -12,6 +12,7 @@ import { DashboardNav } from '../ui/DashboardNav'
 import { Navbar } from '../ui/Navbar'
 import { types } from '../types/types'
 import PostsScreen from '../components/PostsScreen'
+import Post from '../components/posts/Post'
 
 const AppRouter = () => {
 	const isMounted = useRef(true)
@@ -46,6 +47,7 @@ const AppRouter = () => {
 									<Route exact path='/bratic' component={DashboardScreen} />
 									<Route exact path='/bratic/empresa' component={CompanyScreen} />
 									<Route exact path='/bratic/blog' component={PostsScreen} />
+									<Route exact path='/bratic/blog/:postID' component={Post} />
 									<Redirect to='/bratic' />
 								</Switch>
 							</main>
