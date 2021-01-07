@@ -14,24 +14,22 @@ const PostsScreen = () => {
 	const [show, setShow] = useState(false)
 	const [modalId, setModalId] = useState()
 
-	const handleModal = async (visible, modalId) => {
-		setShow(visible)
-		setModalId(modalId)
-	}
-
 	const allMyPosts = async () => {
 		const posts = await getUserPosts(user.id)
 		setPosts(posts)
 	}
 
 	useEffect(() => {
-		if (isMounted) {
-			allMyPosts()
-		}
 		return () => {
 			isMounted.current = false
 		}
-	})
+	}, [])
+
+	useEffect(() => {
+		if (isMounted) {
+			allMyPosts()
+		}
+	}, [])
 
 	const handleAdd = async () => {
 		const newPost = await addPost({ title: 'Nueva Entrada', author: user.id })
@@ -39,14 +37,21 @@ const PostsScreen = () => {
 		setPostID(newPost._id)
 	}
 
-	const handleDeletePost = (id) => {
-		deletePost(id)
+	const handleDeletePost = async (id) => {
+		await deletePost(id)
+		await allMyPosts()
 		handleModal(false, '')
 	}
 
 	const handleUpdatePost = async (id, content) => {
 		await updatePost(id, { content: content })
+		allMyPosts()
 		handleModal(false, '')
+	}
+
+	const handleModal = async (visible, modalId) => {
+		setShow(visible)
+		setModalId(modalId)
 	}
 
 	const displayModal = (modalId) => {
@@ -63,7 +68,7 @@ const PostsScreen = () => {
 							</Modal.Body>
 							<Modal.Footer>
 								<button className='my-btn mini secondary' onClick={() => handleDeletePost(postID)}>
-									Cancelar
+									Cancelar Post
 								</button>
 							</Modal.Footer>
 						</>
