@@ -1,38 +1,53 @@
-import React, { useContext, useReducer, useState } from 'react'
-import useForm from '../../hooks/useForm'
-import { AuthContext } from '../../reducers/auth/AuthContext'
-import { PostsReducer } from '../../reducers/posts/PostsReducer'
+import React, { useState } from 'react'
+// import React, { useContext, useReducer, useState } from 'react'
+// import useForm from '../../hooks/useForm'
+// import { AuthContext } from '../../reducers/auth/AuthContext'
+// import { PostsReducer } from '../../reducers/posts/PostsReducer'
 import AddText from './content/AddText'
 
-const AddPost = ({ postID }) => {
-	const { user } = useContext(AuthContext)
-	const [auxContent, setContent] = useState('default')
+const AddPost = ({ postID, handleUpdatePost }) => {
+	// const { user } = useContext(AuthContext)
+	const [auxContent, setAuxContent] = useState('default')
 
-	const [post, dispatchPost] = useReducer(PostsReducer, {})
-	const { values, setValues, handleInputChange, handleFileChange } = useForm()
-	const { content, title, author } = values
+	// const [post, dispatchPost] = useReducer(PostsReducer, {})
+	// const { values, setValues, handleInputChange, handleFileChange } = useForm()
+
+	const [getContent, setGetContent] = useState([])
 
 	const addThis = ({ target }) => {
 		switch (target.value) {
 			case 'text':
-				setContent('text')
+				setAuxContent('text')
+				break
+			case 'image':
+				setAuxContent('image')
+				break
+			case 'gallery':
+				setAuxContent('gallery')
+				break
+			case 'video':
+				setAuxContent('video')
+				break
+			case 'slider':
+				setAuxContent('slider')
 				break
 			default:
-				setContent('default')
+				setAuxContent('default')
 				break
 		}
 	}
-	// const saveElement = (what) => {
-	//     setValues(
-	//         ...values,
-	//         content: [...content, what]
-	//     )
-	// }
+	const saveElement = (element) => {
+		if (getContent.length > 0) {
+			setGetContent([...getContent, element])
+		} else {
+			setGetContent([element])
+		}
+	}
 
 	return (
 		<>
 			<article>
-				<select onChange={addThis} name='select' placeholder='Añadir...'>
+				<select onChange={addThis} name='content' placeholder='Añadir...'>
 					<option defaultValue>Añadir...</option>
 					<option value='text'>Texto</option>
 					<option value='image'>Imagen única</option>
@@ -41,10 +56,12 @@ const AddPost = ({ postID }) => {
 					<option value='video'>Vídeo</option>
 				</select>
 			</article>
+			<article></article>
 			<article>
 				{auxContent === 'default' && <p>Añadir elemento al post</p>}
-				{auxContent === 'text' && <AddText />}
+				{auxContent === 'text' && <AddText saveElement={saveElement} postID={postID} />}
 			</article>
+			<button onClick={() => handleUpdatePost(postID, getContent)}>Guardar</button>
 		</>
 	)
 }

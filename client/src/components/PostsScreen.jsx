@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/esm/Modal'
-import { getUserPosts, addPost, deletePost } from '../actions/posts.action'
+import Swal from 'sweetalert2'
+import { addPost, deletePost, getUserPosts, updatePost } from '../actions/posts.action'
 import { AuthContext } from '../reducers/auth/AuthContext'
 import AddPost from './posts/AddPost'
 
@@ -18,14 +19,33 @@ const PostsScreen = () => {
 		setModalId(modalId)
 	}
 
+	const allMyPosts = async () => {
+		const posts = await getUserPosts(user.id)
+		setPosts(posts)
+	}
+
+	useEffect(() => {
+		if (isMounted) {
+			allMyPosts()
+		}
+		return () => {
+			isMounted.current = false
+		}
+	})
+
 	const handleAdd = async () => {
-		const newPost = await addPost({ title: 'Nueva Entrada' })
+		const newPost = await addPost({ title: 'Nueva Entrada', author: user.id })
 		await handleModal(true, 'add')
 		setPostID(newPost._id)
 	}
 
 	const handleDeletePost = (id) => {
 		deletePost(id)
+		handleModal(false, '')
+	}
+
+	const handleUpdatePost = async (id, content) => {
+		await updatePost(id, { content: content })
 		handleModal(false, '')
 	}
 
@@ -39,9 +59,13 @@ const PostsScreen = () => {
 								<Modal.Title>Añadir Post</Modal.Title>
 							</Modal.Header>
 							<Modal.Body>
-								<AddPost postID={postID} setShow={setShow} />
-								<button onClick={() => handleDeletePost(postID)}>Cancelar</button>
+								<AddPost postID={postID} setShow={setShow} handleUpdatePost={handleUpdatePost} />
 							</Modal.Body>
+							<Modal.Footer>
+								<button className='my-btn mini secondary' onClick={() => handleDeletePost(postID)}>
+									Cancelar
+								</button>
+							</Modal.Footer>
 						</>
 					)
 				default:
@@ -49,16 +73,23 @@ const PostsScreen = () => {
 			}
 		}
 	}
-
-	useEffect(() => {
-		// if (isMounted) {
-		// 	const prueba = getUserPosts(user.id)
-		// 	console.log(prueba)
-		// }
-		return () => {
-			isMounted.current = false
-		}
-	}, [])
+	const askIfDelete = (id) => {
+		Swal.fire({
+			title: '¿Seguro?',
+			text: 'Si borras esto, la entrada desaparece',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: '¡Borrar Entrada!',
+			cancelButtonText: '¡Uy, no!',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				handleDeletePost(id)
+				Swal.fire('¡Entrada borrada!', 'Esta entrada se marchó para no volver', 'success')
+			}
+		})
+	}
 
 	return (
 		<div>
@@ -67,15 +98,22 @@ const PostsScreen = () => {
 				Añadir entrada
 			</button>
 
-			{posts ? <article>hay</article> : <article className='empty-posts'>No tienes entradas del blog</article>}
+			{posts ? (
+				<article>
+					{posts?.map((elm) => (
+						<div key={elm._id}>
+							{elm._id}
+							<button className='my-btn mini secondary' onClick={() => askIfDelete(elm._id)}>
+								Borrar
+							</button>
+						</div>
+					))}
+				</article>
+			) : (
+				<article className='empty-posts'>No tienes entradas del blog</article>
+			)}
 			<Modal dialogClassName='modal-width' centered className='my-modals' show={show} onHide={() => handleModal(false, '')}>
 				{displayModal(modalId)}
-
-				<Modal.Footer>
-					<button className='my-btn mini secondary' onClick={() => handleModal(false, '')}>
-						cerrar
-					</button>
-				</Modal.Footer>
 			</Modal>
 		</div>
 	)

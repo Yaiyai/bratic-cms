@@ -4,7 +4,7 @@ const textModel = new Schema(
 	{
 		post: { type: Schema.Types.ObjectId, ref: 'Post' },
 		text: String,
-		parsedText: String,
+		parsedText: Object,
 	},
 	{
 		timestamps: true,

@@ -14,7 +14,7 @@ router.get('/:postID', getPost)
 router.use(tokenValidator) //Poniendolo aqui, todas las rutas que estén por debajo, solo podrán accederse si se está validado
 
 router.post('/', addPost)
-router.put('/:postID', [check('title', 'el titulo del post es obligatorio').not().isEmpty(), formValidator], updatePost)
+router.put('/:postID', updatePost)
 router.delete('/:postID', deletePost)
 
 module.exports = router

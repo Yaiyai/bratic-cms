@@ -10,8 +10,8 @@ const getText = async (req, res) => {
 
 const addText = async (req, res) => {
 	const postID = req.params.postID
-	const { text } = req.body
-	await Text.create({ text, post: postID })
+
+	await Text.create({ text: req.body.text, parsedText: req.body.parsedText, post: postID })
 		.then((text) => res.status(201).json({ ok: true, msg: 'Texto creado', text }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha creado texto', err }))
 }

@@ -18,7 +18,7 @@ const getPost = async (req, res) => {
 const getUserPosts = async (req, res) => {
 	const userID = req.params.userID
 
-	await Post.findById({ author: userID })
+	await Post.find({ author: userID })
 		.populate('content')
 		.then((posts) => res.status(201).json({ ok: true, msg: 'UserPosts encontrados', posts }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'UserPosts no encontrados', err }))

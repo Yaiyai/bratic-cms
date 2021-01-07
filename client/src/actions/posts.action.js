@@ -19,13 +19,12 @@ export const addPost = async (post) => {
 	}
 }
 
-export const updatePost = async (id, company) => {
-	const resp = await fetchConToken(`posts/${id}`, company, 'PUT')
+export const updatePost = async (id, post) => {
+	const resp = await fetchConToken(`posts/${id}`, post, 'PUT')
 	const body = await resp.json()
 	if (body.ok) {
-		const updatedPost = body.company
+		const updatedPost = body.post
 		Swal.fire('¡Chachi!', 'Los cambios han sido guardados', 'success')
-
 		return updatedPost
 	} else {
 		const errorMsg = body.error
