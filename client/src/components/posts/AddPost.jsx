@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import AddGallery from './content/AddGallery'
 import AddImage from './content/AddImage'
 import AddText from './content/AddText'
 
@@ -54,6 +55,7 @@ const AddPost = ({ postID, handleUpdatePost }) => {
 				{auxContent === 'default' && <p>Añadir elemento al post</p>}
 				{auxContent === 'text' && <AddText saveElement={saveElement} postID={postID} />}
 				{auxContent === 'image' && <AddImage saveElement={saveElement} postID={postID} />}
+				{auxContent === 'gallery' && <AddGallery saveElement={saveElement} postID={postID} />}
 			</article>
 			<button onClick={() => handleUpdatePost(postID, getContent)}>Guardar</button>
 		</>

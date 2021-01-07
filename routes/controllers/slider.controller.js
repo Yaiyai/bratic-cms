@@ -1,10 +1,10 @@
 const Slider = require('../../models/subdocs/slider.model')
 
 const getSlider = async (req, res) => {
-	const sliderID = req.params.sliderID
-	await Slider.findById(sliderID)
+	const postID = req.params.postID
+	await Slider.find({ post: postID })
 		.populate('post')
-		.then((slider) => res.status(201).json({ ok: true, msg: 'Slider encontrada', slider }))
+		.then((sliders) => res.status(201).json({ ok: true, msg: 'Slider encontrada', sliders }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha encontrado el slider que buscas', err }))
 }
 

@@ -6,7 +6,7 @@ const router = express.Router()
 
 // /api/sliders
 
-router.get('/', getSlider)
+router.get('/:postID', getSlider)
 
 router.use(tokenValidator)
 router.post('/:postID', addSlider)

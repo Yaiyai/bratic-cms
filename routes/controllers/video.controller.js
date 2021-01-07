@@ -1,10 +1,10 @@
 const Video = require('../../models/subdocs/video.model')
 
 const getVideo = async (req, res) => {
-	const videoID = req.params.videoID
-	await Video.findById(videoID)
+	const postID = req.params.postID
+	await Video.find({ post: postID })
 		.populate('post')
-		.then((video) => res.status(201).json({ ok: true, msg: 'Video encontrada', video }))
+		.then((videos) => res.status(201).json({ ok: true, msg: 'Video encontrada', videos }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha encontrado el video que buscas', err }))
 }
 

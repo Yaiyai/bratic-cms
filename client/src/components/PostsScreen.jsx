@@ -6,7 +6,7 @@ import { AuthContext } from '../reducers/auth/AuthContext'
 import AddPost from './posts/AddPost'
 
 const PostsScreen = () => {
-	const isMounted = useRef(false)
+	const isMounted = useRef(true)
 	const [posts, setPosts] = useState()
 	const [postID, setPostID] = useState()
 	const { user } = useContext(AuthContext)
@@ -26,10 +26,13 @@ const PostsScreen = () => {
 	}, [])
 
 	useEffect(() => {
-		if (isMounted) {
+		if (isMounted.current) {
 			allMyPosts()
 		}
-	}, [])
+		return () => {
+			isMounted.current = false
+		}
+	})
 
 	const handleAdd = async () => {
 		const newPost = await addPost({ title: 'Nueva Entrada', author: user.id })

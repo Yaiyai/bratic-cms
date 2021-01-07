@@ -1,10 +1,10 @@
 const Gallery = require('./../../models/subdocs/gallery.model')
 
 const getGallery = async (req, res) => {
-	const galleryID = req.params.galleryID
-	await Gallery.findById(galleryID)
+	const postID = req.params.postID
+	await Gallery.find({ post: postID })
 		.populate('post')
-		.then((gallery) => res.status(201).json({ ok: true, msg: 'Galería encontrada', gallery }))
+		.then((galleries) => res.status(201).json({ ok: true, msg: 'Galería encontrada', galleries }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha encontrado la galería que buscas', err }))
 }
 

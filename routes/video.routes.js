@@ -6,7 +6,7 @@ const router = express.Router()
 
 // /api/videos
 
-router.get('/', getVideo)
+router.get('/:postID', getVideo)
 
 router.use(tokenValidator)
 router.post('/:postID', addVideo)

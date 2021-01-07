@@ -6,7 +6,7 @@ const router = express.Router()
 
 // /api/galleries
 
-router.get('/', getGallery)
+router.get('/:postID', getGallery)
 
 router.use(tokenValidator)
 router.post('/:postID', addGallery)
