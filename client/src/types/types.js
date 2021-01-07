@@ -8,4 +8,9 @@ export const types = {
 	addCompany: '[company] addCompany',
 	companyUpdate: '[company] companyUpdate',
 	companyDelete: '[company] companyDelete',
+
+	getPosts: '[post] getPosts',
+	getThisPost: '[post] getThisPost',
+	addPost: '[post] addPost',
+	postUpdate: '[post] postUpdate',
 }

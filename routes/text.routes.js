@@ -4,7 +4,7 @@ const tokenValidator = require('../middlewares/tokenValidator')
 
 const router = express.Router()
 
-// /api/galleries
+// /api/texts
 
 router.get('/', getText)
 

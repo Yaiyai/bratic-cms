@@ -1,0 +1,18 @@
+.posts-head {
+	display: flex;
+	margin-bottom: calc(#{$module} * 2);
+	align-items: center;
+}
+.modal-width {
+	width: 70%;
+	max-width: none !important;
+}
+
+.empty-posts {
+	margin-top: calc(#{$module} * 1);
+	background-color: map-get($theme-colors, 'light-grey');
+	padding: calc(#{$module} * 1) 0;
+	text-align: center;
+	color: map-get($theme-colors, 'text');
+	border-radius: 5px;
+}

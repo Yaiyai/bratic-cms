@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../reducers/auth/AuthContext'
 
-export const DashboardScreen = () => {
+const DashboardScreen = () => {
 	const { user } = useContext(AuthContext)
 	return (
 		<div>
@@ -9,3 +9,5 @@ export const DashboardScreen = () => {
 		</div>
 	)
 }
+
+export default DashboardScreen

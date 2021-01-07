@@ -2,16 +2,12 @@ import React from 'react'
 import { addCompany } from './../../actions/company.action'
 import useForm from '../../hooks/useForm'
 
-const AddCompany = ({ company, setFetchingCompany }) => {
+const AddCompany = () => {
 	const { values, handleInputChange, handleFileChange } = useForm({})
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		const companyCreated = await addCompany(values)
-
-		//Lift updated state to Company Screen
-		setFetchingCompany(true)
-		company = companyCreated
+		await addCompany(values)
 	}
 
 	return (

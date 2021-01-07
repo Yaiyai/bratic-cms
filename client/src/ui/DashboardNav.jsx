@@ -26,6 +26,9 @@ export const DashboardNav = () => {
 					<li>
 						<Link to='/bratic/empresa'>Datos de empresa</Link>
 					</li>
+					<li>
+						<Link to='/bratic/blog'>Blog</Link>
+					</li>
 				</ul>
 				<div className='btn-group'>
 					<small>Made with &hearts; by Yai</small>

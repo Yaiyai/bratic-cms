@@ -4,6 +4,7 @@ import useForm from './../../hooks/useForm'
 import { deleteCompany, updateCompany } from './../../actions/company.action'
 import { types } from '../../types/types'
 import { CompanyContext } from '../../reducers/CompanyContext'
+import Swal from 'sweetalert2'
 
 export const UpdateCompany = () => {
 	const { company, dispatchCompany } = useContext(CompanyContext)
@@ -14,6 +15,23 @@ export const UpdateCompany = () => {
 	const handleDelete = async () => {
 		await deleteCompany(id)
 		dispatchCompany({ type: types.companyDelete })
+	}
+	const askIfDelete = () => {
+		Swal.fire({
+			title: '¿Seguro?',
+			text: 'Si borras esto, no habrá datos de empresa',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: '¡Borrar Empresa!',
+			cancelButtonText: '¡Uy, no!',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				handleDelete()
+				Swal.fire('¡Empresa borrada!', 'Esta empresa se marchó para no volver', 'success')
+			}
+		})
 	}
 
 	const deleteField = async (property) => {
@@ -43,7 +61,7 @@ export const UpdateCompany = () => {
 			<button className='my-btn mini' onClick={saveChanges}>
 				Guardar Cambios
 			</button>
-			<button className='my-btn secondary mini' onClick={handleDelete}>
+			<button className='my-btn secondary mini' onClick={askIfDelete}>
 				Borrar esta empresa
 			</button>
 

@@ -3,7 +3,7 @@ import { UpdateCompany } from './company/UpdateCompany'
 import AddCompany from './company/AddCompany'
 import { CompanyContext } from '../reducers/CompanyContext'
 
-export const CompanyScreen = () => {
+const CompanyScreen = () => {
 	const isMounted = useRef(true)
 	const { company } = useContext(CompanyContext)
 
@@ -15,3 +15,5 @@ export const CompanyScreen = () => {
 
 	return <>{company._id ? <UpdateCompany /> : <AddCompany />}</>
 }
+
+export default CompanyScreen
