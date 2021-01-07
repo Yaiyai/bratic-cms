@@ -1,10 +1,10 @@
 const Text = require('../../models/subdocs/text.model')
 
 const getText = async (req, res) => {
-	const textID = req.params.textID
-	await Text.findById(textID)
+	const postID = req.params.postID
+	await Text.find({ post: postID })
 		.populate('post')
-		.then((text) => res.status(201).json({ ok: true, msg: 'Texto encontrado', text }))
+		.then((texts) => res.status(201).json({ ok: true, msg: 'Texto encontrado', texts }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha encontrado el texto que buscas', err }))
 }
 

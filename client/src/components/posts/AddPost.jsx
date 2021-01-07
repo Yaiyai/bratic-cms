@@ -1,16 +1,9 @@
 import React, { useState } from 'react'
-// import React, { useContext, useReducer, useState } from 'react'
-// import useForm from '../../hooks/useForm'
-// import { AuthContext } from '../../reducers/auth/AuthContext'
-// import { PostsReducer } from '../../reducers/posts/PostsReducer'
+import AddImage from './content/AddImage'
 import AddText from './content/AddText'
 
 const AddPost = ({ postID, handleUpdatePost }) => {
-	// const { user } = useContext(AuthContext)
 	const [auxContent, setAuxContent] = useState('default')
-
-	// const [post, dispatchPost] = useReducer(PostsReducer, {})
-	// const { values, setValues, handleInputChange, handleFileChange } = useForm()
 
 	const [getContent, setGetContent] = useState([])
 
@@ -60,6 +53,7 @@ const AddPost = ({ postID, handleUpdatePost }) => {
 			<article>
 				{auxContent === 'default' && <p>Añadir elemento al post</p>}
 				{auxContent === 'text' && <AddText saveElement={saveElement} postID={postID} />}
+				{auxContent === 'image' && <AddImage saveElement={saveElement} postID={postID} />}
 			</article>
 			<button onClick={() => handleUpdatePost(postID, getContent)}>Guardar</button>
 		</>

@@ -28,6 +28,7 @@ app.use('/api/galleries', require('./routes/gallery.routes'))
 app.use('/api/sliders', require('./routes/slider.routes'))
 app.use('/api/videos', require('./routes/video.routes'))
 app.use('/api/texts', require('./routes/text.routes'))
+app.use('/api/images', require('./routes/image.routes'))
 
 //Escuchar peticiones
 app.listen(process.env.PORT, () => console.log(`Servidor establecido en puerto ${process.env.PORT}`))

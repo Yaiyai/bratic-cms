@@ -6,7 +6,7 @@ const router = express.Router()
 
 // /api/texts
 
-router.get('/', getText)
+router.get('/:postID', getText)
 
 router.use(tokenValidator)
 router.post('/:postID', addText)
