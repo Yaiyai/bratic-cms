@@ -5,7 +5,7 @@ import { addSlider } from '../../../actions/post-content/slider.action'
 
 const AddSlider = ({ saveElement, postID }) => {
 	const [auxValue, setAuxValue] = useState()
-	const [slider, setGallery] = useState([])
+	const [slider, setSlider] = useState([])
 
 	const handleGalleryChange = async ({ target }) => {
 		const file = target.files[0]
@@ -17,19 +17,19 @@ const AddSlider = ({ saveElement, postID }) => {
 	const deletePicture = (idx) => {
 		const sliderCopy = [...slider]
 		sliderCopy.splice(idx, 1)
-		setGallery(sliderCopy)
+		setSlider(sliderCopy)
 	}
 
 	const handleAddSlider = (e) => {
 		e.preventDefault()
 		if (slider.length === 0) {
-			setGallery([auxValue])
+			setSlider([auxValue])
 		} else if (!slider?.includes(auxValue)) {
-			setGallery([...slider, auxValue])
+			setSlider([...slider, auxValue])
 		}
 	}
 	const saveSlider = async () => {
-		const theSlider = await addSlider({ slider: slider }, postID)
+		const theSlider = await addSlider({ slides: slider }, postID)
 		saveElement('slider', theSlider)
 	}
 
@@ -37,14 +37,16 @@ const AddSlider = ({ saveElement, postID }) => {
 		<>
 			<label htmlFor=''>Slider</label>
 
-			<div className='button-file-group'>
+			<div className='file-group'>
 				<input className='file-input' type='file' onChange={handleGalleryChange} name='slider' />
-				<button onClick={handleAddSlider} className='my-btn mini third'>
+				<button onClick={handleAddSlider} className='my-btn mini secondary'>
 					Añadir Imagen al Slider
 				</button>
 			</div>
-			<button onClick={() => saveSlider()}>Añadir Slider al Post</button>
-			<div className='slider'>
+			<button className='my-btn mini third' onClick={() => saveSlider()}>
+				Añadir Slider a la Entrada
+			</button>
+			<div className='gallery'>
 				{slider?.map((picture, idx) => (
 					<figure className='each-picture' key={idx}>
 						<img src={picture} alt='' />

@@ -62,21 +62,7 @@ const PostsScreen = () => {
 		if (show) {
 			switch (modalId) {
 				case 'add':
-					return (
-						<>
-							<Modal.Header>
-								<Modal.Title>Añadir Post</Modal.Title>
-							</Modal.Header>
-							<Modal.Body>
-								<AddPost postID={postID} setShow={setShow} handleUpdatePost={handleUpdatePost} />
-							</Modal.Body>
-							<Modal.Footer>
-								<button className='my-btn mini secondary' onClick={() => handleDeletePost(postID)}>
-									Cancelar Post
-								</button>
-							</Modal.Footer>
-						</>
-					)
+					return <AddPost postID={postID} setShow={setShow} handleUpdatePost={handleUpdatePost} handleDeletePost={handleDeletePost} />
 				default:
 					break
 			}

@@ -10,11 +10,13 @@ const AddImage = ({ saveElement, postID }) => {
 	}
 
 	return (
-		<div>
+		<div className='file-group'>
 			<label htmlFor='image'>Añadir image</label>
 			<input type='file' className='file-input' name='image' id='image' onChange={handleFileChange} />
-			<button onClick={() => saveImage()}>Añadir Imagen</button>
-			{values?.image && <img src={values.image} alt='' />}
+			<button className='my-btn mini third' onClick={() => saveImage()}>
+				Añadir Imagen a la Entrada
+			</button>
+			{values?.image && <img className='unique-image' src={values.image} alt='' />}
 		</div>
 	)
 }
