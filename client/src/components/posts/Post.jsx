@@ -93,7 +93,7 @@ const Post = () => {
 	}
 	const getThumbnailContent = (item) => {
 		if (item.src) {
-			return <img src={item.thumbnail} />
+			return <img src={item.thumbnail} alt='' />
 		}
 	}
 

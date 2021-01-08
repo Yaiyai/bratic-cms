@@ -190,12 +190,12 @@ const AddPost = ({ postID, handleUpdatePost, handleDeletePost }) => {
 							<div className='preview'>
 								<h6>Textos</h6>
 								{getContent.content.text.map((txt, idx) => (
-									<>
-										<div key={txt._id} dangerouslySetInnerHTML={txt.parsedText}></div>
+									<div key={txt._id}>
+										<div dangerouslySetInnerHTML={txt.parsedText}></div>
 										<button className='my-btn mini secondary' onClick={() => deleteThis('text', txt._id, idx)}>
 											Borrar
 										</button>
-									</>
+									</div>
 								))}
 							</div>
 						)}
@@ -203,12 +203,12 @@ const AddPost = ({ postID, handleUpdatePost, handleDeletePost }) => {
 							<div className='preview'>
 								<h6>Imagen Simple</h6>
 								{getContent.content.image.map((img, idx) => (
-									<>
-										<img key={img._id} className='unique-image' src={img.image} alt='' />
+									<div key={img._id}>
+										<img className='unique-image' src={img.image} alt='' />
 										<button className='my-btn mini secondary' onClick={() => deleteThis('image', img._id, idx)}>
 											Borrar
 										</button>
-									</>
+									</div>
 								))}
 							</div>
 						)}
@@ -216,12 +216,12 @@ const AddPost = ({ postID, handleUpdatePost, handleDeletePost }) => {
 							<div className='preview'>
 								<h6>Vídeo</h6>
 								{getContent.content.video.map((vid, idx) => (
-									<>
+									<div key={vid._id}>
 										<video className='video-preview' src={vid.video} controls muted />
 										<button className='my-btn mini secondary' onClick={() => deleteThis('video', vid._id, idx)}>
 											Borrar
 										</button>
-									</>
+									</div>
 								))}
 							</div>
 						)}
@@ -229,8 +229,8 @@ const AddPost = ({ postID, handleUpdatePost, handleDeletePost }) => {
 							<div className='preview'>
 								<h6>Galerías de fotos</h6>
 								{getContent.content.gallery.map((gal, idx) => (
-									<>
-										<div key={gal._id} className='gallery'>
+									<div key={gal._id}>
+										<div className='gallery'>
 											{gal.gallery.map((picture, idx) => (
 												<figure className='each-picture' key={idx}>
 													<img src={picture} alt='' />
@@ -240,7 +240,7 @@ const AddPost = ({ postID, handleUpdatePost, handleDeletePost }) => {
 										<button className='my-btn mini secondary' onClick={() => deleteThis('gallery', gal._id, idx)}>
 											Borrar
 										</button>
-									</>
+									</div>
 								))}
 							</div>
 						)}
@@ -248,8 +248,8 @@ const AddPost = ({ postID, handleUpdatePost, handleDeletePost }) => {
 							<div className='preview'>
 								<h6>Slider de fotos</h6>
 								{getContent.content.slider.map((sld, idx) => (
-									<>
-										<div key={sld._id} className='gallery'>
+									<div key={sld._id}>
+										<div className='gallery'>
 											{sld.slides.map((picture, idx) => (
 												<figure className='each-picture' key={idx}>
 													<img src={picture} alt='' />
@@ -259,7 +259,7 @@ const AddPost = ({ postID, handleUpdatePost, handleDeletePost }) => {
 										<button className='my-btn mini secondary' onClick={() => deleteThis('slider', sld._id, idx)}>
 											Borrar
 										</button>
-									</>
+									</div>
 								))}
 							</div>
 						)}
