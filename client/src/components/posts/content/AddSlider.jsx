@@ -41,9 +41,6 @@ const AddSlider = ({ saveElement, postID }) => {
 					Añadir Imagen al Slider
 				</button>
 			</div>
-			<button className='my-btn mini' onClick={() => saveSlider()}>
-				Añadir Slider a la Entrada
-			</button>
 			<div className='gallery'>
 				{slider?.map((picture, idx) => (
 					<figure className='each-picture' key={idx}>
@@ -52,6 +49,9 @@ const AddSlider = ({ saveElement, postID }) => {
 					</figure>
 				))}
 			</div>
+			<button className='my-btn mini' onClick={() => saveSlider()}>
+				Añadir Slider a la Entrada
+			</button>
 		</>
 	)
 }

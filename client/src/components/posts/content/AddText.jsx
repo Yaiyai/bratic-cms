@@ -18,7 +18,7 @@ const AddText = ({ saveElement, postID }) => {
 			text: quill,
 			parsedText: { __html: quill },
 		})
-	}, [quill, values, setValues])
+	}, [quill])
 
 	return (
 		<div>

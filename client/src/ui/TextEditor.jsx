@@ -9,10 +9,12 @@ const TextEditor = ({ setQuill }) => {
 	const modules = {
 		toolbar: {
 			container: [
-				[{ header: '1' }, { header: '2' }, { font: [] }],
-				[{ size: [] }],
+				[{ header: [1, 2, 3, 4, 5, 6, false] }],
+				[{ color: [] }, { background: [] }],
+				[{ align: [] }],
 				['bold', 'italic', 'underline', 'strike', 'blockquote'],
 				[{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+				[{ script: 'sub' }, { script: 'super' }],
 				['link'],
 			],
 		},
@@ -34,6 +36,6 @@ const TextEditor = ({ setQuill }) => {
 	)
 }
 
-TextEditor.formats = ['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link']
+TextEditor.formats = ['header', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'align', 'color', 'script', 'background']
 
 export default TextEditor

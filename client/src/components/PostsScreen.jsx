@@ -48,7 +48,7 @@ const PostsScreen = () => {
 	}
 
 	const handleUpdatePost = async (id, content) => {
-		await updatePost(id, { content: content })
+		await updatePost(id, content)
 		allMyPosts()
 		handleModal(false, '')
 	}
@@ -81,7 +81,7 @@ const PostsScreen = () => {
 		}).then((result) => {
 			if (result.isConfirmed) {
 				handleDeletePost(id)
-				Swal.fire('¡Entrada borrada!', 'Esta entrada se marchó para no volver', 'success')
+				// Swal.fire('¡Entrada borrada!', 'Esta entrada se marchó para no volver', 'success')
 			}
 		})
 	}

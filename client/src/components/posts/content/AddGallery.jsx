@@ -41,9 +41,6 @@ const AddGallery = ({ saveElement, postID }) => {
 					Añadir Imagen
 				</button>
 			</div>
-			<button className='my-btn mini' onClick={() => saveGallery()}>
-				Añadir Galería a la entrada
-			</button>
 			<div className='gallery'>
 				{gallery?.map((picture, idx) => (
 					<figure className='each-picture' key={idx}>
@@ -52,6 +49,9 @@ const AddGallery = ({ saveElement, postID }) => {
 					</figure>
 				))}
 			</div>
+			<button className='my-btn mini' onClick={() => saveGallery()}>
+				Añadir Galería a la entrada
+			</button>
 		</>
 	)
 }

@@ -5,12 +5,19 @@ import AddSlider from './content/AddSlider'
 import AddText from './content/AddText'
 import AddVideo from './content/AddVideo'
 import Modal from 'react-bootstrap/esm/Modal'
+import useForm from '../../hooks/useForm'
+import { deleteVideo } from '../../actions/post-content/video.action'
+import { deleteImage } from '../../actions/post-content/image.action'
+import { deleteSlider } from '../../actions/post-content/slider.action'
+import { deleteGallery } from '../../actions/post-content/gallery.action'
+import { deleteText } from '../../actions/post-content/text.action'
 
 const AddPost = ({ postID, handleUpdatePost, handleDeletePost }) => {
 	const select = useRef()
 	const [auxContent, setAuxContent] = useState('default')
+	const { values, handleInputChange } = useForm()
 
-	const [getContent, setGetContent] = useState({ slider: [], image: [], text: [], video: [], gallery: [] })
+	const [getContent, setGetContent] = useState({ title: 'Sin título', subtitle: '', content: { slider: [], image: [], text: [], video: [], gallery: [] } })
 
 	const addThis = ({ target }) => {
 		switch (target.value) {
@@ -43,59 +50,101 @@ const AddPost = ({ postID, handleUpdatePost, handleDeletePost }) => {
 	const saveElement = (type, element) => {
 		switch (type) {
 			case 'text':
-				if (getContent.text.length > 0) {
-					const contentCopy = [...getContent.text, element]
-					setGetContent({ ...getContent, text: contentCopy })
+				if (getContent.content.text.length > 0) {
+					const contentCopy = [...getContent.content.text, element]
+					setGetContent({ ...getContent, content: { ...getContent.content, text: contentCopy } })
 					setToDefault()
 				} else {
 					const contentCopy = [element]
-					setGetContent({ ...getContent, text: contentCopy })
+					setGetContent({ ...getContent, content: { ...getContent.content, text: contentCopy } })
 					setToDefault()
 				}
 				break
 			case 'image':
-				if (getContent.image.length > 0) {
-					const contentCopy = [...getContent.image, element]
-					setGetContent({ ...getContent, image: contentCopy })
+				if (getContent.content.image.length > 0) {
+					const contentCopy = [...getContent.content.image, element]
+					setGetContent({ ...getContent, content: { ...getContent.content, image: contentCopy } })
 					setToDefault()
 				} else {
 					const contentCopy = [element]
-					setGetContent({ ...getContent, image: contentCopy })
+					setGetContent({ ...getContent, content: { ...getContent.content, image: contentCopy } })
 					setToDefault()
 				}
 				break
 			case 'gallery':
-				if (getContent.gallery.length > 0) {
-					const contentCopy = [...getContent.gallery, element]
-					setGetContent({ ...getContent, gallery: contentCopy })
+				if (getContent.content.gallery.length > 0) {
+					const contentCopy = [...getContent.content.gallery, element]
+					setGetContent({ ...getContent, content: { ...getContent.content, gallery: contentCopy } })
 					setToDefault()
 				} else {
 					const contentCopy = [element]
-					setGetContent({ ...getContent, gallery: contentCopy })
+					setGetContent({ ...getContent, content: { ...getContent.content, gallery: contentCopy } })
 					setToDefault()
 				}
 				break
 			case 'video':
-				if (getContent.video.length > 0) {
-					const contentCopy = [...getContent.video, element]
-					setGetContent({ ...getContent, video: contentCopy })
+				if (getContent.content.video.length > 0) {
+					const contentCopy = [...getContent.content.video, element]
+					setGetContent({ ...getContent, content: { ...getContent.content, video: contentCopy } })
 					setToDefault()
 				} else {
 					const contentCopy = [element]
-					setGetContent({ ...getContent, video: contentCopy })
+					setGetContent({ ...getContent, content: { ...getContent.content, video: contentCopy } })
 					setToDefault()
 				}
 				break
 			case 'slider':
-				if (getContent.slider.length > 0) {
-					const contentCopy = [...getContent.slider, element]
-					setGetContent({ ...getContent, slider: contentCopy })
+				if (getContent.content.slider.length > 0) {
+					const contentCopy = [...getContent.content.slider, element]
+					setGetContent({ ...getContent, content: { ...getContent.content, slider: contentCopy } })
 					setToDefault()
 				} else {
 					const contentCopy = [element]
-					setGetContent({ ...getContent, slider: contentCopy })
+					setGetContent({ ...getContent, content: { ...getContent.content, slider: contentCopy } })
 					setToDefault()
 				}
+				break
+			default:
+				break
+		}
+	}
+
+	const saveTitles = (e) => {
+		e.preventDefault()
+		setGetContent({ ...getContent, title: values.title, subtitle: values.subtitle })
+	}
+
+	const deleteThis = (type, id, idx) => {
+		switch (type) {
+			case 'video':
+				const videoCopy = [...getContent.content.video]
+				videoCopy.splice(idx, 1)
+				setGetContent({ ...getContent, content: { ...getContent.content, video: videoCopy } })
+				deleteVideo(id)
+				break
+			case 'image':
+				const imageCopy = [...getContent.content.image]
+				imageCopy.splice(idx, 1)
+				setGetContent({ ...getContent, content: { ...getContent.content, image: imageCopy } })
+				deleteImage(id)
+				break
+			case 'text':
+				const textCopy = [...getContent.content.text]
+				textCopy.splice(idx, 1)
+				setGetContent({ ...getContent, content: { ...getContent.content, text: textCopy } })
+				deleteText(id)
+				break
+			case 'slider':
+				const sliderCopy = [...getContent.content.slider]
+				sliderCopy.splice(idx, 1)
+				setGetContent({ ...getContent, content: { ...getContent.content, slider: sliderCopy } })
+				deleteSlider(id)
+				break
+			case 'gallery':
+				const galleryCopy = [...getContent.content.gallery]
+				galleryCopy.splice(idx, 1)
+				setGetContent({ ...getContent, content: { ...getContent.content, gallery: galleryCopy } })
+				deleteGallery(id)
 				break
 			default:
 				break
@@ -105,7 +154,16 @@ const AddPost = ({ postID, handleUpdatePost, handleDeletePost }) => {
 	return (
 		<>
 			<Modal.Header>
-				<Modal.Title>Añadir Post</Modal.Title>
+				<Modal.Title>Añadir Entrada {values?.title && <span>: {values?.title}</span>}</Modal.Title>
+				<form className='form-title' onSubmit={saveTitles}>
+					<label htmlFor='title'>Título de la Entrada</label>
+					<input id='title' type='text' name='title' onChange={handleInputChange} placeholder={getContent.title} />
+					<label htmlFor='subtitle'>Subtítulo de la Entrada</label>
+					<input id='subtitle' type='text' name='subtitle' placeholder={getContent.subtitle} onChange={handleInputChange} />
+					<button className='my-btn mini' type='submit'>
+						Guardar
+					</button>
+				</form>
 			</Modal.Header>
 			<Modal.Body>
 				<select ref={select} onChange={addThis} name='content' placeholder='Añadir...'>
@@ -128,55 +186,80 @@ const AddPost = ({ postID, handleUpdatePost, handleDeletePost }) => {
 						{auxContent === 'slider' && <AddSlider saveElement={saveElement} postID={postID} />}
 					</article>
 					<article className='right'>
-						{getContent.text.length > 0 && (
-							<div className='texts'>
+						{getContent.content.text.length > 0 && (
+							<div className='preview'>
 								<h6>Textos</h6>
-								{getContent.text.map((txt) => (
-									<div key={txt._id} dangerouslySetInnerHTML={txt.parsedText}></div>
+								{getContent.content.text.map((txt, idx) => (
+									<>
+										<div key={txt._id} dangerouslySetInnerHTML={txt.parsedText}></div>
+										<button className='my-btn mini secondary' onClick={() => deleteThis('text', txt._id, idx)}>
+											Borrar
+										</button>
+									</>
 								))}
 							</div>
 						)}
-						{getContent.image.length > 0 && (
-							<div className='texts'>
+						{getContent.content.image.length > 0 && (
+							<div className='preview'>
 								<h6>Imagen Simple</h6>
-								{getContent.image.map((img) => (
-									<img className='unique-image' src={img.image} alt='' />
+								{getContent.content.image.map((img, idx) => (
+									<>
+										<img key={img._id} className='unique-image' src={img.image} alt='' />
+										<button className='my-btn mini secondary' onClick={() => deleteThis('image', img._id, idx)}>
+											Borrar
+										</button>
+									</>
 								))}
 							</div>
 						)}
-						{getContent.video.length > 0 && (
-							<div className='texts'>
+						{getContent.content.video.length > 0 && (
+							<div className='preview'>
 								<h6>Vídeo</h6>
-								{getContent.video.map((vid) => (
-									<video className='video-preview' src={vid.video} controls muted />
+								{getContent.content.video.map((vid, idx) => (
+									<>
+										<video className='video-preview' src={vid.video} controls muted />
+										<button className='my-btn mini secondary' onClick={() => deleteThis('video', vid._id, idx)}>
+											Borrar
+										</button>
+									</>
 								))}
 							</div>
 						)}
-						{getContent.gallery?.length > 0 && (
-							<div className='texts'>
+						{getContent.content.gallery?.length > 0 && (
+							<div className='preview'>
 								<h6>Galerías de fotos</h6>
-								{getContent.gallery.map((gal) => (
-									<div className='gallery'>
-										{gal.gallery.map((picture, idx) => (
-											<figure className='each-picture' key={idx}>
-												<img src={picture} alt='' />
-											</figure>
-										))}
-									</div>
+								{getContent.content.gallery.map((gal, idx) => (
+									<>
+										<div key={gal._id} className='gallery'>
+											{gal.gallery.map((picture, idx) => (
+												<figure className='each-picture' key={idx}>
+													<img src={picture} alt='' />
+												</figure>
+											))}
+										</div>
+										<button className='my-btn mini secondary' onClick={() => deleteThis('gallery', gal._id, idx)}>
+											Borrar
+										</button>
+									</>
 								))}
 							</div>
 						)}
-						{getContent.slider?.length > 0 && (
-							<div className='texts'>
+						{getContent.content.slider?.length > 0 && (
+							<div className='preview'>
 								<h6>Slider de fotos</h6>
-								{getContent.slider.map((sld) => (
-									<div className='gallery'>
-										{sld.slides.map((picture, idx) => (
-											<figure className='each-picture' key={idx}>
-												<img src={picture} alt='' />
-											</figure>
-										))}
-									</div>
+								{getContent.content.slider.map((sld, idx) => (
+									<>
+										<div key={sld._id} className='gallery'>
+											{sld.slides.map((picture, idx) => (
+												<figure className='each-picture' key={idx}>
+													<img src={picture} alt='' />
+												</figure>
+											))}
+										</div>
+										<button className='my-btn mini secondary' onClick={() => deleteThis('slider', sld._id, idx)}>
+											Borrar
+										</button>
+									</>
 								))}
 							</div>
 						)}
