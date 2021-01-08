@@ -76,7 +76,7 @@
 	.left,
 	.right {
 		width: 50%;
-		padding: calc(#{$module} / 2);
+		padding: calc(#{$module} / 2) calc(#{$module} / 2) calc(#{$module} / 2) 0;
 		.unique-image {
 			width: 100px;
 			height: 100px;

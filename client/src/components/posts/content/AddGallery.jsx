@@ -35,15 +35,15 @@ const AddGallery = ({ saveElement, postID }) => {
 
 	return (
 		<>
-			<label htmlFor=''>Galería de imágenes</label>
-
-			<div className='button-file-group'>
+			<div className='file-group'>
 				<input className='file-input' type='file' onChange={handleGalleryChange} placeholder={'Añadir Foto'} name='gallery' />
 				<button onClick={handleAddGallery} className='my-btn mini third'>
 					Añadir Imagen
 				</button>
 			</div>
-			<button onClick={() => saveGallery()}>Añadir Galería al Post</button>
+			<button className='my-btn mini' onClick={() => saveGallery()}>
+				Añadir Galería a la entrada
+			</button>
 			<div className='gallery'>
 				{gallery?.map((picture, idx) => (
 					<figure className='each-picture' key={idx}>

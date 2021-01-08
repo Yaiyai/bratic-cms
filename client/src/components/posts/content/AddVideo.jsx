@@ -11,9 +11,12 @@ const AddVideo = ({ saveElement, postID }) => {
 
 	return (
 		<div>
-			<label htmlFor='video'>Añadir video</label>
-			<input type='file' className='file-input' name='video' id='video' onChange={handleFileChange} />
-			<button onClick={() => saveVideo()}>Añadir Vídeo</button>
+			<div className='file-group'>
+				<input type='file' className='file-input' name='video' id='video' onChange={handleFileChange} />
+			</div>
+			<button className='my-btn mini' onClick={() => saveVideo()}>
+				Añadir Vídeo a la entrada
+			</button>
 			{values?.video && <video className='video-preview' src={values.video} controls muted />}
 		</div>
 	)

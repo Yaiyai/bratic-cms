@@ -35,15 +35,13 @@ const AddSlider = ({ saveElement, postID }) => {
 
 	return (
 		<>
-			<label htmlFor=''>Slider</label>
-
 			<div className='file-group'>
 				<input className='file-input' type='file' onChange={handleGalleryChange} name='slider' />
-				<button onClick={handleAddSlider} className='my-btn mini secondary'>
+				<button onClick={handleAddSlider} className='my-btn mini third'>
 					Añadir Imagen al Slider
 				</button>
 			</div>
-			<button className='my-btn mini third' onClick={() => saveSlider()}>
+			<button className='my-btn mini' onClick={() => saveSlider()}>
 				Añadir Slider a la Entrada
 			</button>
 			<div className='gallery'>

@@ -1,31 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { addText } from '../../../actions/post-content/text.action'
 import useForm from '../../../hooks/useForm'
 import TextEditor from '../../../ui/TextEditor'
 
 const AddText = ({ saveElement, postID }) => {
 	const [quill, setQuill] = useState()
-	const [parsed, setParsed] = useState()
 	const { values, setValues } = useForm()
-
-	const handleQuill = async (e) => {
-		e.preventDefault()
-		setValues({
-			...values,
-			text: quill,
-			parsedText: parsed,
-		})
-	}
 
 	const saveText = async () => {
 		const theText = await addText(values, postID)
 		saveElement('text', theText)
 	}
 
+	useEffect(() => {
+		setValues({
+			...values,
+			text: quill,
+			parsedText: { __html: quill },
+		})
+	}, [quill, values, setValues])
+
 	return (
 		<div>
-			<TextEditor setQuill={setQuill} handleQuill={handleQuill} setParsed={setParsed} />
-			<button onClick={() => saveText()}>Añadir Texto</button>
+			<TextEditor setQuill={setQuill} />
+			<button className='my-btn mini' onClick={() => saveText()}>
+				Añadir Texto a la entrada
+			</button>
 		</div>
 	)
 }

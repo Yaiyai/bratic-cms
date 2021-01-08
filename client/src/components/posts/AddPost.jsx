@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import AddGallery from './content/AddGallery'
 import AddImage from './content/AddImage'
 import AddSlider from './content/AddSlider'
@@ -7,6 +7,7 @@ import AddVideo from './content/AddVideo'
 import Modal from 'react-bootstrap/esm/Modal'
 
 const AddPost = ({ postID, handleUpdatePost, handleDeletePost }) => {
+	const select = useRef()
 	const [auxContent, setAuxContent] = useState('default')
 
 	const [getContent, setGetContent] = useState({ slider: [], image: [], text: [], video: [], gallery: [] })
@@ -33,51 +34,67 @@ const AddPost = ({ postID, handleUpdatePost, handleDeletePost }) => {
 				break
 		}
 	}
+
+	const setToDefault = () => {
+		select.current.selectedIndex = 0
+		setAuxContent('default')
+	}
+
 	const saveElement = (type, element) => {
 		switch (type) {
 			case 'text':
 				if (getContent.text.length > 0) {
 					const contentCopy = [...getContent.text, element]
 					setGetContent({ ...getContent, text: contentCopy })
+					setToDefault()
 				} else {
 					const contentCopy = [element]
 					setGetContent({ ...getContent, text: contentCopy })
+					setToDefault()
 				}
 				break
 			case 'image':
 				if (getContent.image.length > 0) {
 					const contentCopy = [...getContent.image, element]
 					setGetContent({ ...getContent, image: contentCopy })
+					setToDefault()
 				} else {
 					const contentCopy = [element]
 					setGetContent({ ...getContent, image: contentCopy })
+					setToDefault()
 				}
 				break
 			case 'gallery':
 				if (getContent.gallery.length > 0) {
 					const contentCopy = [...getContent.gallery, element]
 					setGetContent({ ...getContent, gallery: contentCopy })
+					setToDefault()
 				} else {
 					const contentCopy = [element]
 					setGetContent({ ...getContent, gallery: contentCopy })
+					setToDefault()
 				}
 				break
 			case 'video':
 				if (getContent.video.length > 0) {
 					const contentCopy = [...getContent.video, element]
 					setGetContent({ ...getContent, video: contentCopy })
+					setToDefault()
 				} else {
 					const contentCopy = [element]
 					setGetContent({ ...getContent, video: contentCopy })
+					setToDefault()
 				}
 				break
 			case 'slider':
 				if (getContent.slider.length > 0) {
 					const contentCopy = [...getContent.slider, element]
 					setGetContent({ ...getContent, slider: contentCopy })
+					setToDefault()
 				} else {
 					const contentCopy = [element]
 					setGetContent({ ...getContent, slider: contentCopy })
+					setToDefault()
 				}
 				break
 			default:
@@ -91,8 +108,10 @@ const AddPost = ({ postID, handleUpdatePost, handleDeletePost }) => {
 				<Modal.Title>Añadir Post</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<select onChange={addThis} name='content' placeholder='Añadir...'>
-					<option defaultValue>Añadir...</option>
+				<select ref={select} onChange={addThis} name='content' placeholder='Añadir...'>
+					<option value='default' defaultValue>
+						Añadir...
+					</option>
 					<option value='text'>Texto</option>
 					<option value='image'>Imagen única</option>
 					<option value='gallery'>Galería de imágenes</option>
