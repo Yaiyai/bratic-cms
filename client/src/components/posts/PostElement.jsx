@@ -9,7 +9,7 @@ const PostElement = ({ askIfDelete, post }) => {
 
 	return (
 		<>
-			<article className='each-post'>
+			<article className='each-post-prev'>
 				<div className='info'>
 					<h6>{post.title}</h6>
 					{date && <small>{date}</small>}

@@ -22,7 +22,7 @@
 	flex-direction: column;
 	width: 100%;
 	margin-top: calc(#{$module} * 2);
-	.each-post {
+	.each-post-prev {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -157,6 +157,74 @@
 			}
 			h3 {
 				@include font-line-height(14px);
+			}
+		}
+	}
+}
+
+.each-post {
+	.unique-image {
+		width: 100px;
+		height: 100px;
+		overflow: hidden;
+		background-color: map-get($theme-colors, 'light-grey');
+		position: relative;
+		margin: calc(#{$module} / 2) 0;
+		img {
+			height: 100%;
+			object-fit: cover;
+			object-position: center;
+		}
+	}
+	.video-preview {
+		width: 300px;
+		margin: calc(#{$module} / 2) 0;
+	}
+	.swiper-container {
+		height: calc(#{$module} * 15);
+		width: 100%;
+		@include breakpoint(md-down) {
+			height: calc(#{$module} * 15);
+		}
+		.swiper-wrapper {
+			height: 100%;
+			width: 100%;
+			.swiper-slide {
+				height: 100%;
+				width: 100%;
+				overflow: hidden;
+				img {
+					height: 100%;
+					object-fit: cover;
+					object-position: center;
+				}
+			}
+		}
+	}
+
+	.gallery {
+		display: flex;
+		flex-wrap: wrap;
+		margin: calc(#{$module} / 2) 0;
+		.each-picture {
+			@include items-grid(8, calc(#{$module} / 6));
+			height: 100px;
+			overflow: hidden;
+			background-color: map-get($theme-colors, 'light-grey');
+			position: relative;
+			img {
+				height: 100%;
+				object-fit: cover;
+				object-position: center;
+			}
+			.close-icon {
+				position: absolute;
+				top: 0;
+				right: 0;
+				cursor: pointer;
+				width: 15px;
+				height: 15px;
+				color: map-get($theme-colors, 'primary');
 			}
 		}
 	}

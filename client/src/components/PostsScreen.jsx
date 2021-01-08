@@ -68,6 +68,7 @@ const PostsScreen = () => {
 			}
 		}
 	}
+
 	const askIfDelete = (id) => {
 		Swal.fire({
 			title: '¿Seguro?',

@@ -1,6 +1,12 @@
 import { useEffect, useReducer, useRef } from 'react'
 import { AuthContext } from './reducers/auth/AuthContext'
 import { AuthReducer } from './reducers/auth/authReducer'
+// Import Swiper styles
+import 'swiper/swiper.scss'
+import 'swiper/components/pagination/pagination.scss'
+//Photoswipe
+import 'react-photoswiper/lib/photoswipe.css'
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './global.scss'
 import { library } from '@fortawesome/fontawesome-svg-core'
