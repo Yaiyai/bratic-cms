@@ -14,7 +14,6 @@ export const getThisPost = async (id) => {
 	const body = await resp.json()
 	if (body.ok) {
 		const thePost = body.post
-		console.log(body)
 		return thePost
 	}
 }

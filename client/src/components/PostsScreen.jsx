@@ -107,7 +107,7 @@ const PostsScreen = () => {
 				Añadir entrada
 			</button>
 
-			{posts ? (
+			{posts?.length > 0 ? (
 				<section className='all-posts'>
 					{posts?.map((elm) => (
 						<PostElement askIfDelete={askIfDelete} post={elm} key={elm._id} />

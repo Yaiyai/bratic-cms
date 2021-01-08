@@ -12,9 +12,9 @@ const AddVideo = ({ saveElement, postID }) => {
 	return (
 		<div>
 			<label htmlFor='video'>Añadir video</label>
-			{values?.video && <video className='each-preview' src={values.video} controls muted />}
 			<input type='file' className='file-input' name='video' id='video' onChange={handleFileChange} />
 			<button onClick={() => saveVideo()}>Añadir Vídeo</button>
+			{values?.video && <video className='each-preview' src={values.video} controls muted />}
 		</div>
 	)
 }

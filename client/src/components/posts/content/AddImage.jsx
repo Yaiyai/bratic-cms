@@ -12,9 +12,9 @@ const AddImage = ({ saveElement, postID }) => {
 	return (
 		<div>
 			<label htmlFor='image'>Añadir image</label>
-			{values?.image && <img src={values.image} alt='' />}
 			<input type='file' className='file-input' name='image' id='image' onChange={handleFileChange} />
 			<button onClick={() => saveImage()}>Añadir Imagen</button>
+			{values?.image && <img src={values.image} alt='' />}
 		</div>
 	)
 }

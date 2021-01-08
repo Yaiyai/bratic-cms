@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import AddGallery from './content/AddGallery'
 import AddImage from './content/AddImage'
+import AddSlider from './content/AddSlider'
 import AddText from './content/AddText'
 import AddVideo from './content/AddVideo'
 
@@ -102,6 +103,7 @@ const AddPost = ({ postID, handleUpdatePost }) => {
 				{auxContent === 'image' && <AddImage saveElement={saveElement} postID={postID} />}
 				{auxContent === 'gallery' && <AddGallery saveElement={saveElement} postID={postID} />}
 				{auxContent === 'video' && <AddVideo saveElement={saveElement} postID={postID} />}
+				{auxContent === 'slider' && <AddSlider saveElement={saveElement} postID={postID} />}
 			</article>
 			<button onClick={() => handleUpdatePost(postID, getContent)}>Guardar</button>
 		</>

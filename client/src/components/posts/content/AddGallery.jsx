@@ -36,14 +36,6 @@ const AddGallery = ({ saveElement, postID }) => {
 	return (
 		<>
 			<label htmlFor=''>Galería de imágenes</label>
-			<div className='gallery'>
-				{gallery?.map((picture, idx) => (
-					<figure className='each-picture' key={idx}>
-						<img src={picture} alt='' />
-						<FontAwesomeIcon className='close-icon' onClick={() => deletePicture(idx)} icon='times-circle' />
-					</figure>
-				))}
-			</div>
 
 			<div className='button-file-group'>
 				<input className='file-input' type='file' onChange={handleGalleryChange} placeholder={'Añadir Foto'} name='gallery' />
@@ -52,6 +44,14 @@ const AddGallery = ({ saveElement, postID }) => {
 				</button>
 			</div>
 			<button onClick={() => saveGallery()}>Añadir Galería al Post</button>
+			<div className='gallery'>
+				{gallery?.map((picture, idx) => (
+					<figure className='each-picture' key={idx}>
+						<img src={picture} alt='' />
+						<FontAwesomeIcon className='close-icon' onClick={() => deletePicture(idx)} icon='times-circle' />
+					</figure>
+				))}
+			</div>
 		</>
 	)
 }
