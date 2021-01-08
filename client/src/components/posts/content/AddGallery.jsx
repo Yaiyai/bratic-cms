@@ -30,7 +30,7 @@ const AddGallery = ({ saveElement, postID }) => {
 	}
 	const saveGallery = async () => {
 		const theGallery = await addGallery({ gallery: gallery }, postID)
-		saveElement(theGallery)
+		saveElement('gallery', theGallery)
 	}
 
 	return (

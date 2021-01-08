@@ -6,7 +6,7 @@ const AddImage = ({ saveElement, postID }) => {
 	const { values, handleFileChange } = useForm()
 	const saveImage = async () => {
 		const theImage = await addImage({ image: values.image }, postID)
-		saveElement(theImage)
+		saveElement('image', theImage)
 	}
 
 	return (

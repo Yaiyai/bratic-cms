@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import AddGallery from './content/AddGallery'
 import AddImage from './content/AddImage'
 import AddText from './content/AddText'
+import AddVideo from './content/AddVideo'
 
 const AddPost = ({ postID, handleUpdatePost }) => {
 	const [auxContent, setAuxContent] = useState('default')
 
-	const [getContent, setGetContent] = useState([])
+	const [getContent, setGetContent] = useState({ slider: [], image: [], text: [], video: [], gallery: [] })
 
 	const addThis = ({ target }) => {
 		switch (target.value) {
@@ -30,11 +31,55 @@ const AddPost = ({ postID, handleUpdatePost }) => {
 				break
 		}
 	}
-	const saveElement = (element) => {
-		if (getContent.length > 0) {
-			setGetContent([...getContent, element])
-		} else {
-			setGetContent([element])
+	const saveElement = (type, element) => {
+		switch (type) {
+			case 'text':
+				if (getContent.text.length > 0) {
+					const contentCopy = [...getContent.text, element]
+					setGetContent({ ...getContent, text: contentCopy })
+				} else {
+					const contentCopy = [element]
+					setGetContent({ ...getContent, text: contentCopy })
+				}
+				break
+			case 'image':
+				if (getContent.image.length > 0) {
+					const contentCopy = [...getContent.image, element]
+					setGetContent({ ...getContent, image: contentCopy })
+				} else {
+					const contentCopy = [element]
+					setGetContent({ ...getContent, image: contentCopy })
+				}
+				break
+			case 'gallery':
+				if (getContent.gallery.length > 0) {
+					const contentCopy = [...getContent.gallery, element]
+					setGetContent({ ...getContent, gallery: contentCopy })
+				} else {
+					const contentCopy = [element]
+					setGetContent({ ...getContent, gallery: contentCopy })
+				}
+				break
+			case 'video':
+				if (getContent.video.length > 0) {
+					const contentCopy = [...getContent.video, element]
+					setGetContent({ ...getContent, video: contentCopy })
+				} else {
+					const contentCopy = [element]
+					setGetContent({ ...getContent, video: contentCopy })
+				}
+				break
+			case 'slider':
+				if (getContent.slider.length > 0) {
+					const contentCopy = [...getContent.slider, element]
+					setGetContent({ ...getContent, slider: contentCopy })
+				} else {
+					const contentCopy = [element]
+					setGetContent({ ...getContent, slider: contentCopy })
+				}
+				break
+			default:
+				break
 		}
 	}
 
@@ -56,6 +101,7 @@ const AddPost = ({ postID, handleUpdatePost }) => {
 				{auxContent === 'text' && <AddText saveElement={saveElement} postID={postID} />}
 				{auxContent === 'image' && <AddImage saveElement={saveElement} postID={postID} />}
 				{auxContent === 'gallery' && <AddGallery saveElement={saveElement} postID={postID} />}
+				{auxContent === 'video' && <AddVideo saveElement={saveElement} postID={postID} />}
 			</article>
 			<button onClick={() => handleUpdatePost(postID, getContent)}>Guardar</button>
 		</>

@@ -19,7 +19,7 @@ const AddText = ({ saveElement, postID }) => {
 
 	const saveText = async () => {
 		const theText = await addText(values, postID)
-		saveElement(theText)
+		saveElement('text', theText)
 	}
 
 	return (
