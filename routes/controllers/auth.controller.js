@@ -44,18 +44,8 @@ const renewToken = async (req, res) => {
 	res.status(201).json({ ok: true, msg: 'revalidar token', id, name, token: newToken })
 }
 
-const deleteUser = (req, res) => {
-	res.status(201).json({ ok: true, msg: 'borrar' })
-}
-
-const updateUser = (req, res) => {
-	res.status(201).json({ ok: true, msg: 'actualizar' })
-}
-
 module.exports = {
 	addUser,
-	deleteUser,
-	updateUser,
 	loginUser,
 	renewToken,
 }

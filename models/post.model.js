@@ -11,6 +11,7 @@ const postModel = new Schema(
 			video: [{ type: Schema.Types.ObjectId, ref: 'Video' }],
 			text: [{ type: Schema.Types.ObjectId, ref: 'Text' }],
 			image: [{ type: Schema.Types.ObjectId, ref: 'Image' }],
+			download: [{ type: Schema.Types.ObjectId, ref: 'Download' }],
 		},
 	},
 	{

@@ -14,6 +14,7 @@ const getPost = async (req, res) => {
 		.populate('content.gallery')
 		.populate('content.slider')
 		.populate('content.video')
+		.populate('content.download')
 		.populate('author')
 		.then((post) => res.status(201).json({ ok: true, msg: 'Post encontrado', post }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'Post no encontrado', err }))

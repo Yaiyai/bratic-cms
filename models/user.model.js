@@ -16,6 +16,9 @@ const userModel = Schema(
 			type: String,
 			require: true,
 		},
+		position: String,
+		avatar: String,
+		linkedin: String,
 	},
 	{
 		timestamps: true,
