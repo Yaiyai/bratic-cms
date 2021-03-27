@@ -23,10 +23,11 @@ const updateText = async (req, res) => {
 		return res.status(400).json({ ok: false, msg: 'No se ha encontrado el texto que quieres actualizar' })
 	}
 	const textUpdated = req.body
+	console.log(textUpdated)
 
 	await Text.findByIdAndUpdate(textID, textUpdated, { new: true })
-		.then((text) => res.status(201).json({ ok: true, msg: 'Texto encontrado', text }))
-		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha encontrado el texto que buscas', err }))
+		.then((text) => res.status(201).json({ ok: true, msg: 'Texto actualizado', text }))
+		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha actualizado el texto que buscas', err }))
 }
 
 const deleteText = async (req, res) => {
