@@ -4,6 +4,7 @@ const sliderModel = new Schema(
 	{
 		post: { type: Schema.Types.ObjectId, ref: 'Post' },
 		slides: Array,
+		order: Number,
 	},
 	{
 		timestamps: true,

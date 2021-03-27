@@ -30,7 +30,7 @@ const TextEditor = ({ setQuill }) => {
 	return (
 		<div>
 			<div className='text-editor'>
-				<ReactQuill ref={quillRef} modules={modules} formats={TextEditor.formats} theme='snow' value={value} onChange={setValue} />
+				<ReactQuill ref={ quillRef } modules={ modules } formats={ TextEditor.formats } theme='snow' value={ value } onChange={ setValue } />
 			</div>
 		</div>
 	)

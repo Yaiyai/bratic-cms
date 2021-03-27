@@ -27,7 +27,6 @@ form {
 			border: 1px solid map-get($theme-colors, 'secondary');
 		}
 		&.file-input {
-			background-color: pink;
 			width: 50%;
 			outline: none;
 			color: map-get($theme-colors, 'text');

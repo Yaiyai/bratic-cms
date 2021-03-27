@@ -4,6 +4,7 @@ const imageModel = new Schema(
 	{
 		post: { type: Schema.Types.ObjectId, ref: 'Post' },
 		image: String,
+		order: Number,
 	},
 	{
 		timestamps: true,

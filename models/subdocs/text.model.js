@@ -5,6 +5,7 @@ const textModel = new Schema(
 		post: { type: Schema.Types.ObjectId, ref: 'Post' },
 		text: String,
 		parsedText: Object,
+		order: Number,
 	},
 	{
 		timestamps: true,

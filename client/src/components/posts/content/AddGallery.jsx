@@ -34,25 +34,25 @@ const AddGallery = ({ saveElement, postID }) => {
 	}
 
 	return (
-		<>
+		<section id="add-gallery">
 			<div className='file-group'>
-				<input className='file-input' type='file' onChange={handleGalleryChange} placeholder={'Añadir Foto'} name='gallery' />
-				<button onClick={handleAddGallery} className='my-btn mini third'>
+				<input className='file-input' type='file' onChange={ handleGalleryChange } placeholder={ 'Añadir Foto' } name='gallery' />
+				<button onClick={ handleAddGallery } className='my-btn mini third'>
 					Añadir Imagen
 				</button>
 			</div>
 			<div className='gallery'>
-				{gallery?.map((picture, idx) => (
-					<figure className='each-picture' key={idx}>
-						<img src={picture} alt='' />
-						<FontAwesomeIcon className='close-icon' onClick={() => deletePicture(idx)} icon='times-circle' />
+				{ gallery?.map((picture, idx) => (
+					<figure className='each-picture' key={ idx }>
+						<img src={ picture } alt='' />
+						<FontAwesomeIcon className='close-icon' onClick={ () => deletePicture(idx) } icon='times-circle' />
 					</figure>
-				))}
+				)) }
 			</div>
-			<button className='my-btn mini' onClick={() => saveGallery()}>
+			<button className='my-btn mini' onClick={ () => saveGallery() }>
 				Añadir Galería a la entrada
 			</button>
-		</>
+		</section>
 	)
 }
 

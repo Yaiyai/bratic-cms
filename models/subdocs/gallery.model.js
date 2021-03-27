@@ -4,6 +4,7 @@ const galleryModel = new Schema(
 	{
 		post: { type: Schema.Types.ObjectId, ref: 'Post' },
 		gallery: Array,
+		order: Number,
 	},
 	{
 		timestamps: true,

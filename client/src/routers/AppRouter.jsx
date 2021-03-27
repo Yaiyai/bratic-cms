@@ -13,6 +13,7 @@ import { Navbar } from '../ui/Navbar'
 import { types } from '../types/types'
 import PostsScreen from '../components/PostsScreen'
 import Post from '../components/posts/Post'
+import AddPostScreen from '../components/posts/AddPostScreen'
 
 const AppRouter = () => {
 	const isMounted = useRef(true)
@@ -37,17 +38,19 @@ const AppRouter = () => {
 	return (
 		<Router>
 			<div>
-				{user.token ? (
-					<CompanyContext.Provider value={{ company, dispatchCompany }}>
+				{ user.token ? (
+					<CompanyContext.Provider value={ { company, dispatchCompany } }>
 						<div className='dashboard-container'>
 							<DashboardNav />
 
 							<main>
 								<Switch>
-									<Route exact path='/bratic' component={DashboardScreen} />
-									<Route exact path='/bratic/empresa' component={CompanyScreen} />
-									<Route exact path='/bratic/blog' component={PostsScreen} />
-									<Route exact path='/bratic/blog/:postID' component={Post} />
+									<Route exact path='/bratic' component={ DashboardScreen } />
+									<Route exact path='/bratic/empresa' component={ CompanyScreen } />
+									<Route exact path='/bratic/blog' component={ PostsScreen } />
+									<Route exact path='/bratic/blog/nueva-entrada/:postID' component={ AddPostScreen } />
+									<Route exact path='/bratic/blog/:postID' component={ Post } />
+									<Route exact path='/bratic/blog/editar-entrada/:postID' component={ AddPostScreen } />
 									<Redirect to='/bratic' />
 								</Switch>
 							</main>
@@ -58,15 +61,15 @@ const AppRouter = () => {
 						<Navbar />
 						<main className='container'>
 							<Switch>
-								<Route exact path='/' component={LoginScreen} />
-								<Route path='/registro' component={SignupScreen} />
+								<Route exact path='/' component={ LoginScreen } />
+								<Route path='/registro' component={ SignupScreen } />
 								<Redirect to='/' />
 							</Switch>
 							<small>Made with &hearts; by Yai</small>
 							<small>&copy; Bratic S.L.</small>
 						</main>
 					</>
-				)}
+				) }
 			</div>
 		</Router>
 	)

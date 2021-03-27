@@ -11,14 +11,17 @@ const PostElement = ({ askIfDelete, post }) => {
 		<>
 			<article className='each-post-prev'>
 				<div className='info'>
-					<h6>{post.title}</h6>
-					{date && <small>{date}</small>}
+					<h6>{ post.title }</h6>
+					{ date && <small>{ date }</small> }
 				</div>
 				<div className='btn-group'>
-					<button className='my-btn mini third' onClick={() => askIfDelete(post._id)}>
+					<button className='my-btn mini third' onClick={ () => askIfDelete(post._id) }>
 						Borrar
 					</button>
-					<Link className='my-btn mini' to={`/bratic/blog/${post._id}`}>
+					<Link className='my-btn mini secondary' to={ `/bratic/blog/editar-entrada/${post._id}` }>
+						Editar
+					</Link>
+					<Link className='my-btn mini ' to={ `/bratic/blog/${post._id}` }>
 						Ver
 					</Link>
 				</div>

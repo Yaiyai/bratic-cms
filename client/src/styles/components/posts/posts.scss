@@ -1,3 +1,6 @@
+@import './AddPostScreen.scss';
+@import './AddGallery.scss';
+
 .posts-head {
 	display: flex;
 	margin-bottom: calc(#{$module} * 2);
@@ -57,7 +60,6 @@
 		margin-bottom: calc(#{$module} * 1);
 
 		.file-input {
-			width: 100%;
 			outline: none;
 			color: map-get($theme-colors, 'text');
 			font-weight: $weight-light;
@@ -91,74 +93,12 @@
 	.left,
 	.right {
 		padding: calc(#{$module} / 2) calc(#{$module} / 2) calc(#{$module} / 2) 0;
-		.unique-image {
-			width: 100px;
-			height: 100px;
-			overflow: hidden;
-			background-color: map-get($theme-colors, 'light-grey');
-			position: relative;
-			img {
-				height: 100%;
-				object-fit: cover;
-				object-position: center;
-			}
-		}
-		.video-preview {
-			width: 300px;
-		}
-
-		.gallery {
-			display: flex;
-			flex-wrap: wrap;
-			margin-bottom: calc(#{$module} / 2);
-			.each-picture {
-				@include items-grid(4, calc(#{$module} / 6));
-				height: 100px;
-				overflow: hidden;
-				background-color: map-get($theme-colors, 'light-grey');
-				position: relative;
-				img {
-					height: 100%;
-					object-fit: cover;
-					object-position: center;
-				}
-				.close-icon {
-					position: absolute;
-					top: 0;
-					right: 0;
-					cursor: pointer;
-					width: 15px;
-					height: 15px;
-					color: map-get($theme-colors, 'primary');
-				}
-			}
-		}
 	}
 	.left {
 		width: 30%;
 	}
 	.right {
 		width: 70%;
-		background-color: #efefef;
-		border-radius: 5px;
-		max-height: 100%;
-		overflow: scroll;
-		padding-left: calc(#{$module} / 3);
-		.preview {
-			p {
-				@include font-line-height($font-xs);
-				margin: 0;
-			}
-			h1 {
-				@include font-line-height(20px);
-			}
-			h2 {
-				@include font-line-height(16px);
-			}
-			h3 {
-				@include font-line-height(14px);
-			}
-		}
 	}
 }
 
