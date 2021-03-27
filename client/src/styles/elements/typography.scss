@@ -1,0 +1,91 @@
+.orange {
+	color: map-get($theme-colors, 'secondary');
+	text-transform: capitalize;
+}
+.red {
+	color: map-get($theme-colors, 'primary');
+	text-transform: uppercase;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: $font-titles;
+}
+
+h1 {
+	font-size: ($h1-size);
+}
+h2 {
+	color: map-get($theme-colors, 'text');
+	font-weight: $titles-bold;
+	@include font-line-height($h2-size);
+	margin-bottom: calc(#{$module} * 2);
+}
+h3 {
+	font-size: ($h3-size);
+}
+h4 {
+	font-size: ($h4-size);
+}
+h6 {
+	font-size: ($h6-size);
+}
+h5 {
+	font-size: ($h5-size);
+}
+p {
+	@include font-line-height($font-base);
+	font-weight: $text-normal;
+	@include breakpoint(lg-down) {
+		@include font-line-height($font-sm);
+	}
+}
+.subtitle {
+	text-transform: uppercase;
+	color: map-get($theme-colors, 'primary');
+	@include font-line-height($font-lg);
+	font-weight: $text-semibold;
+	@include breakpoint(lg-down) {
+		@include font-line-height($font-md);
+	}
+	@include breakpoint(md-down) {
+		text-align: center;
+	}
+}
+
+//Text Editor
+.text-editor {
+	.ql-size-large {
+		text-transform: uppercase;
+		color: map-get($theme-colors, 'primary');
+		@include font-line-height($font-lg);
+		font-weight: $text-semibold;
+	}
+	strong {
+		font-weight: $text-semibold;
+	}
+	ul {
+		li {
+			&::before {
+				content: '\00bb';
+				margin-right: calc(#{$module} / 4);
+				font-weight: $text-semibold;
+				color: map-get($theme-colors, 'primary');
+			}
+		}
+	}
+	.ql-indent-1,
+	.ql-indent-2 {
+		margin-left: calc(#{$module} * 1);
+		@include font-line-height($font-sm);
+		&::before {
+			content: '\2234';
+			margin-right: calc(#{$module} / 4);
+			font-weight: $text-semibold;
+			color: map-get($theme-colors, 'primary');
+		}
+	}
+}

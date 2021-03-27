@@ -12,8 +12,18 @@ export const addText = async (text, postID) => {
 		Swal.fire('¡Oh-oh!', errorMsg, 'error')
 	}
 }
+
 export const deleteText = async (id) => {
 	const resp = await fetchConToken(`texts/${id}`, {}, 'DELETE')
+	const body = await resp.json()
+	if (!body.ok) {
+		const errorMsg = body.msg
+		Swal.fire('¡Oh-oh!', errorMsg, 'error')
+	}
+}
+
+export const findTextAndUpdate = async (id, text) => {
+	const resp = await fetchConToken(`texts/${id}`, text, 'PUT')
 	const body = await resp.json()
 	if (!body.ok) {
 		const errorMsg = body.msg

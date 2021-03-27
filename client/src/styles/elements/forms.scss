@@ -30,7 +30,7 @@ form {
 			width: 50%;
 			outline: none;
 			color: map-get($theme-colors, 'text');
-			font-weight: $weight-light;
+			font-weight: $text-light;
 			@include font-line-height(10px);
 			margin-bottom: calc(#{$module} / 2);
 			border-bottom: none;
@@ -71,6 +71,6 @@ form {
 	label {
 		@include font-line-height($font-xs);
 		margin-right: calc(#{$module} / 3);
-		font-weight: $weight-semibold;
+		font-weight: $text-semibold;
 	}
 }

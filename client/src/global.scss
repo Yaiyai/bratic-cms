@@ -1,7 +1,7 @@
 @import './styles/styles';
 
 body {
-	font-family: $font;
+	font-family: $font-text;
 	margin: 0;
 	color: map-get($theme-colors, 'text');
 }
@@ -25,7 +25,7 @@ img {
 	width: 100%;
 }
 small {
-	font-weight: $weight-light;
+	font-weight: $text-light;
 	@include font-line-height(10px);
 	text-align: center;
 	display: block;

@@ -7,7 +7,7 @@
 }
 
 .my-btn {
-	font-weight: $weight-semibold;
+	font-weight: $text-semibold;
 	font-size: $font-sm;
 	background-color: map-get($theme-colors, 'primary');
 	border: none;

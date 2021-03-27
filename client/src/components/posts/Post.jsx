@@ -1,22 +1,23 @@
+import Swal from 'sweetalert2'
 //Photoswipe
 import { PhotoSwipeGallery } from 'react-photoswiper'
 import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { deleteGallery } from '../../actions/post-content/gallery.action'
-import { deleteImage } from '../../actions/post-content/image.action'
-import { deleteSlider } from '../../actions/post-content/slider.action'
-import { deleteText } from '../../actions/post-content/text.action'
-import { deleteVideo } from '../../actions/post-content/video.action'
-import { getThisPost } from '../../actions/posts.action'
+import { Link, useParams } from 'react-router-dom'
+import { deletePost, getThisPost } from '../../actions/posts.action'
 
 //Swiper
 import SwiperCore, { Autoplay, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 SwiperCore.use([Autoplay, Pagination])
+
+
 
 const Post = () => {
 	const isMounted = useRef(true)
 	const { postID } = useParams()
+	let history = useHistory();
+
 	const [post, setPost] = useState()
 	const [items, setItems] = useState()
 
@@ -49,146 +50,109 @@ const Post = () => {
 		)
 	}, [post])
 
-	const deleteThis = (type, id, idx) => {
-		switch (type) {
-			case 'video':
-				const videoCopy = [...post?.content.video]
-				videoCopy.splice(idx, 1)
-				setPost({ ...post, content: { ...post?.content, video: videoCopy } })
-				deleteVideo(id)
-				break
-			case 'image':
-				const imageCopy = [...post?.content.image]
-				imageCopy.splice(idx, 1)
-				setPost({ ...post, content: { ...post?.content, image: imageCopy } })
-				deleteImage(id)
-				break
-			case 'text':
-				const textCopy = [...post?.content.text]
-				textCopy.splice(idx, 1)
-				setPost({ ...post, content: { ...post?.content, text: textCopy } })
-				deleteText(id)
-				break
-			case 'slider':
-				const sliderCopy = [...post?.content.slider]
-				sliderCopy.splice(idx, 1)
-				setPost({ ...post, content: { ...post?.content, slider: sliderCopy } })
-				deleteSlider(id)
-				break
-			case 'gallery':
-				const galleryCopy = [...post?.content.gallery]
-				galleryCopy.splice(idx, 1)
-				setPost({ ...post, content: { ...post?.content, gallery: galleryCopy } })
-				deleteGallery(id)
-				break
-			default:
-				break
-		}
-	}
 
 	const getThumbnails = (str) => {
 		let splitStr = str.split('upload/')
 		let newStr = 'upload/w_200/'
 		return `${splitStr[0]}${newStr}${splitStr[1]}`
 	}
+
 	const getThumbnailContent = (item) => {
-		if (item.src) {
-			return <img src={item.thumbnail} alt='' />
-		}
+		item.map(elm => {
+			console.log(elm.thumbnail);
+			return (
+				<img src={ elm.thumbnail } alt='' />
+			)
+		})
 	}
 
+	const askIfDelete = (id) => {
+		Swal.fire({
+			title: '¿Seguro?',
+			text: 'Si borras esto, la entrada desaparece',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: '¡Borrar Entrada!',
+			cancelButtonText: '¡Uy, no!',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				handleDeletePost(id)
+				// Swal.fire('¡Entrada borrada!', 'Esta entrada se marchó para no volver', 'success')
+			}
+		})
+	}
+	const handleDeletePost = async (id) => {
+		await deletePost(id)
+		history.push('/bratic/blog')
+	}
+
+
 	return (
-		<section className='each-post'>
-			<h1>{post?.title}</h1>
-			{post?.subtitle && <h2>{post?.subtitle}</h2>}
-			<hr />
-			{post?.content.text.length > 0 && (
-				<div className='preview'>
-					<h6>Textos</h6>
-					{post?.content.text.map((txt, idx) => (
-						<>
-							<div key={txt._id} dangerouslySetInnerHTML={txt.parsedText}></div>
-							<button className='my-btn mini secondary' onClick={() => deleteThis('text', txt._id, idx)}>
-								Borrar
-							</button>
-						</>
-					))}
-				</div>
-			)}
-			{post?.content.image.length > 0 && (
-				<div className='preview'>
-					<h6>Imagen Simple</h6>
-					{post?.content.image.map((img, idx) => (
-						<>
-							<img key={img._id} className='unique-image' src={img.image} alt='' />
-							<button className='my-btn mini secondary' onClick={() => deleteThis('image', img._id, idx)}>
-								Borrar
-							</button>
-						</>
-					))}
-				</div>
-			)}
-			{post?.content.video.length > 0 && (
-				<div className='preview'>
-					<h6>Vídeo</h6>
-					{post?.content.video.map((vid, idx) => (
-						<>
-							<video className='video-preview' src={vid.video} controls muted />
-							<button className='my-btn mini secondary' onClick={() => deleteThis('video', vid._id, idx)}>
-								Borrar
-							</button>
-						</>
-					))}
-				</div>
-			)}
-			{post?.content.gallery?.length > 0 && (
-				<div className='preview'>
-					<h6>Galerías de fotos</h6>
-					{items && <PhotoSwipeGallery items={items} thumbnailContent={getThumbnailContent} />}
+		<section id="post-preview">
+			<div className="btn-group">
+				<button className='my-btn mini third' onClick={ () => askIfDelete(post?._id) }>
+					Borrar
+				</button>
+				<Link className='my-btn mini secondary' to={ `/bratic/blog/editar-entrada/${post?._id}` }>
+					Editar
+				</Link>
+				<Link className='my-btn mini thirsd' to={ `/bratic/blog/` }>
+					Volver al blog
+				</Link>
 
-					{post?.content.gallery.map((gal, idx) => (
-						<>
-							<div key={gal._id} className='gallery'>
-								{gal.gallery.map((picture, idx) => (
-									<figure className='each-picture' key={idx}>
-										<img src={picture} alt='' />
-									</figure>
-								))}
-							</div>
-							<button className='my-btn mini secondary' onClick={() => deleteThis('gallery', gal._id, idx)}>
-								Borrar
-							</button>
-						</>
-					))}
-				</div>
-			)}
-			{post?.content.slider?.length > 0 && (
-				<div className='preview'>
-					<h6>Slider de fotos</h6>
+			</div>
+			<h1>{ post?.title }</h1>
+			{ post?.subtitle && <h2>{ post?.subtitle }</h2> }
+			{ post?.createdAt && <small className="date">{ post?.createdAt }</small> }
+			{ post?.content.image.length > 0 && (
+				<figure className="main-image">
+					<img key={ post?.content.image[0]._id } src={ post?.content.image[0].image } alt='' />
+				</figure>
+			) }
+			<div className="container">
+				{ post?.content.text.length > 0 && (
+					post?.content.text.map((txt, idx) => (
+						<div className='post-text' key={ txt._id } dangerouslySetInnerHTML={ txt.parsedText }></div>
+					))
+				) }
 
-					{post?.content.slider.map((sld, idx) => (
-						<>
-							<Swiper
-								spaceBetween={0}
-								autoplay={{
-									delay: 2500,
-								}}
-								slidesPerView={1}
-								pagination={{ clickable: true }}>
-								{sld.slides.map((picture, idx) => (
-									<SwiperSlide key={idx}>
-										<img src={picture} alt='' />
-									</SwiperSlide>
-								))}
-							</Swiper>
+				{ post?.content.video.length > 0 && (
+					post?.content.video.map((vid, idx) => (
+						<video className='video-preview' src={ vid.video } controls muted />
+					))
+				) }
+				{ items?.length > 0 && (
+					<PhotoSwipeGallery items={ items } thumbnailContent={ getThumbnailContent } />
+				) }
 
-							<button className='my-btn mini secondary' onClick={() => deleteThis('slider', sld._id, idx)}>
-								Borrar
-							</button>
-						</>
-					))}
-				</div>
-			)}
+				{ post?.content.slider?.length > 0 && (
+					<div className='preview'>
+						<h6>Slider de fotos</h6>
+						{post?.content.slider.map((sld, idx) => (
+							<>
+								<Swiper
+									spaceBetween={ 0 }
+									autoplay={ {
+										delay: 2500,
+									} }
+									slidesPerView={ 1 }
+									pagination={ { clickable: true } }>
+									{ sld.slides.map((picture, idx) => (
+										<SwiperSlide key={ idx }>
+											<img src={ picture } alt='' />
+										</SwiperSlide>
+									)) }
+								</Swiper>
+							</>
+						)) }
+					</div>
+				) }
+
+			</div>
+
+
 		</section>
 	)
 }

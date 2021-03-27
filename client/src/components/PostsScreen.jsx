@@ -62,11 +62,9 @@ const PostsScreen = () => {
 	}
 
 	return (
-		<div>
+		<div id="posts-screen">
 			<h2>Entradas del Blog</h2>
 			<button onClick={ handleAdd }>Añadir entrada del blog</button>
-
-
 
 			{posts?.length > 0 ? (
 				<section className='all-posts'>

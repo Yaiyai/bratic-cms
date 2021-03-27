@@ -1,0 +1,39 @@
+#posts-screen {
+	.empty-posts {
+		margin-top: calc(#{$module} * 1);
+		background-color: map-get($theme-colors, 'light-grey');
+		padding: calc(#{$module} * 1) 0;
+		text-align: center;
+		color: map-get($theme-colors, 'text');
+		border-radius: 5px;
+	}
+
+	.all-posts {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		margin-top: calc(#{$module} * 2);
+		.each-post-prev {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: calc(#{$module} * 1) 0;
+			border-bottom: 1px solid map-get($theme-colors, 'light-grey');
+			.info {
+				display: flex;
+				align-items: center;
+				> * {
+					margin: 0;
+					margin-right: calc(#{$module} / 3);
+				}
+			}
+			.btn-group {
+				display: flex;
+				align-items: center;
+				.my-btn {
+					margin-left: calc(#{$module} / 3);
+				}
+			}
+		}
+	}
+}

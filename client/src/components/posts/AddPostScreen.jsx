@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import useForm from '../../hooks/useForm';
 import { deleteVideo } from '../../actions/post-content/video.action';
 import { deleteImage } from '../../actions/post-content/image.action';
-import { deleteText } from '../../actions/post-content/text.action';
+import { deleteText, findTextAndUpdate } from '../../actions/post-content/text.action';
 import { deleteSlider } from '../../actions/post-content/slider.action';
 import { deleteGallery } from '../../actions/post-content/gallery.action';
 import AddText from './content/AddText';
@@ -13,9 +13,11 @@ import AddGallery from './content/AddGallery';
 import AddVideo from './content/AddVideo';
 import AddSlider from './content/AddSlider';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import useCounter from '../../hooks/useCounter';
 
 const AddPostScreen = () => {
     let history = useHistory();
+    const { counter, increment, decrement, } = useCounter(1)
     let params = useParams()
     const [postId, setPostId] = useState()
     const select = useRef()
@@ -32,6 +34,7 @@ const AddPostScreen = () => {
     const handleExit = (id) => {
         history.goBack()
     }
+
     const handleDeletePost = async (id) => {
         await deletePost(id)
         history.goBack()
@@ -148,34 +151,70 @@ const AddPostScreen = () => {
                 videoCopy.splice(idx, 1)
                 setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, video: videoCopy } })
                 deleteVideo(id)
+                decrement()
                 break
             case 'image':
                 const imageCopy = [...selectedPost.content.image]
                 imageCopy.splice(idx, 1)
                 setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, image: imageCopy } })
                 deleteImage(id)
+                decrement()
                 break
             case 'text':
                 const textCopy = [...selectedPost.content.text]
                 textCopy.splice(idx, 1)
                 setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, text: textCopy } })
                 deleteText(id)
+                decrement()
                 break
             case 'slider':
                 const sliderCopy = [...selectedPost.content.slider]
                 sliderCopy.splice(idx, 1)
                 setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, slider: sliderCopy } })
                 deleteSlider(id)
+                decrement()
                 break
             case 'gallery':
                 const galleryCopy = [...selectedPost.content.gallery]
                 galleryCopy.splice(idx, 1)
                 setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, gallery: galleryCopy } })
                 deleteGallery(id)
+                decrement()
                 break
             default:
                 break
         }
+    }
+
+    //Drag and Drop Methods
+    const drop = async (e) => {
+        e.preventDefault()
+        const tag = e.dataTransfer.getData('card_id')
+        const card = document.getElementById(tag)
+
+        card.style.display = 'block'
+        e.target.appendChild(card)
+
+        const spaceId = card.parentElement.id
+        await findTextAndUpdate(tag, { order: spaceId })
+    }
+
+    const dragOverReceptor = (e) => {
+        e.preventDefault()
+    }
+    const dragStart = (e) => {
+        const target = e.target
+        e.dataTransfer.setData('card_id', target.id)
+        const tag = e.dataTransfer.getData('card_id')
+        console.log(tag);
+
+        setTimeout(() => {
+            target.style.display = 'none'
+            target.className = 'preview'
+        }, 0)
+    }
+    const dragOver = (e) => {
+        e.stopPropagation()
     }
 
     return (
@@ -212,99 +251,95 @@ const AddPostScreen = () => {
 
                     <article className='add-post'>
                         { auxContent === 'default' && <p>Añadir elemento al post</p> }
-                        { auxContent === 'text' && <AddText saveElement={ saveElement } postID={ postId } /> }
-                        { auxContent === 'image' && <AddImage saveElement={ saveElement } postID={ postId } /> }
-                        { auxContent === 'gallery' && <AddGallery saveElement={ saveElement } postID={ postId } /> }
-                        { auxContent === 'video' && <AddVideo saveElement={ saveElement } postID={ postId } /> }
-                        { auxContent === 'slider' && <AddSlider saveElement={ saveElement } postID={ postId } /> }
+                        { auxContent === 'text' && <AddText saveElement={ saveElement } postID={ postId } increment={ increment } /> }
+                        { auxContent === 'image' && <AddImage saveElement={ saveElement } postID={ postId } increment={ increment } /> }
+                        { auxContent === 'gallery' && <AddGallery saveElement={ saveElement } postID={ postId } increment={ increment } /> }
+                        { auxContent === 'video' && <AddVideo saveElement={ saveElement } postID={ postId } increment={ increment } /> }
+                        { auxContent === 'slider' && <AddSlider saveElement={ saveElement } postID={ postId } increment={ increment } /> }
                     </article>
                 </div>
                 <div className="view-area">
-                    <article className='right'>
-                        {
-                            selectedPost.title && <h1>{ selectedPost.title }</h1>
-                        }
-                        {
-                            selectedPost.subtitle && <h1>{ selectedPost.subtitle }</h1>
-                        }
-                        { selectedPost.content.text.length > 0 && (
-                            <div className='preview post-text'>
-                                <h6>Textos</h6>
-                                {selectedPost.content.text.map((txt, idx) => (
-                                    <div key={ txt._id }>
-                                        <div dangerouslySetInnerHTML={ txt.parsedText }></div>
-                                        <button className='my-btn mini underlined' onClick={ () => deleteThis('text', txt._id, idx) }>
-                                            Borrar
-										</button>
-                                    </div>
-                                )) }
+                    {
+                        selectedPost.title && <h1>{ selectedPost.title }</h1>
+                    }
+                    {
+                        selectedPost.subtitle && <h2>{ selectedPost.subtitle }</h2>
+                    }
+                    { [...Array(counter)].map((elm, idx) => (
+                        idx !== 0 && (
+                            <div onDrop={ drop } onDragOver={ dragOverReceptor } id={ idx } key={ idx } className="receiving-container">
+                                <p className="container-number">
+                                    { idx }
+                                </p>
                             </div>
-                        ) }
-                        { selectedPost.content.image.length > 0 && (
-                            <div className='preview post-simple-image'>
-                                <h6>Imagen Simple</h6>
-                                {selectedPost.content.image.map((img, idx) => (
-                                    <div key={ img._id }>
-                                        <img className='unique-image' src={ img.image } alt='' />
-                                        <button className='my-btn mini underlined' onClick={ () => deleteThis('image', img._id, idx) }>
-                                            Borrar
+                        )
+                    ))
+                    }
+
+                    { selectedPost.content.text.length > 0 && (
+                        selectedPost.content.text.map((txt, idx) => (
+                            <div className="preview post-text" key={ txt._id } id={ txt._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
+                                <div dangerouslySetInnerHTML={ txt.parsedText }></div>
+                                <button className='my-btn mini underlined' onClick={ () => deleteThis('text', txt._id, idx) }>
+                                    Borrar
 										</button>
-                                    </div>
-                                )) }
                             </div>
-                        ) }
-                        { selectedPost.content.video.length > 0 && (
-                            <div className='preview post-video'>
-                                <h6>Vídeo</h6>
-                                {selectedPost.content.video.map((vid, idx) => (
-                                    <div key={ vid._id }>
-                                        <video className='video-preview' src={ vid.video } controls muted />
-                                        <button className='my-btn mini underlined' onClick={ () => deleteThis('video', vid._id, idx) }>
-                                            Borrar
+                        ))
+                    ) }
+                    { selectedPost.content.image.length > 0 && (
+                        <div >
+                            {selectedPost.content.image.map((img, idx) => (
+                                <div className='preview post-simple-image' key={ img._id } id={ img._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
+                                    <img draggable='false' className='unique-image' src={ img.image } alt='' />
+                                    <button className='my-btn mini underlined' onClick={ () => deleteThis('image', img._id, idx) }>
+                                        Borrar
 										</button>
-                                    </div>
-                                )) }
-                            </div>
-                        ) }
-                        { selectedPost.content.gallery?.length > 0 && (
-                            <div className='preview post-gallery'>
-                                <h6>Galerías de fotos</h6>
-                                {selectedPost.content.gallery.map((gal, idx) => (
-                                    <div key={ gal._id }>
-                                        <div className='gallery'>
-                                            { gal.gallery.map((picture, idx) => (
-                                                <figure className='each-picture' key={ idx }>
-                                                    <img src={ picture } alt='' />
-                                                </figure>
-                                            )) }
-                                        </div>
-                                        <button className='my-btn mini underlined' onClick={ () => deleteThis('gallery', gal._id, idx) }>
-                                            Borrar
+                                </div>
+                            )) }
+                        </div>
+                    ) }
+                    { selectedPost.content.video.length > 0 && (
+                        selectedPost.content.video.map((vid, idx) => (
+                            <div className='preview post-video' key={ vid._id } id={ vid._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
+                                <video className='video-preview' src={ vid.video } controls muted />
+                                <button className='my-btn mini underlined' onClick={ () => deleteThis('video', vid._id, idx) }>
+                                    Borrar
 										</button>
-                                    </div>
-                                )) }
                             </div>
-                        ) }
-                        { selectedPost.content.slider?.length > 0 && (
-                            <div className='preview post-slider'>
-                                <h6>Slider de fotos</h6>
-                                {selectedPost.content.slider.map((sld, idx) => (
-                                    <div key={ sld._id }>
-                                        <div className='gallery'>
-                                            { sld.slides.map((picture, idx) => (
-                                                <figure className='each-picture' key={ idx }>
-                                                    <img src={ picture } alt='' />
-                                                </figure>
-                                            )) }
-                                        </div>
-                                        <button className='my-btn mini underlined' onClick={ () => deleteThis('slider', sld._id, idx) }>
-                                            Borrar
+                        ))
+                    ) }
+                    { selectedPost.content.gallery?.length > 0 && (
+                        selectedPost.content.gallery.map((gal, idx) => (
+                            <div className='preview post-gallery' id={ gal._id } key={ gal._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
+                                <div className='gallery'>
+                                    { gal.gallery.map((picture, idx) => (
+                                        <figure draggable='false' className='each-picture' key={ idx }>
+                                            <img draggable='false' src={ picture } alt='' />
+                                        </figure>
+                                    )) }
+                                </div>
+                                <button className='my-btn mini underlined' onClick={ () => deleteThis('gallery', gal._id, idx) }>
+                                    Borrar
 										</button>
-                                    </div>
-                                )) }
                             </div>
-                        ) }
-                    </article>
+                        ))
+                    ) }
+                    { selectedPost.content.slider?.length > 0 && (
+                        selectedPost.content.slider.map((sld, idx) => (
+                            <div className='preview post-slider' key={ sld._id } key={ sld._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
+                                <div className='gallery'>
+                                    { sld.slides.map((picture, idx) => (
+                                        <figure draggable='false' className='each-picture' key={ idx }>
+                                            <img draggable='false' src={ picture } alt='' />
+                                        </figure>
+                                    )) }
+                                </div>
+                                <button className='my-btn mini underlined' onClick={ () => deleteThis('slider', sld._id, idx) }>
+                                    Borrar
+										</button>
+                            </div>
+                        ))
+                    ) }
                 </div>
             </section>
         </section>

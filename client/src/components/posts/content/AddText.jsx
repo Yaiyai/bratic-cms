@@ -3,13 +3,14 @@ import { addText } from '../../../actions/post-content/text.action'
 import useForm from '../../../hooks/useForm'
 import TextEditor from '../../../ui/TextEditor'
 
-const AddText = ({ saveElement, postID }) => {
+const AddText = ({ saveElement, postID, increment }) => {
 	const isMounted = useRef(true)
 	const [quill, setQuill] = useState()
 	const { values, setValues } = useForm()
 
 	const saveText = async () => {
 		const theText = await addText(values, postID)
+		increment()
 		saveElement('text', theText)
 	}
 
