@@ -2,10 +2,10 @@ import React from 'react'
 import { addImage } from '../../../actions/post-content/image.action'
 import useForm from '../../../hooks/useForm'
 
-const AddImage = ({ saveElement, postID, counter, increment }) => {
+const AddImage = ({ saveElement, postID, increment }) => {
 	const { values, handleFileChange } = useForm()
 	const saveImage = async () => {
-		const theImage = await addImage({ image: values.image, order: counter }, postID)
+		const theImage = await addImage({ image: values.image }, postID)
 		saveElement('image', theImage)
 		increment()
 	}

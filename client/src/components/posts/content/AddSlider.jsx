@@ -3,7 +3,7 @@ import { fileUpload } from '../../../helpers/uploadFiles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { addSlider } from '../../../actions/post-content/slider.action'
 
-const AddSlider = ({ saveElement, postID, counter, increment }) => {
+const AddSlider = ({ saveElement, postID, increment }) => {
 	const [auxValue, setAuxValue] = useState()
 	const [slider, setSlider] = useState([])
 	const [showButton, setShowButton] = useState(false)
@@ -31,7 +31,7 @@ const AddSlider = ({ saveElement, postID, counter, increment }) => {
 		setShowButton(false)
 	}
 	const saveSlider = async () => {
-		const theSlider = await addSlider({ slides: slider, order: counter }, postID)
+		const theSlider = await addSlider({ slides: slider }, postID)
 		saveElement('slider', theSlider)
 		increment()
 	}

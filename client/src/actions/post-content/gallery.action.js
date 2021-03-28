@@ -21,3 +21,23 @@ export const deleteGallery = async (id) => {
 		Swal.fire('¡Oh-oh!', errorMsg, 'error')
 	}
 }
+
+export const findGalleryAndUpdate = async (id, gallery) => {
+	const resp = await fetchConToken(`galleries/${id}`, gallery, 'PUT')
+	const body = await resp.json()
+	if (!body.ok) {
+		const errorMsg = body.msg
+		Swal.fire('¡Oh-oh!', errorMsg, 'error')
+	}
+}
+
+export const findGalleryAndUpdateReturn = async (id, gallery) => {
+	const resp = await fetchConToken(`galleries/${id}`, gallery, 'PUT')
+	const body = await resp.json()
+	if (!body.ok) {
+		const errorMsg = body.msg
+		Swal.fire('¡Oh-oh!', errorMsg, 'error')
+	} else {
+		return body
+	}
+}

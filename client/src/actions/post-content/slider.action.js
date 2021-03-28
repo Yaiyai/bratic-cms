@@ -20,3 +20,22 @@ export const deleteSlider = async (id) => {
 		Swal.fire('¡Oh-oh!', errorMsg, 'error')
 	}
 }
+export const findSliderAndUpdate = async (id, slider) => {
+	const resp = await fetchConToken(`sliders/${id}`, slider, 'PUT')
+	const body = await resp.json()
+	if (!body.ok) {
+		const errorMsg = body.msg
+		Swal.fire('¡Oh-oh!', errorMsg, 'error')
+	}
+}
+
+export const findSliderAndUpdateReturn = async (id, slider) => {
+	const resp = await fetchConToken(`sliders/${id}`, slider, 'PUT')
+	const body = await resp.json()
+	if (!body.ok) {
+		const errorMsg = body.msg
+		Swal.fire('¡Oh-oh!', errorMsg, 'error')
+	} else {
+		return body
+	}
+}

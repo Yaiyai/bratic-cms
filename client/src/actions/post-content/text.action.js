@@ -19,6 +19,8 @@ export const deleteText = async (id) => {
 	if (!body.ok) {
 		const errorMsg = body.msg
 		Swal.fire('¡Oh-oh!', errorMsg, 'error')
+	} else {
+		Swal.fire('¡Bien!', 'Texto borrado', 'success')
 	}
 }
 

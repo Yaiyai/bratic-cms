@@ -19,5 +19,27 @@ export const deleteImage = async (id) => {
 	if (!body.ok) {
 		const errorMsg = body.msg
 		Swal.fire('¡Oh-oh!', errorMsg, 'error')
+	} else {
+		Swal.fire('¡Bien!', 'Imagen Borrada', 'success')
+	}
+}
+
+export const findImageAndUpdate = async (id, image) => {
+	const resp = await fetchConToken(`images/${id}`, image, 'PUT')
+	const body = await resp.json()
+	if (!body.ok) {
+		const errorMsg = body.msg
+		Swal.fire('¡Oh-oh!', errorMsg, 'error')
+	}
+}
+
+export const findImageAndUpdateReturn = async (id, image) => {
+	const resp = await fetchConToken(`images/${id}`, image, 'PUT')
+	const body = await resp.json()
+	if (!body.ok) {
+		const errorMsg = body.msg
+		Swal.fire('¡Oh-oh!', errorMsg, 'error')
+	} else {
+		return body
 	}
 }

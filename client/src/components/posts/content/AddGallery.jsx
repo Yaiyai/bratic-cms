@@ -3,7 +3,7 @@ import { fileUpload } from '../../../helpers/uploadFiles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { addGallery } from '../../../actions/post-content/gallery.action'
 
-const AddGallery = ({ saveElement, postID, counter, increment }) => {
+const AddGallery = ({ saveElement, postID, increment }) => {
 	const [auxValue, setAuxValue] = useState()
 	const [gallery, setGallery] = useState([])
 	const [showButton, setShowButton] = useState(false)
@@ -34,7 +34,7 @@ const AddGallery = ({ saveElement, postID, counter, increment }) => {
 
 	}
 	const saveGallery = async () => {
-		const theGallery = await addGallery({ gallery: gallery, order: counter }, postID)
+		const theGallery = await addGallery({ gallery: gallery }, postID)
 		saveElement('gallery', theGallery)
 		increment()
 	}

@@ -3,6 +3,7 @@ export const fileUpload = async (file) => {
 	const formData = new FormData()
 	formData.append('upload_preset', 'bratic-app')
 	formData.append('file', file)
+	formData.append('folder', 'pre')
 	let url
 
 	await fetch(cloudUrl, { method: 'POST', body: formData })

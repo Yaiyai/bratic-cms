@@ -10,8 +10,31 @@
 	.edit-post {
 		display: flex;
 		width: 100%;
+		.preview {
+			background-color: #fafafa;
+			padding: calc(#{$module} * 1);
+			border: 3px map-get($theme-colors, 'grey') dashed;
+			margin-bottom: calc(#{$module} * 1);
+			video {
+				display: block;
+				width: 100%;
+				height: calc(#{$module} * 5);
+				object-fit: contain;
+				object-position: top;
+			}
+			&.post-gallery {
+				.gallery {
+					display: flex;
+					flex-wrap: wrap;
+					.each-picture {
+						@include items-grid(2, $module/3);
+					}
+				}
+			}
+		}
 		.edit-area {
 			width: calc((100% / 12) * 3);
+
 			.title-area {
 				padding: calc(#{$module} * 1) 0;
 			}
@@ -58,6 +81,14 @@
 					}
 				}
 			}
+			.content-to-order {
+				margin-top: calc(#{$module} * 2);
+				display: flex;
+				flex-direction: column;
+				padding: calc(#{$module} / 2);
+				border: 1px map-get($theme-colors, 'primary') solid;
+				border-radius: 10px;
+			}
 		}
 		.view-area {
 			width: calc((100% / 12) * 9);
@@ -97,12 +128,6 @@
 					margin: 0;
 					margin-bottom: calc(#{$module} * 1);
 				}
-			}
-			.preview {
-				background-color: #fafafa;
-				padding: calc(#{$module} * 1);
-				border: 3px map-get($theme-colors, 'grey') dashed;
-				margin-bottom: calc(#{$module} * 1);
 			}
 
 			.unique-image {

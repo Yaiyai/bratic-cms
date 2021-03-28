@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { deletePost, getThisPost, updatePost } from '../../actions/posts.action'
 import { useHistory } from "react-router-dom";
 import useForm from '../../hooks/useForm';
-import { deleteVideo } from '../../actions/post-content/video.action';
-import { deleteImage } from '../../actions/post-content/image.action';
-import { deleteText, findTextAndUpdate, findTextAndUpdateReturn } from '../../actions/post-content/text.action';
-import { deleteSlider } from '../../actions/post-content/slider.action';
-import { deleteGallery } from '../../actions/post-content/gallery.action';
+import { findVideoAndUpdate, findVideoAndUpdateReturn } from '../../actions/post-content/video.action';
+import { findImageAndUpdate, findImageAndUpdateReturn } from '../../actions/post-content/image.action';
+import { findTextAndUpdate, findTextAndUpdateReturn } from '../../actions/post-content/text.action';
+import { findSliderAndUpdate, findSliderAndUpdateReturn } from '../../actions/post-content/slider.action';
+import { findGalleryAndUpdate, findGalleryAndUpdateReturn } from '../../actions/post-content/gallery.action';
 import AddText from './content/AddText';
 import AddImage from './content/AddImage';
 import AddGallery from './content/AddGallery';
@@ -14,6 +14,8 @@ import AddVideo from './content/AddVideo';
 import AddSlider from './content/AddSlider';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import useCounter from '../../hooks/useCounter';
+import RenderContentByType from './content/RenderContentByType';
+import PostState from './content/PostState';
 
 const AddPostScreen = () => {
     let history = useHistory();
@@ -26,15 +28,9 @@ const AddPostScreen = () => {
 
     const [content, setContent] = useState([])
 
-    const orderContent = useCallback(() => {
-        content.sort((a, b) => a.order - b.order)
-    }, [content])
 
     const [selectedPost, setSelectedPost] = useState({ title: 'Sin título', subtitle: '', content: { slider: [], image: [], text: [], video: [], gallery: [] } })
 
-    useEffect(() => {
-        orderContent()
-    }, [selectedPost, content, orderContent])
 
     const findCurrentPost = async (id) => {
         const currentPost = await getThisPost(id)
@@ -85,6 +81,10 @@ const AddPostScreen = () => {
     const setToDefault = () => {
         select.current.selectedIndex = 0
         setAuxContent('default')
+    }
+
+    const savePostState = (status) => {
+        setSelectedPost({ ...selectedPost, status: status })
     }
 
     const saveElement = (type, element) => {
@@ -164,74 +164,79 @@ const AddPostScreen = () => {
         setSelectedPost({ ...selectedPost, title: values.title, subtitle: values.subtitle })
     }
 
-    const deleteThis = (type, id, idx) => {
-        switch (type) {
-            case 'video':
-                const videoCopy = [...selectedPost.content.video]
-                videoCopy.splice(idx, 1)
-                setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, video: videoCopy } })
-                deleteVideo(id)
-                decrement()
-                break
-            case 'image':
-                const imageCopy = [...selectedPost.content.image]
-                imageCopy.splice(idx, 1)
-                setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, image: imageCopy } })
-                deleteImage(id)
-                decrement()
-                break
-            case 'text':
-                const textCopy = [...selectedPost.content.text]
-                textCopy.splice(idx, 1)
-                setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, text: textCopy } })
-                deleteText(id)
-                decrement()
-                break
-            case 'slider':
-                const sliderCopy = [...selectedPost.content.slider]
-                sliderCopy.splice(idx, 1)
-                setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, slider: sliderCopy } })
-                deleteSlider(id)
-                decrement()
-                break
-            case 'gallery':
-                const galleryCopy = [...selectedPost.content.gallery]
-                galleryCopy.splice(idx, 1)
-                setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, gallery: galleryCopy } })
-                deleteGallery(id)
-                decrement()
-                break
-            default:
-                break
-        }
-    }
 
     //Drag and Drop Methods
     const drop = async (e) => {
         e.preventDefault()
         const tag = e.dataTransfer.getData('card_id')
         const card = document.getElementById(tag)
+        const cardType = (e.dataTransfer.getData('card_type'));
 
         card.style.display = 'block'
-        e.target.appendChild(card)
+        card.className = 'preview'
 
+        e.target.appendChild(card)
         const spaceId = card.parentElement.id
-        await findTextAndUpdate(tag, { order: spaceId })
-        const updatedText = await findTextAndUpdateReturn(tag, { order: spaceId })
-        const filteredArray = content.filter(elm => elm._id !== tag)
-        setContent([...filteredArray, updatedText.text])
-        orderContent()
+        let filteredArray = []
+        let orderedNew = []
+
+        switch (cardType) {
+            case 'text':
+                await findTextAndUpdate(tag, { order: spaceId })
+                const updatedText = await findTextAndUpdateReturn(tag, { order: spaceId })
+                filteredArray = content.filter(elm => elm._id !== tag)
+                orderedNew = [...filteredArray, updatedText.text].sort((a, b) => a.order - b.order)
+                setContent(orderedNew)
+
+                break;
+            case 'imagen':
+                await findImageAndUpdate(tag, { order: spaceId })
+                const updatedImage = await findImageAndUpdateReturn(tag, { order: spaceId })
+                filteredArray = content.filter(elm => elm._id !== tag)
+                orderedNew = [...filteredArray, updatedImage.image].sort((a, b) => a.order - b.order)
+                setContent(orderedNew)
+
+                break;
+            case 'gallery':
+                await findGalleryAndUpdate(tag, { order: spaceId })
+                const updatedGallery = await findGalleryAndUpdateReturn(tag, { order: spaceId })
+                filteredArray = content.filter(elm => elm._id !== tag)
+                orderedNew = [...filteredArray, updatedGallery.gallery].sort((a, b) => a.order - b.order)
+                setContent(orderedNew)
+
+                break;
+            case 'video':
+                await findVideoAndUpdate(tag, { order: spaceId })
+                const updatedVideo = await findVideoAndUpdateReturn(tag, { order: spaceId })
+                filteredArray = content.filter(elm => elm._id !== tag)
+                orderedNew = [...filteredArray, updatedVideo.video].sort((a, b) => a.order - b.order)
+                setContent(orderedNew)
+
+                break;
+            case 'slider':
+                await findSliderAndUpdate(tag, { order: spaceId })
+                const updatedSlider = await findSliderAndUpdateReturn(tag, { order: spaceId })
+                filteredArray = content.filter(elm => elm._id !== tag)
+                orderedNew = [...filteredArray, updatedSlider.slider].sort((a, b) => a.order - b.order)
+                setContent(orderedNew)
+
+                break;
+            default:
+                break;
+        }
+
+
 
     }
 
     const dragOverReceptor = (e) => {
         e.preventDefault()
     }
+
     const dragStart = (e) => {
         const target = e.target
         e.dataTransfer.setData('card_id', target.id)
-        const tag = e.dataTransfer.getData('card_id')
-        console.log(tag);
+        e.dataTransfer.setData('card_type', target.attributes.posttype.value)
 
         setTimeout(() => {
             target.style.display = 'none'
@@ -244,84 +249,6 @@ const AddPostScreen = () => {
     }
 
 
-    const renderByContentType = (contentType, content) => {
-        switch (contentType) {
-            case 'texto':
-                return (
-                    <div onDrop={ drop } onDragOver={ dragOverReceptor } id={ content.order } key={ content.order } className="receiving-container">
-                        <p className="container-number">
-                            { content.order }
-                        </p>
-                        <div className="preview post-text" key={ content._id } id={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
-                            <div dangerouslySetInnerHTML={ content.parsedText }></div>
-                            <button className='my-btn mini underlined' onClick={ () => deleteThis('text', content._id) }>Borrar</button>
-                        </div>
-                    </div>
-                )
-            case 'imagen':
-                return (
-                    <div onDrop={ drop } onDragOver={ dragOverReceptor } id={ content.order } key={ content.order } className="receiving-container">
-                        <p className="container-number">
-                            { content.order }
-                        </p>
-                        <div className='preview post-simple-image' key={ content._id } id={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
-                            <img draggable='false' className='unique-image' src={ content.image } alt='' />
-                            <button className='my-btn mini underlined' onClick={ () => deleteThis('image', content._id) }>Borrar</button>
-                        </div>
-                    </div>
-                )
-            case 'video':
-                return (
-                    <div onDrop={ drop } onDragOver={ dragOverReceptor } id={ content.order } key={ content.order } className="receiving-container">
-                        <p className="container-number">
-                            { content.order }
-                        </p>
-                        <div className='preview post-video' key={ content._id } id={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
-                            <video className='video-preview' src={ content.video } controls muted />
-                            <button className='my-btn mini underlined' onClick={ () => deleteThis('video', content._id) }>Borrar</button>
-                        </div>
-                    </div>
-                )
-            case 'slider':
-                return (
-                    <div onDrop={ drop } onDragOver={ dragOverReceptor } id={ content.order } key={ content.order } className="receiving-container">
-                        <p className="container-number">
-                            { content.order }
-                        </p>
-                        <div className='preview post-slider' key={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
-                            <div className='gallery'>
-                                { content.slides.map((picture, idx) => (
-                                    <figure draggable='false' className='each-picture' key={ idx }>
-                                        <img draggable='false' src={ picture } alt='' />
-                                    </figure>
-                                )) }
-                            </div>
-                            <button className='my-btn mini underlined' onClick={ () => deleteThis('slider', content._id) }>Borrar</button>
-                        </div>
-                    </div>
-                )
-            case 'galeria':
-                return (
-                    <div onDrop={ drop } onDragOver={ dragOverReceptor } id={ content.order } key={ content.order } className="receiving-container">
-                        <p className="container-number">
-                            { content.order }
-                        </p>
-                        <div className='preview post-gallery' id={ content._id } key={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
-                            <div className='gallery'>
-                                { content.gallery.map((picture, idx) => (
-                                    <figure draggable='false' className='each-picture' key={ idx }>
-                                        <img draggable='false' src={ picture } alt='' />
-                                    </figure>
-                                )) }
-                            </div>
-                            <button className='my-btn mini underlined' onClick={ () => deleteThis('gallery', content._id) }>Borrar</button>
-                        </div>
-                    </div>
-                )
-            default:
-                break
-        }
-    }
 
     return (
         <section id="add-posts-screen">
@@ -333,6 +260,7 @@ const AddPostScreen = () => {
             </article>
             <section className="edit-post">
                 <div className="edit-area">
+                    <PostState savePostState={ savePostState } postState={ selectedPost.status } />
                     <article className="title-area">
                         <form className='form-title' onSubmit={ saveTitles }>
                             <label htmlFor='title'>Título de la Entrada</label>
@@ -357,11 +285,17 @@ const AddPostScreen = () => {
 
                     <article className='add-post'>
                         { auxContent === 'default' && <p>Añadir elemento al post</p> }
-                        { auxContent === 'text' && <AddText saveElement={ saveElement } postID={ postId } counter={ counter } increment={ increment } /> }
-                        { auxContent === 'image' && <AddImage saveElement={ saveElement } postID={ postId } counter={ counter } increment={ increment } /> }
-                        { auxContent === 'gallery' && <AddGallery saveElement={ saveElement } postID={ postId } counter={ counter } increment={ increment } /> }
-                        { auxContent === 'video' && <AddVideo saveElement={ saveElement } postID={ postId } counter={ counter } increment={ increment } /> }
-                        { auxContent === 'slider' && <AddSlider saveElement={ saveElement } postID={ postId } counter={ counter } increment={ increment } /> }
+                        { auxContent === 'text' && <AddText saveElement={ saveElement } postID={ postId } increment={ increment } /> }
+                        { auxContent === 'image' && <AddImage saveElement={ saveElement } postID={ postId } increment={ increment } /> }
+                        { auxContent === 'gallery' && <AddGallery saveElement={ saveElement } postID={ postId } increment={ increment } /> }
+                        { auxContent === 'video' && <AddVideo saveElement={ saveElement } postID={ postId } increment={ increment } /> }
+                        { auxContent === 'slider' && <AddSlider saveElement={ saveElement } postID={ postId } increment={ increment } /> }
+                    </article>
+                    <article className="content-to-order">
+                        <h6>Contenido generado para ordenar</h6>
+                        {
+                            content.length > 0 && <RenderContentByType content={ content } dragStart={ dragStart } dragOver={ dragOver } decrement={ decrement } />
+                        }
                     </article>
                 </div>
                 <div className="view-area">
@@ -371,9 +305,18 @@ const AddPostScreen = () => {
                     {
                         selectedPost.subtitle && <h2>{ selectedPost.subtitle }</h2>
                     }
-                    {
-                        content.length > 0 && content.map((content) => renderByContentType(content.postType, content))
+                    <h6>Orden de aparicion de los elementos</h6>
+                    { [...Array(counter)].map((elm, idx) => (
+                        idx !== 0 && (
+                            <div onDrop={ drop } onDragOver={ dragOverReceptor } id={ idx } key={ `contenedor-${idx}` } className="receiving-container">
+                                <p className="container-number">
+                                    { idx }
+                                </p>
+                            </div>
+                        )
+                    ))
                     }
+
                 </div>
             </section>
         </section>
