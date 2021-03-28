@@ -9,12 +9,8 @@ import 'react-photoswiper/lib/photoswipe.css'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './global.scss'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faTimesCircle, faChevronDown, faChevronUp, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
 import AppRouter from './routers/AppRouter'
-library.add(fab, faTimesCircle, faChevronDown, faChevronUp, faCheckCircle)
 
 const init = () => {
 	return JSON.parse(localStorage.getItem('bratic-user')) || { logged: false }
@@ -37,7 +33,7 @@ const App = () => {
 
 	return (
 		<>
-			<AuthContext.Provider value={{ user, dispatch }}>
+			<AuthContext.Provider value={ { user, dispatch } }>
 				<AppRouter />
 			</AuthContext.Provider>
 		</>

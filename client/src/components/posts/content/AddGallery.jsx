@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { fileUpload } from '../../../helpers/uploadFiles'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FaTimesCircle } from "react-icons/fa";
 import { addGallery } from '../../../actions/post-content/gallery.action'
 
 const AddGallery = ({ saveElement, postID, increment }) => {
@@ -49,7 +49,7 @@ const AddGallery = ({ saveElement, postID, increment }) => {
 				{ gallery?.map((picture, idx) => (
 					<figure className='each-picture' key={ idx }>
 						<img src={ picture } alt='' />
-						<FontAwesomeIcon className='close-icon' onClick={ () => deletePicture(idx) } icon='times-circle' />
+						<FaTimesCircle className='close-icon' onClick={ () => deletePicture(idx) } />
 					</figure>
 				)) }
 			</div>

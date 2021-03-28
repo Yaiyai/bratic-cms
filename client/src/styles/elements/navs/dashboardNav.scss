@@ -1,15 +1,32 @@
 .dash-nav {
 	display: flex;
 	left: 0;
-	width: 2%;
+	width: 30px;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 	background-color: map-get($theme-colors, 'third');
 	height: 100vh;
-	padding: $module;
+	padding: 0;
+	position: relative;
 	&.open {
+		padding: $module;
 		width: 15%;
+	}
+	.close-nav {
+		cursor: pointer;
+		position: absolute;
+		background-color: map-get($theme-colors, 'primary');
+		top: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		right: 0;
+		width: 30px;
+		height: 30px;
+		svg {
+			color: white;
+		}
 	}
 
 	ul {

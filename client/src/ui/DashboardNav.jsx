@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../reducers/auth/AuthContext'
 import { types } from '../types/types'
+import { FaTimesCircle } from "react-icons/fa";
+import { IoOpenOutline } from "react-icons/io5";
 
 export const DashboardNav = () => {
 	const { dispatch } = useContext(AuthContext)
@@ -19,6 +21,10 @@ export const DashboardNav = () => {
 				show ? (
 					<nav className='dash-nav open'>
 						<>
+							<div className="close-nav">
+								<FaTimesCircle className='close-icon' onClick={ () => setShow(false) } />
+							</div>
+
 							<ul>
 								<li>
 									<Link to='/bratic'>
@@ -38,13 +44,14 @@ export const DashboardNav = () => {
 								<small>Made with &hearts; by Yai</small>
 								<small>&copy; Bratic S.L.</small>
 								<button className='my-btn secondary mini' onClick={ handleLogout }>Cerrar Sesión</button>
-								<button onClick={ () => setShow(false) }>cerrar</button>
 							</div>
 						</>
 					</nav>
 				) : (
 					<nav className='dash-nav'>
-						<button onClick={ () => setShow(true) }>Abrir</button>
+						<div className="close-nav">
+							<IoOpenOutline className='close-icon' onClick={ () => setShow(true) } />
+						</div>
 					</nav>
 				)
 			}
