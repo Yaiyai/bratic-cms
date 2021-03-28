@@ -4,9 +4,9 @@ import { AuthContext } from '../reducers/auth/AuthContext'
 const DashboardScreen = () => {
 	const { user } = useContext(AuthContext)
 	return (
-		<div>
-			<h1>¡Bienvenid@ {user.name}!</h1>
-		</div>
+		<section id="dashboard-screen">
+			<h3>¡Bienvenid@ { user.name }!</h3>
+		</section>
 	)
 }
 

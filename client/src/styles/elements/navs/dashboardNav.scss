@@ -1,14 +1,17 @@
 .dash-nav {
 	display: flex;
-	position: fixed;
 	left: 0;
-	width: 20%;
+	width: 2%;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 	background-color: map-get($theme-colors, 'third');
 	height: 100vh;
 	padding: $module;
+	&.open {
+		width: 15%;
+	}
+
 	ul {
 		margin: 0;
 		padding: 0;
