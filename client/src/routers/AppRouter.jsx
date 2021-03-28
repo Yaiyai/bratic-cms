@@ -14,6 +14,7 @@ import { types } from '../types/types'
 import PostsScreen from '../components/PostsScreen'
 import Post from '../components/posts/Post'
 import AddPostScreen from '../components/posts/AddPostScreen'
+import EditPostScreen from '../components/posts/EditPostScreen'
 
 const AppRouter = () => {
 	const isMounted = useRef(true)
@@ -50,7 +51,7 @@ const AppRouter = () => {
 									<Route exact path='/bratic/blog' component={ PostsScreen } />
 									<Route exact path='/bratic/blog/nueva-entrada/:postID' component={ AddPostScreen } />
 									<Route exact path='/bratic/blog/:postID' component={ Post } />
-									<Route exact path='/bratic/blog/editar-entrada/:postID' component={ AddPostScreen } />
+									<Route exact path='/bratic/blog/editar-entrada/:postID' component={ EditPostScreen } />
 									<Redirect to='/bratic' />
 								</Switch>
 							</main>

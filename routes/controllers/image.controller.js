@@ -11,7 +11,7 @@ const getImage = async (req, res) => {
 const addImage = async (req, res) => {
 	const postID = req.params.postID
 
-	await Image.create({ image: req.body.image, post: postID })
+	await Image.create({ image: req.body.image, order: req.body.order, post: postID })
 		.then((image) => res.status(201).json({ ok: true, msg: 'Imagen creado', image }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha creala imagen', err }))
 }

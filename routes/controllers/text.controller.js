@@ -11,7 +11,7 @@ const getText = async (req, res) => {
 const addText = async (req, res) => {
 	const postID = req.params.postID
 
-	await Text.create({ text: req.body.text, parsedText: req.body.parsedText, post: postID })
+	await Text.create({ text: req.body.text, parsedText: req.body.parsedText, order: req.body.order, post: postID })
 		.then((text) => res.status(201).json({ ok: true, msg: 'Texto creado', text }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha creado texto', err }))
 }
@@ -23,8 +23,6 @@ const updateText = async (req, res) => {
 		return res.status(400).json({ ok: false, msg: 'No se ha encontrado el texto que quieres actualizar' })
 	}
 	const textUpdated = req.body
-	console.log(textUpdated)
-
 	await Text.findByIdAndUpdate(textID, textUpdated, { new: true })
 		.then((text) => res.status(201).json({ ok: true, msg: 'Texto actualizado', text }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha actualizado el texto que buscas', err }))

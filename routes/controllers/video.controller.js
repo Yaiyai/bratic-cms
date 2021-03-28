@@ -10,8 +10,8 @@ const getVideo = async (req, res) => {
 
 const addVideo = async (req, res) => {
 	const postID = req.params.postID
-	const { video } = req.body
-	await Video.create({ video, post: postID })
+
+	await Video.create({ video: req.body.video, order: req.body.order, post: postID })
 		.then((video) => res.status(201).json({ ok: true, msg: 'Video creada', video }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha creado video', err }))
 }

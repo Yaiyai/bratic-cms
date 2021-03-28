@@ -5,6 +5,10 @@ const downloadModel = new Schema(
 		post: { type: Schema.Types.ObjectId, ref: 'Post' },
 		download: String,
 		order: Number,
+		postType: {
+			type: String,
+			default: 'descarga',
+		},
 	},
 	{
 		timestamps: true,

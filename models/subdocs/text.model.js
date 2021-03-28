@@ -6,6 +6,10 @@ const textModel = new Schema(
 		text: String,
 		parsedText: Object,
 		order: Number,
+		postType: {
+			type: String,
+			default: 'texto',
+		},
 	},
 	{
 		timestamps: true,

@@ -30,3 +30,14 @@ export const findTextAndUpdate = async (id, text) => {
 		Swal.fire('¡Oh-oh!', errorMsg, 'error')
 	}
 }
+
+export const findTextAndUpdateReturn = async (id, text) => {
+	const resp = await fetchConToken(`texts/${id}`, text, 'PUT')
+	const body = await resp.json()
+	if (!body.ok) {
+		const errorMsg = body.msg
+		Swal.fire('¡Oh-oh!', errorMsg, 'error')
+	} else {
+		return body
+	}
+}

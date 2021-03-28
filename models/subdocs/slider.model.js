@@ -5,6 +5,10 @@ const sliderModel = new Schema(
 		post: { type: Schema.Types.ObjectId, ref: 'Post' },
 		slides: Array,
 		order: Number,
+		postType: {
+			type: String,
+			default: 'slider',
+		},
 	},
 	{
 		timestamps: true,

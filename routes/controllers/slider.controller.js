@@ -10,8 +10,7 @@ const getSlider = async (req, res) => {
 
 const addSlider = async (req, res) => {
 	const postID = req.params.postID
-	const { slides } = req.body
-	await Slider.create({ slides, post: postID })
+	await Slider.create({ slides: req.body.slides, order: req.body.order, post: postID })
 		.then((slider) => res.status(201).json({ ok: true, msg: 'Slider creada', slider }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha creado slider', err }))
 }

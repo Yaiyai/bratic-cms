@@ -10,8 +10,8 @@ const getGallery = async (req, res) => {
 
 const addGallery = async (req, res) => {
 	const postID = req.params.postID
-	const { gallery } = req.body
-	await Gallery.create({ gallery, post: postID })
+
+	await Gallery.create({ gallery: req.body.gallery, order: req.body.order, post: postID })
 		.then((gallery) => res.status(201).json({ ok: true, msg: 'Galería creada', gallery }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha creado galería', err }))
 }

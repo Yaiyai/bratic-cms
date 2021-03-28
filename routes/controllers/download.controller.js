@@ -11,7 +11,7 @@ const getDownload = async (req, res) => {
 const addDownload = async (req, res) => {
 	const postID = req.params.postID
 
-	await Download.create({ download: req.body.download, post: postID })
+	await Download.create({ download: req.body.download, order: req.body.order, post: postID })
 		.then((download) => res.status(201).json({ ok: true, msg: 'Download creado', download }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha creala download', err }))
 }

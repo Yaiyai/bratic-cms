@@ -21,6 +21,20 @@ const Post = () => {
 	const [post, setPost] = useState()
 	const [items, setItems] = useState()
 
+	const [content, setContent] = useState([])
+
+
+	const orderPreviousContent = async (id) => {
+		const currentPost = await getThisPost(id)
+		const postContent = currentPost.content
+		let aux = []
+		for (const content in postContent) {
+			postContent[content].forEach(elm => aux.push(elm))
+		}
+		aux.sort((a, b) => a.order - b.order)
+		setContent(aux)
+	}
+
 	const getPost = async () => {
 		const thePost = await getThisPost(postID)
 		setPost(thePost)
@@ -29,6 +43,7 @@ const Post = () => {
 	useEffect(() => {
 		if (isMounted.current) {
 			getPost()
+			orderPreviousContent(postID)
 		}
 		return () => {
 			isMounted.current = false
@@ -59,7 +74,6 @@ const Post = () => {
 
 	const getThumbnailContent = (item) => {
 		item.map(elm => {
-			console.log(elm.thumbnail);
 			return (
 				<img src={ elm.thumbnail } alt='' />
 			)

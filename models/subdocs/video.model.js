@@ -5,6 +5,10 @@ const videoModel = new Schema(
 		post: { type: Schema.Types.ObjectId, ref: 'Post' },
 		video: String,
 		order: Number,
+		postType: {
+			type: String,
+			default: 'video',
+		},
 	},
 	{
 		timestamps: true,

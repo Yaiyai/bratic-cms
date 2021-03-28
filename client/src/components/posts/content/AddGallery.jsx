@@ -3,13 +3,16 @@ import { fileUpload } from '../../../helpers/uploadFiles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { addGallery } from '../../../actions/post-content/gallery.action'
 
-const AddGallery = ({ saveElement, postID, increment }) => {
+const AddGallery = ({ saveElement, postID, counter, increment }) => {
 	const [auxValue, setAuxValue] = useState()
 	const [gallery, setGallery] = useState([])
+	const [showButton, setShowButton] = useState(false)
+
 
 	const handleGalleryChange = async ({ target }) => {
 		const file = target.files[0]
 		const url = await fileUpload(file)
+		setShowButton(true)
 
 		setAuxValue(url)
 	}
@@ -27,20 +30,20 @@ const AddGallery = ({ saveElement, postID, increment }) => {
 		} else if (!gallery?.includes(auxValue)) {
 			setGallery([...gallery, auxValue])
 		}
+		setShowButton(false)
+
 	}
 	const saveGallery = async () => {
-		const theGallery = await addGallery({ gallery: gallery }, postID)
-		increment()
+		const theGallery = await addGallery({ gallery: gallery, order: counter }, postID)
 		saveElement('gallery', theGallery)
+		increment()
 	}
 
 	return (
 		<section id="add-gallery">
 			<div className='file-group'>
 				<input className='file-input' type='file' onChange={ handleGalleryChange } placeholder={ 'Añadir Foto' } name='gallery' />
-				<button onClick={ handleAddGallery } className='my-btn mini third'>
-					Añadir Imagen
-				</button>
+				{ showButton && <button onClick={ handleAddGallery } className='my-btn mini third'>Añadir Imagen</button> }
 			</div>
 			<div className='gallery'>
 				{ gallery?.map((picture, idx) => (
@@ -50,9 +53,7 @@ const AddGallery = ({ saveElement, postID, increment }) => {
 					</figure>
 				)) }
 			</div>
-			<button className='my-btn mini' onClick={ () => saveGallery() }>
-				Añadir Galería a la entrada
-			</button>
+			{gallery.length > 0 && <button className='my-btn mini' onClick={ () => saveGallery() }> Añadir Galería a la entrada </button> }
 		</section>
 	)
 }
