@@ -5,7 +5,10 @@ const textModel = new Schema(
 		post: { type: Schema.Types.ObjectId, ref: 'Post' },
 		text: String,
 		parsedText: Object,
-		order: Number,
+		order: {
+			type: Number,
+			default: 0,
+		},
 		postType: {
 			type: String,
 			default: 'texto',

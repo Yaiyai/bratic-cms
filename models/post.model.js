@@ -18,6 +18,7 @@ const postModel = new Schema(
 			image: [{ type: Schema.Types.ObjectId, ref: 'Image' }],
 			download: [{ type: Schema.Types.ObjectId, ref: 'Download' }],
 		},
+		orderedContent: Array,
 	},
 	{
 		timestamps: true,

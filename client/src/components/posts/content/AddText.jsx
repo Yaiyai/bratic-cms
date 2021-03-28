@@ -22,9 +22,7 @@ const AddText = ({ saveElement, postID, increment }) => {
 
 	useEffect(() => {
 		if (isMounted.current) {
-
 			setValues({
-				...values,
 				text: quill,
 				parsedText: { __html: quill },
 			})

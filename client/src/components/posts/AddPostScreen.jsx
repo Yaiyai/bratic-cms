@@ -7,80 +7,44 @@ import { findImageAndUpdate, findImageAndUpdateReturn } from '../../actions/post
 import { findTextAndUpdate, findTextAndUpdateReturn } from '../../actions/post-content/text.action';
 import { findSliderAndUpdate, findSliderAndUpdateReturn } from '../../actions/post-content/slider.action';
 import { findGalleryAndUpdate, findGalleryAndUpdateReturn } from '../../actions/post-content/gallery.action';
-import AddText from './content/AddText';
-import AddImage from './content/AddImage';
-import AddGallery from './content/AddGallery';
-import AddVideo from './content/AddVideo';
-import AddSlider from './content/AddSlider';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import useCounter from '../../hooks/useCounter';
-import RenderContentByType from './content/RenderContentByType';
-import PostState from './content/PostState';
+import RenderContentByType from './content/_ui/RenderContentByType';
+import PostState from './content/_ui/PostState';
+import Swal from 'sweetalert2';
+import WhatToAdd from './content/_ui/WhatToAdd';
+import ViewArea from './content/_ui/ViewArea';
+import TitlesArea from './content/_ui/TitlesArea';
+import { dragOver, dragOverReceptor, dragStart } from '../../helpers/dranAndDrop';
 
 const AddPostScreen = () => {
     let history = useHistory();
-    const { counter, increment, decrement, } = useCounter(1)
     let params = useParams()
-    const [postId, setPostId] = useState()
     const select = useRef()
-    const [auxContent, setAuxContent] = useState('default')
+    const { counter, increment, decrement } = useCounter(1)
     const { values, handleInputChange } = useForm()
+    const [postId, setPostId] = useState()
 
-    const [content, setContent] = useState([])
-
-
+    const [auxContent, setAuxContent] = useState('default')
     const [selectedPost, setSelectedPost] = useState({ title: 'Sin título', subtitle: '', content: { slider: [], image: [], text: [], video: [], gallery: [] } })
-
-
-    const findCurrentPost = async (id) => {
-        const currentPost = await getThisPost(id)
-        setSelectedPost(currentPost)
-    }
-
-    const handleExit = (id) => {
-        history.goBack()
-    }
-
-    const handleDeletePost = async (id) => {
-        await deletePost(id)
-        history.goBack()
-    }
-    const handleUpdatePost = async (id, content) => {
-        await updatePost(id, content)
-        history.goBack()
-    }
+    const [content, setContent] = useState([])
 
     useEffect(() => {
         setPostId(params.postID)
         findCurrentPost(params.postID)
     }, [params.postID])
 
-    const addThis = ({ target }) => {
-        switch (target.value) {
-            case 'text':
-                setAuxContent('text')
-                break
-            case 'image':
-                setAuxContent('image')
-                break
-            case 'gallery':
-                setAuxContent('gallery')
-                break
-            case 'video':
-                setAuxContent('video')
-                break
-            case 'slider':
-                setAuxContent('slider')
-                break
-            default:
-                setAuxContent('default')
-                break
-        }
+
+    //Post Methods
+    const findCurrentPost = async (id) => {
+        const currentPost = await getThisPost(id)
+        setSelectedPost(currentPost)
     }
 
-    const setToDefault = () => {
-        select.current.selectedIndex = 0
-        setAuxContent('default')
+    const handleSaveContent = () => {
+        setSelectedPost({ ...selectedPost, orderedContent: content })
+        Swal.fire('¡Bien!', 'Orden Guardado', 'success')
+        setToDefault()
     }
 
     const savePostState = (status) => {
@@ -165,12 +129,36 @@ const AddPostScreen = () => {
     }
 
 
-    //Drag and Drop Methods
+    //Select Methods
+    const setToDefault = () => {
+        select.current.selectedIndex = 0
+        setAuxContent('default')
+    }
+
+
+    //Buttons Methods
+    const handleExit = (id) => {
+        history.goBack()
+    }
+
+    const handleDeletePost = async (id) => {
+        await deletePost(id)
+        history.goBack()
+    }
+
+    const handleUpdatePost = async (id, content) => {
+        await updatePost(id, content)
+        history.goBack()
+    }
+
+
+    //Drop Method
     const drop = async (e) => {
         e.preventDefault()
         const tag = e.dataTransfer.getData('card_id')
         const card = document.getElementById(tag)
-        const cardType = (e.dataTransfer.getData('card_type'));
+        const cardType = e.dataTransfer.getData('card_type')
+
 
         card.style.display = 'block'
         card.className = 'preview'
@@ -181,73 +169,50 @@ const AddPostScreen = () => {
         let orderedNew = []
 
         switch (cardType) {
-            case 'text':
+            case 'texto':
                 await findTextAndUpdate(tag, { order: spaceId })
                 const updatedText = await findTextAndUpdateReturn(tag, { order: spaceId })
-                filteredArray = content.filter(elm => elm._id !== tag)
+                filteredArray = content.filter((elm) => elm._id !== tag)
                 orderedNew = [...filteredArray, updatedText.text].sort((a, b) => a.order - b.order)
                 setContent(orderedNew)
 
-                break;
+                break
             case 'imagen':
                 await findImageAndUpdate(tag, { order: spaceId })
                 const updatedImage = await findImageAndUpdateReturn(tag, { order: spaceId })
-                filteredArray = content.filter(elm => elm._id !== tag)
+                filteredArray = content.filter((elm) => elm._id !== tag)
                 orderedNew = [...filteredArray, updatedImage.image].sort((a, b) => a.order - b.order)
                 setContent(orderedNew)
 
-                break;
-            case 'gallery':
+                break
+            case 'galeria':
                 await findGalleryAndUpdate(tag, { order: spaceId })
                 const updatedGallery = await findGalleryAndUpdateReturn(tag, { order: spaceId })
-                filteredArray = content.filter(elm => elm._id !== tag)
+                filteredArray = content.filter((elm) => elm._id !== tag)
                 orderedNew = [...filteredArray, updatedGallery.gallery].sort((a, b) => a.order - b.order)
                 setContent(orderedNew)
 
-                break;
+                break
             case 'video':
                 await findVideoAndUpdate(tag, { order: spaceId })
                 const updatedVideo = await findVideoAndUpdateReturn(tag, { order: spaceId })
-                filteredArray = content.filter(elm => elm._id !== tag)
+                filteredArray = content.filter((elm) => elm._id !== tag)
                 orderedNew = [...filteredArray, updatedVideo.video].sort((a, b) => a.order - b.order)
                 setContent(orderedNew)
 
-                break;
+                break
             case 'slider':
                 await findSliderAndUpdate(tag, { order: spaceId })
                 const updatedSlider = await findSliderAndUpdateReturn(tag, { order: spaceId })
-                filteredArray = content.filter(elm => elm._id !== tag)
+                filteredArray = content.filter((elm) => elm._id !== tag)
                 orderedNew = [...filteredArray, updatedSlider.slider].sort((a, b) => a.order - b.order)
                 setContent(orderedNew)
 
-                break;
+                break
             default:
-                break;
+                break
         }
-
-
-
     }
-
-    const dragOverReceptor = (e) => {
-        e.preventDefault()
-    }
-
-    const dragStart = (e) => {
-        const target = e.target
-        e.dataTransfer.setData('card_id', target.id)
-        e.dataTransfer.setData('card_type', target.attributes.posttype.value)
-
-        setTimeout(() => {
-            target.style.display = 'none'
-            target.className = 'preview'
-        }, 0)
-    }
-
-    const dragOver = (e) => {
-        e.stopPropagation()
-    }
-
 
 
     return (
@@ -261,63 +226,18 @@ const AddPostScreen = () => {
             <section className="edit-post">
                 <div className="edit-area">
                     <PostState savePostState={ savePostState } postState={ selectedPost.status } />
-                    <article className="title-area">
-                        <form className='form-title' onSubmit={ saveTitles }>
-                            <label htmlFor='title'>Título de la Entrada</label>
-                            <input id='title' type='text' name='title' onChange={ handleInputChange } placeholder={ selectedPost.title } />
-                            <label htmlFor='subtitle'>Subtítulo de la Entrada</label>
-                            <input id='subtitle' type='text' name='subtitle' placeholder={ selectedPost.subtitle } onChange={ handleInputChange } />
-                            <button className='my-btn mini secondary' type='submit'>
-                                Guardar títulos
-                        </button>
-                        </form>
-                    </article>
+                    <TitlesArea selectedPost={ setSelectedPost } handleInputChange={ handleInputChange } saveTitles={ saveTitles } />
+                    <WhatToAdd auxContent={ auxContent } setAuxContent={ setAuxContent } select={ select } postId={ postId } saveElement={ saveElement } increment={ increment } />
 
-                    <select ref={ select } onChange={ addThis } name='content' placeholder='Añadir...'>
-                        <option value='default' defaultValue> Añadir... </option>
-                        <option value='text'>Texto</option>
-                        <option value='image'>Imagen única</option>
-                        <option value='gallery'>Galería de imágenes</option>
-                        <option value='slider'>Slider</option>
-                        <option value='video'>Vídeo</option>
-                    </select>
-
-
-                    <article className='add-post'>
-                        { auxContent === 'default' && <p>Añadir elemento al post</p> }
-                        { auxContent === 'text' && <AddText saveElement={ saveElement } postID={ postId } increment={ increment } /> }
-                        { auxContent === 'image' && <AddImage saveElement={ saveElement } postID={ postId } increment={ increment } /> }
-                        { auxContent === 'gallery' && <AddGallery saveElement={ saveElement } postID={ postId } increment={ increment } /> }
-                        { auxContent === 'video' && <AddVideo saveElement={ saveElement } postID={ postId } increment={ increment } /> }
-                        { auxContent === 'slider' && <AddSlider saveElement={ saveElement } postID={ postId } increment={ increment } /> }
-                    </article>
-                    <article className="content-to-order">
+                    <article className="content-to-order" onDrop={ drop } onDragOver={ dragOverReceptor }>
                         <h6>Contenido generado para ordenar</h6>
                         {
-                            content.length > 0 && <RenderContentByType content={ content } dragStart={ dragStart } dragOver={ dragOver } decrement={ decrement } />
+                            content.length > 0 && <RenderContentByType content={ content } setContent={ setContent } dragStart={ dragStart } dragOver={ dragOver } decrement={ decrement } />
                         }
                     </article>
                 </div>
-                <div className="view-area">
-                    {
-                        selectedPost.title && <h1>{ selectedPost.title }</h1>
-                    }
-                    {
-                        selectedPost.subtitle && <h2>{ selectedPost.subtitle }</h2>
-                    }
-                    <h6>Orden de aparicion de los elementos</h6>
-                    { [...Array(counter)].map((elm, idx) => (
-                        idx !== 0 && (
-                            <div onDrop={ drop } onDragOver={ dragOverReceptor } id={ idx } key={ `contenedor-${idx}` } className="receiving-container">
-                                <p className="container-number">
-                                    { idx }
-                                </p>
-                            </div>
-                        )
-                    ))
-                    }
 
-                </div>
+                <ViewArea selectedPost={ selectedPost } dragOverReceptor={ dragOverReceptor } drop={ drop } counter={ counter } handleSaveContent={ handleSaveContent } />
             </section>
         </section>
 

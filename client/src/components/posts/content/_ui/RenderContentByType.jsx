@@ -1,17 +1,23 @@
-import React, { useState } from 'react'
-import { deleteGallery } from '../../../actions/post-content/gallery.action';
-import { deleteText } from '../../../actions/post-content/text.action';
-import { deleteSlider } from '../../../actions/post-content/slider.action';
-import { deleteVideo } from '../../../actions/post-content/video.action';
-import { deleteImage } from '../../../actions/post-content/image.action';
+import React, { useEffect, useState } from 'react'
+import { deleteGallery } from '../../../../actions/post-content/gallery.action';
+import { deleteText } from '../../../../actions/post-content/text.action';
+import { deleteSlider } from '../../../../actions/post-content/slider.action';
+import { deleteVideo } from '../../../../actions/post-content/video.action';
+import { deleteImage } from '../../../../actions/post-content/image.action';
 
-const RenderContentByType = ({ content, dragOver, dragStart, decrement }) => {
+const RenderContentByType = ({ content, setContent, dragOver, dragStart, decrement }) => {
 
-    const [newContent, setNewContent] = useState(content)
+    const [newContent, setNewContent] = useState([])
+
+    useEffect(() => {
+        setNewContent(content)
+    }, [content]);
 
     const updatedContent = (id) => {
         let filteredArray = newContent.filter(elm => elm._id !== id)
         setNewContent(filteredArray)
+        setContent(filteredArray)
+        decrement()
     }
 
     const deleteThis = async (type, id) => {
@@ -45,9 +51,9 @@ const RenderContentByType = ({ content, dragOver, dragStart, decrement }) => {
         switch (contentType) {
             case 'texto':
                 return (
-                    <div key={ content._id } posttype="text" className="preview post-text" id={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
+                    <div key={ content._id } posttype="texto" className="preview post-text" id={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
                         <p><strong>Tipo de contenido:</strong> Texto</p>
-                        {content.order && <p><strong>Orden de aparición:</strong> { content.order }</p> }
+                        <p><strong>Orden de aparición:</strong> { content.order }</p>
                         <hr />
                         <div dangerouslySetInnerHTML={ content.parsedText }></div>
                         <button className='my-btn mini underlined' onClick={ () => deleteThis('text', content._id) }>Borrar</button>
@@ -57,7 +63,7 @@ const RenderContentByType = ({ content, dragOver, dragStart, decrement }) => {
                 return (
                     <div key={ content._id } posttype="imagen" className='preview post-simple-image' id={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
                         <p><strong>Tipo de contenido:</strong> Imagen simple</p>
-                        {content.order && <p><strong>Orden de aparición:</strong> { content.order }</p> }
+                        <p><strong>Orden de aparición:</strong> { content.order }</p>
                         <hr />
                         <img draggable='false' className='unique-image' src={ content.image } alt='' />
                         <button className='my-btn mini underlined' onClick={ () => deleteThis('image', content._id) }>Borrar</button>
@@ -67,7 +73,7 @@ const RenderContentByType = ({ content, dragOver, dragStart, decrement }) => {
                 return (
                     <div key={ content._id } posttype="video" className='preview post-video' id={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
                         <p><strong>Tipo de contenido:</strong> Vídeo</p>
-                        {content.order && <p><strong>Orden de aparición:</strong> { content.order }</p> }
+                        <p><strong>Orden de aparición:</strong> { content.order }</p>
                         <hr />
                         <video draggable='false' className='video-preview' src={ content.video } controls muted />
                         <button className='my-btn mini underlined' onClick={ () => deleteThis('video', content._id) }>Borrar</button>
@@ -77,7 +83,7 @@ const RenderContentByType = ({ content, dragOver, dragStart, decrement }) => {
                 return (
                     <div key={ content._id } posttype="slider" className='preview post-slider' onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
                         <p><strong>Tipo de contenido:</strong> Slider</p>
-                        {content.order && <p><strong>Orden de aparición:</strong> { content.order }</p> }
+                        <p><strong>Orden de aparición:</strong> { content.order }</p>
                         <hr />
                         <div className='gallery'>
                             { content.slides.map((picture, idx) => (
@@ -93,7 +99,7 @@ const RenderContentByType = ({ content, dragOver, dragStart, decrement }) => {
                 return (
                     <div key={ content._id } posttype="galeria" className='preview post-gallery' id={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
                         <p><strong>GTipo de contenido:</strong> alería</p>
-                        {content.order && <p><strong>Orden de aparición:</strong> { content.order }</p> }
+                        <p><strong>Orden de aparición:</strong> { content.order }</p>
                         <hr />>
                         <div className='gallery'>
                             { content.gallery.map((picture, idx) => (

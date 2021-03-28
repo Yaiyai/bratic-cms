@@ -4,7 +4,10 @@ const galleryModel = new Schema(
 	{
 		post: { type: Schema.Types.ObjectId, ref: 'Post' },
 		gallery: Array,
-		order: Number,
+		order: {
+			type: Number,
+			default: 0,
+		},
 		postType: {
 			type: String,
 			default: 'galeria',
