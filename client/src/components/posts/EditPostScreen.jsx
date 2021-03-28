@@ -41,20 +41,19 @@ const EditPostScreen = () => {
 
     const orderPreviousContent = useCallback(async (id) => {
         const currentPost = await getThisPost(id)
-        let aux = []
 
         if (currentPost.orderedContent.length > 0) {
             setCounter(currentPost.orderedContent.length + 1)
             return
         } else {
-
+            let auxArray = []
             const postContent = currentPost.content
             for (const content in postContent) {
-                postContent[content].forEach(elm => aux.push(elm))
+                postContent[content].forEach(elm => auxArray.push(elm))
             }
-            aux.sort((a, b) => a.order - b.order)
-            setContent(aux)
-            setCounter(aux.length + 1)
+            auxArray.sort((a, b) => a.order - b.order)
+            setContent(auxArray)
+            setCounter(auxArray.length + 1)
         }
 
     }, [setCounter])
