@@ -11,8 +11,6 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 SwiperCore.use([Autoplay, Pagination])
 
-
-
 const Post = () => {
 	const isMounted = useRef(true)
 	const { postID } = useParams()

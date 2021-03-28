@@ -1,0 +1,34 @@
+.each-post-prev {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	padding: calc(#{$module} * 1) 0;
+	border-bottom: 1px solid map-get($theme-colors, 'light-grey');
+	&:first-child {
+		border-top: 1px solid map-get($theme-colors, 'light-grey');
+	}
+	.info {
+		display: flex;
+		flex-direction: column;
+		> * {
+			margin: 0;
+			margin-right: calc(#{$module} / 3);
+		}
+		h5 {
+			margin-bottom: calc(#{$module} / 2);
+		}
+		p {
+			@include font-line-height($font-sm);
+			strong {
+				color: map-get($theme-colors, 'primary');
+			}
+		}
+	}
+	.btn-group {
+		display: flex;
+		align-items: center;
+		.my-btn {
+			margin-left: calc(#{$module} / 3);
+		}
+	}
+}

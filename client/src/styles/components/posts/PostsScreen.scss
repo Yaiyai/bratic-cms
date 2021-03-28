@@ -1,4 +1,11 @@
 #posts-screen {
+	h2 {
+		margin: 0;
+		margin-bottom: calc(#{$module} * 0.5);
+	}
+	.user {
+		color: map-get($theme-colors, 'secondary');
+	}
 	.empty-posts {
 		margin-top: calc(#{$module} * 1);
 		background-color: map-get($theme-colors, 'light-grey');
@@ -13,27 +20,5 @@
 		flex-direction: column;
 		width: 100%;
 		margin-top: calc(#{$module} * 2);
-		.each-post-prev {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: calc(#{$module} * 1) 0;
-			border-bottom: 1px solid map-get($theme-colors, 'light-grey');
-			.info {
-				display: flex;
-				align-items: center;
-				> * {
-					margin: 0;
-					margin-right: calc(#{$module} / 3);
-				}
-			}
-			.btn-group {
-				display: flex;
-				align-items: center;
-				.my-btn {
-					margin-left: calc(#{$module} / 3);
-				}
-			}
-		}
 	}
 }

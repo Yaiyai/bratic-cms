@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
 import { addPost, deletePost, getUserPosts } from '../actions/posts.action'
 import { AuthContext } from '../reducers/auth/AuthContext'
-import PostElement from './posts/PostElement'
+import PostElement from './posts/content/_ui/PostElement'
 
 const PostsScreen = () => {
 	let history = useHistory();
@@ -64,7 +64,8 @@ const PostsScreen = () => {
 	return (
 		<div id="posts-screen">
 			<h2>Entradas del Blog</h2>
-			<button onClick={ handleAdd }>Añadir entrada del blog</button>
+			<p>Estás viendo las entradas del blog que <strong className="user">{ user.name }</strong> (tú, señor@) ha creado</p>
+			<button className="my-btn primary mini" onClick={ handleAdd }>Añadir entrada del blog</button>
 
 			{posts?.length > 0 ? (
 				<section className='all-posts'>
