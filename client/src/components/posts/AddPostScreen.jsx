@@ -1,26 +1,34 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { deletePost, getThisPost, updatePost } from '../../actions/posts.action'
+//Hooks
 import { useHistory } from "react-router-dom";
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import useForm from '../../hooks/useForm';
+import useCounter from '../../hooks/useCounter';
+
+//Actions
+import { deletePost, getThisPost, updatePost } from '../../actions/posts.action'
 import { findVideoAndUpdate, findVideoAndUpdateReturn } from '../../actions/post-content/video.action';
 import { findImageAndUpdate, findImageAndUpdateReturn } from '../../actions/post-content/image.action';
 import { findTextAndUpdate, findTextAndUpdateReturn } from '../../actions/post-content/text.action';
 import { findSliderAndUpdate, findSliderAndUpdateReturn } from '../../actions/post-content/slider.action';
 import { findGalleryAndUpdate, findGalleryAndUpdateReturn } from '../../actions/post-content/gallery.action';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import useCounter from '../../hooks/useCounter';
-import RenderContentByType from './content/_ui/RenderContentByType';
+import { dragOver, dragOverReceptor, dragStart } from '../../helpers/dranAndDrop';
+
+//Componentes
 import PostState from './content/_ui/PostState';
-import Swal from 'sweetalert2';
+import RenderContentByType from './content/_ui/RenderContentByType';
 import WhatToAdd from './content/_ui/WhatToAdd';
 import ViewArea from './content/_ui/ViewArea';
 import TitlesArea from './content/_ui/TitlesArea';
-import { dragOver, dragOverReceptor, dragStart } from '../../helpers/dranAndDrop';
+
+//Dependencias
+import Swal from 'sweetalert2';
 
 const AddPostScreen = () => {
     let history = useHistory();
     let params = useParams()
     const select = useRef()
+
     const { counter, increment, decrement } = useCounter(1)
     const { values, handleInputChange } = useForm()
     const [postId, setPostId] = useState()
@@ -158,7 +166,7 @@ const AddPostScreen = () => {
         const tag = e.dataTransfer.getData('card_id')
         const card = document.getElementById(tag)
         const cardType = e.dataTransfer.getData('card_type')
-
+        console.log(tag);
 
         card.style.display = 'block'
         card.className = 'preview'
@@ -218,7 +226,7 @@ const AddPostScreen = () => {
     return (
         <section id="add-posts-screen">
             <article className="post-btn-group">
-                <p>¿Qué hacemos con éste post?</p>
+                <h3>Nueva entrada del blog</h3>
                 <button className="my-btn mini secondary" onClick={ () => handleDeletePost(postId) }>Borrar Entrada</button>
                 <button className="my-btn mini third" onClick={ () => handleUpdatePost(postId, selectedPost) }>Guardar Entrada</button>
                 <button className="my-btn mini" onClick={ () => handleExit() }>Salir</button>

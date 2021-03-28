@@ -1,9 +1,10 @@
 import React from 'react'
 import { addImage } from '../../../actions/post-content/image.action'
 import useForm from '../../../hooks/useForm'
+import Loader from '../../../ui/Loader'
 
 const AddImage = ({ saveElement, postID, increment }) => {
-	const { values, handleFileChange } = useForm()
+	const { values, handleFileChange, loading } = useForm()
 	const saveImage = async () => {
 		const theImage = await addImage({ image: values.image }, postID)
 		saveElement('image', theImage)
@@ -15,12 +16,18 @@ const AddImage = ({ saveElement, postID, increment }) => {
 			<div className='file-group'>
 				<input type='file' className='file-input' name='image' id='image' onChange={ handleFileChange } />
 			</div>
-			{values?.image && (
-				<>
-					<img className='unique-image' src={ values.image } alt='' />
-					<button className='my-btn mini' onClick={ () => saveImage() }> Añadir Imagen a la Entrada</button>
-				</>
-			) }
+			{loading ? (
+				<Loader loading={ true } />
+			) : (
+				values?.image && (
+					<>
+						<img className='unique-image' src={ values.image } alt='' />
+						<button className='my-btn mini' onClick={ () => saveImage() }> Añadir Imagen a la Entrada</button>
+					</>
+				)
+
+			)
+			}
 		</div>
 	)
 }

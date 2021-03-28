@@ -62,7 +62,7 @@ const RenderContentByType = ({ content, setContent, dragOver, dragStart, decreme
             case 'imagen':
                 return (
                     <div key={ content._id } posttype="imagen" className='preview post-simple-image' id={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
-                        <p><strong>Tipo de contenido:</strong> Imagen simple</p>
+                        <p><strong>Tipo de contenido:</strong> Imagen Única</p>
                         <p><strong>Orden de aparición:</strong> { content.order }</p>
                         <hr />
                         <img draggable='false' className='unique-image' src={ content.image } alt='' />
@@ -98,9 +98,9 @@ const RenderContentByType = ({ content, setContent, dragOver, dragStart, decreme
             case 'galeria':
                 return (
                     <div key={ content._id } posttype="galeria" className='preview post-gallery' id={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
-                        <p><strong>GTipo de contenido:</strong> alería</p>
+                        <p><strong>Tipo de contenido:</strong> Galería</p>
                         <p><strong>Orden de aparición:</strong> { content.order }</p>
-                        <hr />>
+                        <hr />
                         <div className='gallery'>
                             { content.gallery.map((picture, idx) => (
                                 <figure draggable='false' className='each-picture' key={ idx }>

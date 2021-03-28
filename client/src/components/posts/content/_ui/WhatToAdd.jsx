@@ -33,6 +33,7 @@ const WhatToAdd = ({ auxContent, setAuxContent, select, postId, saveElement, inc
 
     return (
         <>
+            <h6>Tienes que añadir obligatoriamente, por lo menos, una imagen única</h6>
             <select ref={ select } onChange={ addThis } name='content' placeholder='Añadir...'>
                 <option value='default' defaultValue> Añadir... </option>
                 <option value='text'>Texto</option>

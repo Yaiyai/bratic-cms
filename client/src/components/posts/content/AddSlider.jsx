@@ -2,17 +2,21 @@ import React, { useState } from 'react'
 import { fileUpload } from '../../../helpers/uploadFiles'
 import { FaTimesCircle } from "react-icons/fa";
 import { addSlider } from '../../../actions/post-content/slider.action'
+import Loader from '../../../ui/Loader';
 
 const AddSlider = ({ saveElement, postID, increment }) => {
 	const [auxValue, setAuxValue] = useState()
 	const [slider, setSlider] = useState([])
 	const [showButton, setShowButton] = useState(false)
+	const [loading, setLoading] = useState(false)
 
 	const handleGalleryChange = async ({ target }) => {
+		setLoading(true)
 		const file = target.files[0]
 		const url = await fileUpload(file)
 		setShowButton(true)
 		setAuxValue(url)
+		setLoading(false)
 	}
 
 	const deletePicture = (idx) => {
@@ -30,6 +34,7 @@ const AddSlider = ({ saveElement, postID, increment }) => {
 		}
 		setShowButton(false)
 	}
+
 	const saveSlider = async () => {
 		const theSlider = await addSlider({ slides: slider }, postID)
 		saveElement('slider', theSlider)
@@ -40,6 +45,7 @@ const AddSlider = ({ saveElement, postID, increment }) => {
 		<section id="add-slider">
 			<div className='file-group'>
 				<input className='file-input' type='file' onChange={ handleGalleryChange } name='slider' />
+				{ loading && <Loader loading={ true } /> }
 				{
 					showButton && <button onClick={ handleAddSlider } className='my-btn mini third'> Añadir Imagen al Slider </button>
 				}

@@ -17,6 +17,7 @@
 			padding: calc(#{$module} * 1);
 			border: 3px map-get($theme-colors, 'grey') dashed;
 			margin-bottom: calc(#{$module} * 1);
+			cursor: move;
 			video {
 				display: block;
 				width: 100%;

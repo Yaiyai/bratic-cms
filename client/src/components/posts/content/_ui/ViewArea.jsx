@@ -1,24 +1,25 @@
 import React from 'react'
+import ReceivingContainer from './ReceivingContainer'
 
 const ViewArea = ({ selectedPost, dragOverReceptor, drop, counter, handleSaveContent }) => {
     return (
         <div className="view-area">
-            <button className="my-btn mini" onClick={ () => handleSaveContent() }>Guardar Contenido Ordenado</button>
-
-            {
-                selectedPost.title && <h1>{ selectedPost.title }</h1>
-            }
-            {
-                selectedPost.subtitle && <h2>{ selectedPost.subtitle }</h2>
-            }
-            <h6>Orden de aparicion de los elementos</h6>
+            <div className="titles-btn">
+                <div>
+                    {
+                        selectedPost.title && <h1>{ selectedPost.title }</h1>
+                    }
+                    {
+                        selectedPost.subtitle && <h2>{ selectedPost.subtitle }</h2>
+                    }
+                </div>
+                <button className="my-btn mini" onClick={ () => handleSaveContent() }>Guardar Contenido Ordenado</button>
+            </div>
+            <hr />
+            <h6>Arrastra elementos para ordenarlos como quieras que aparezcan en la web :)</h6>
             {[...Array(counter)].map((elm, idx) => (
                 idx !== 0 && (
-                    <div onDrop={ drop } onDragOver={ dragOverReceptor } id={ idx } key={ `contenedor-${idx}` } className="receiving-container">
-                        <p className="container-number">
-                            { idx }
-                        </p>
-                    </div>
+                    <ReceivingContainer key={ `er-contenedo-${idx}` } dragOverReceptor={ dragOverReceptor } drop={ drop } idx={ idx } />
                 )
             ))
             }

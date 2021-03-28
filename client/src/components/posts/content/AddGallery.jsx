@@ -2,19 +2,23 @@ import React, { useState } from 'react'
 import { fileUpload } from '../../../helpers/uploadFiles'
 import { FaTimesCircle } from "react-icons/fa";
 import { addGallery } from '../../../actions/post-content/gallery.action'
+import Loader from '../../../ui/Loader';
 
 const AddGallery = ({ saveElement, postID, increment }) => {
 	const [auxValue, setAuxValue] = useState()
 	const [gallery, setGallery] = useState([])
 	const [showButton, setShowButton] = useState(false)
+	const [loading, setLoading] = useState(false)
 
 
 	const handleGalleryChange = async ({ target }) => {
+		setLoading(true)
 		const file = target.files[0]
 		const url = await fileUpload(file)
 		setShowButton(true)
 
 		setAuxValue(url)
+		setLoading(false)
 	}
 
 	const deletePicture = (idx) => {
@@ -43,6 +47,7 @@ const AddGallery = ({ saveElement, postID, increment }) => {
 		<section id="add-gallery">
 			<div className='file-group'>
 				<input className='file-input' type='file' onChange={ handleGalleryChange } placeholder={ 'Añadir Foto' } name='gallery' />
+				{ loading && <Loader loading={ true } /> }
 				{ showButton && <button onClick={ handleAddGallery } className='my-btn mini third'>Añadir Imagen</button> }
 			</div>
 			<div className='gallery'>

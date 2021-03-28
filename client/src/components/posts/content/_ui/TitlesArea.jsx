@@ -8,9 +8,7 @@ const TitlesArea = ({ selectedPost, saveTitles, handleInputChange }) => {
                 <input id='title' type='text' name='title' onChange={ handleInputChange } placeholder={ selectedPost.title } />
                 <label htmlFor='subtitle'>Subtítulo de la Entrada</label>
                 <input id='subtitle' type='text' name='subtitle' placeholder={ selectedPost.subtitle } onChange={ handleInputChange } />
-                <button className='my-btn mini secondary' type='submit'>
-                    Guardar títulos
-                        </button>
+                <button className='my-btn mini third' type='submit'> Guardar títulos </button>
             </form>
         </article>
     )
