@@ -124,14 +124,14 @@ const Post = () => {
 				</figure>
 			) }
 			<div className="container">
-				{ post?.content.text.length > 0 && (
-					post?.content.text.map((txt, idx) => (
+				{ content.text.length > 0 && (
+					content.text.map((txt, idx) => (
 						<div className='post-text' key={ txt._id } dangerouslySetInnerHTML={ txt.parsedText }></div>
 					))
 				) }
 
-				{ post?.content.video.length > 0 && (
-					post?.content.video.map((vid, idx) => (
+				{ content.video.length > 0 && (
+					content.video.map((vid, idx) => (
 						<video className='video-preview' src={ vid.video } controls muted />
 					))
 				) }
@@ -139,10 +139,10 @@ const Post = () => {
 					<PhotoSwipeGallery items={ items } thumbnailContent={ getThumbnailContent } />
 				) }
 
-				{ post?.content.slider?.length > 0 && (
+				{ content.slider?.length > 0 && (
 					<div className='preview'>
 						<h6>Slider de fotos</h6>
-						{post?.content.slider.map((sld, idx) => (
+						{content.slider.map((sld, idx) => (
 							<>
 								<Swiper
 									spaceBetween={ 0 }

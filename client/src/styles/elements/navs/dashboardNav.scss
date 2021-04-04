@@ -73,7 +73,7 @@
 					border: none;
 					display: none;
 					flex-direction: column;
-					background-color: map-get($theme-colors, 'light-primary');
+					background-color: transparentize($color: white, $amount: 0.9);
 					li {
 						width: 100%;
 					}

@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom'
 import { AuthContext } from '../reducers/auth/AuthContext'
 import { types } from '../types/types'
 import { CgArrowBottomLeftR, CgArrowTopRightR } from "react-icons/cg";
+import { SectionContext } from '../reducers/sections/sectionsContext';
+import { FaChevronDown } from 'react-icons/fa';
 
-export const DashboardNav = () => {
-	const { dispatch } = useContext(AuthContext)
+export const DashboardNav = ({ handleShow }) => {
+	const { dispatch, user } = useContext(AuthContext)
 	const [show, setShow] = useState(true)
+	const { sections } = useContext(SectionContext)
+
 
 	const handleLogout = async () => {
 		await dispatch({ type: types.logout })
@@ -38,10 +42,29 @@ export const DashboardNav = () => {
 								<li>
 									<Link to='/bratic/blog'>Blog</Link>
 								</li>
+								<li className='dropdown'>
+									<p data-toggle='dropdown'>
+										Secciones de la web <FaChevronDown />
+									</p>
+									{ sections.length > 0 && (
+										<ul className='dropdown-menu'>
+											{sections.map((st) => (
+												<li key={ st._id }>
+													<Link to={ `/bratic/seccion/${st._id}` }>{ st.sectionName }</Link>
+												</li>
+											)) }
+										</ul>
+									) }
+								</li>
 							</ul>
 							<div className='btn-group'>
 								<small>Made with &hearts; by Yai</small>
 								<small>&copy; Bratic S.L.</small>
+								{ user.email === 'admin@yai.com' && (
+									<button className='my-btn third mini' onClick={ handleShow }>
+										Añadir Sección
+									</button>
+								) }
 								<button className='my-btn secondary mini' onClick={ handleLogout }>Cerrar Sesión</button>
 							</div>
 						</>

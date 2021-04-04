@@ -13,4 +13,10 @@ export const types = {
 	getThisPost: '[post] getThisPost',
 	addPost: '[post] addPost',
 	postUpdate: '[post] postUpdate',
+
+	addSection: '[Section] addSection',
+	getSections: '[Section] getSections',
+	sectionUpdate: '[Section] sectionUpdate',
+	deleteSection: '[Section] deleteSection',
+	updateThis: '[Section] updateThis',
 }

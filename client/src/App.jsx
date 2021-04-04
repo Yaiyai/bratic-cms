@@ -31,6 +31,7 @@ const App = () => {
 		}
 	}, [user])
 
+
 	return (
 		<>
 			<AuthContext.Provider value={ { user, dispatch } }>
