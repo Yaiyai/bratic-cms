@@ -12,29 +12,6 @@
 		overflow: hidden;
 		display: flex;
 		width: 100%;
-		.preview {
-			background-color: #fafafa;
-			padding: calc(#{$module} * 1);
-			border: 3px map-get($theme-colors, 'grey') dashed;
-			margin-bottom: calc(#{$module} * 1);
-			cursor: move;
-			video {
-				display: block;
-				width: 100%;
-				height: calc(#{$module} * 5);
-				object-fit: contain;
-				object-position: top;
-			}
-			&.post-gallery {
-				.gallery {
-					display: flex;
-					flex-wrap: wrap;
-					.each-picture {
-						@include items-grid(2, $module/3);
-					}
-				}
-			}
-		}
 		.edit-area {
 			width: calc((100% / 12) * 3);
 			overflow: scroll;

@@ -26,13 +26,4 @@
 			text-align: center;
 		}
 	}
-	.preview {
-		flex-grow: 1;
-		display: block;
-		margin-left: calc(#{$module} * 2);
-		margin-bottom: 0 !important;
-		.my-btn {
-			display: none;
-		}
-	}
 }

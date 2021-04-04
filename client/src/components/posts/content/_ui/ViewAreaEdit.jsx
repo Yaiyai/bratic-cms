@@ -19,7 +19,7 @@ const ViewAreaEdit = ({ selectedPost, dragStart, dragOver, decrement, dragOverRe
             <hr />
             <h6>Arrastra elementos para ordenarlos como quieras que aparezcan en la web :)</h6>
             {
-                selectedPost?.orderedContent?.length > 0 && <RenderContentByTypeEdit content={ selectedPost.orderedContent } setContent={ setContent } dragStart={ dragStart } dragOver={ dragOver } decrement={ decrement } />
+                selectedPost?.orderedContent?.length > 0 && <RenderContentByTypeEdit dragOverReceptor={ dragOverReceptor } drop={ drop } content={ selectedPost.orderedContent } setContent={ setContent } dragStart={ dragStart } dragOver={ dragOver } decrement={ decrement } />
             }
             {
                 [...Array(counter)].map((elm, idx) => (

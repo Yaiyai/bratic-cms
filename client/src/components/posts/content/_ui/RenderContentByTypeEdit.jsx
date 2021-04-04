@@ -57,9 +57,8 @@ const RenderContentByTypeEdit = ({ content, setContent, dragOver, dragStart, dec
                         </div>
                         <div key={ content._id } posttype="texto" className="preview post-text" id={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
                             <p><strong>Tipo de contenido:</strong> Texto</p>
-                            <p><strong>Orden de aparición:</strong> { content.order }</p>
-                            <hr />
-                            <div dangerouslySetInnerHTML={ content.parsedText }></div>
+                            <p className="order"><strong>Orden de aparición:</strong> { content.order }</p>
+                            <div className="text" dangerouslySetInnerHTML={ content.parsedText }></div>
                             <button className='my-btn mini underlined' onClick={ () => deleteThis('text', content._id) }>Borrar</button>
                         </div>
                     </div>
@@ -72,8 +71,7 @@ const RenderContentByTypeEdit = ({ content, setContent, dragOver, dragStart, dec
                         </div>
                         <div key={ content._id } posttype="imagen" className='preview post-simple-image' id={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
                             <p><strong>Tipo de contenido:</strong> Imagen Única</p>
-                            <p><strong>Orden de aparición:</strong> { content.order }</p>
-                            <hr />
+                            <p className="order"><strong>Orden de aparición:</strong> { content.order }</p>
                             <img draggable='false' className='unique-image' src={ content.image } alt='' />
                             <button className='my-btn mini underlined' onClick={ () => deleteThis('image', content._id) }>Borrar</button>
                         </div>
@@ -88,8 +86,7 @@ const RenderContentByTypeEdit = ({ content, setContent, dragOver, dragStart, dec
                         </div>
                         <div key={ content._id } posttype="video" className='preview post-video' id={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
                             <p><strong>Tipo de contenido:</strong> Vídeo</p>
-                            <p><strong>Orden de aparición:</strong> { content.order }</p>
-                            <hr />
+                            <p className="order"><strong>Orden de aparición:</strong> { content.order }</p>
                             <video draggable='false' className='video-preview' src={ content.video } controls muted />
                             <button className='my-btn mini underlined' onClick={ () => deleteThis('video', content._id) }>Borrar</button>
                         </div>
@@ -103,8 +100,7 @@ const RenderContentByTypeEdit = ({ content, setContent, dragOver, dragStart, dec
                         </div>
                         <div key={ content._id } posttype="slider" className='preview post-slider' onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
                             <p><strong>Tipo de contenido:</strong> Slider</p>
-                            <p><strong>Orden de aparición:</strong> { content.order }</p>
-                            <hr />
+                            <p className="order"><strong>Orden de aparición:</strong> { content.order }</p>
                             <div className='gallery'>
                                 { content.slides.map((picture, idx) => (
                                     <figure draggable='false' className='each-picture' key={ idx }>
@@ -124,8 +120,7 @@ const RenderContentByTypeEdit = ({ content, setContent, dragOver, dragStart, dec
                         </div>
                         <div key={ content._id } posttype="galeria" className='preview post-gallery' id={ content._id } onDragStart={ dragStart } onDragOver={ dragOver } draggable='true'>
                             <p><strong>Tipo de contenido:</strong> Galería</p>
-                            <p><strong>Orden de aparición:</strong> { content.order }</p>
-                            <hr />
+                            <p className="order"><strong>Orden de aparición:</strong> { content.order }</p>
                             <div className='gallery'>
                                 { content.gallery.map((picture, idx) => (
                                     <figure draggable='false' className='each-picture' key={ idx }>

@@ -2,8 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../reducers/auth/AuthContext'
 import { types } from '../types/types'
-import { FaTimesCircle } from "react-icons/fa";
-import { IoOpenOutline } from "react-icons/io5";
+import { CgArrowBottomLeftR, CgArrowTopRightR } from "react-icons/cg";
 
 export const DashboardNav = () => {
 	const { dispatch } = useContext(AuthContext)
@@ -22,7 +21,7 @@ export const DashboardNav = () => {
 					<nav className='dash-nav open'>
 						<>
 							<div className="close-nav">
-								<FaTimesCircle className='close-icon' onClick={ () => setShow(false) } />
+								<CgArrowBottomLeftR className='close-icon' onClick={ () => setShow(false) } />
 							</div>
 
 							<ul>
@@ -50,7 +49,7 @@ export const DashboardNav = () => {
 				) : (
 					<nav className='dash-nav'>
 						<div className="close-nav">
-							<IoOpenOutline className='close-icon' onClick={ () => setShow(true) } />
+							<CgArrowTopRightR className='close-icon' onClick={ () => setShow(true) } />
 						</div>
 					</nav>
 				)

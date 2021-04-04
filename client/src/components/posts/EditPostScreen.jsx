@@ -36,34 +36,42 @@ const EditPostScreen = () => {
     const [auxContent, setAuxContent] = useState('default')
     const [selectedPost, setSelectedPost] = useState({ title: 'Sin título', subtitle: '', content: { slider: [], image: [], text: [], video: [], gallery: [] } })
     const [content, setContent] = useState([])
+    const [previousContent, setPreviousContent] = useState([])
 
     //Edit Methods
-
     const orderPreviousContent = useCallback(async (id) => {
         const currentPost = await getThisPost(id)
-
+        let auxIdsArray = []
         if (currentPost.orderedContent.length > 0) {
-            setCounter(currentPost.orderedContent.length + 1)
-            return
-        } else {
-            let auxArray = []
-            const postContent = currentPost.content
-            for (const content in postContent) {
-                postContent[content].forEach(elm => auxArray.push(elm))
-            }
-            auxArray.sort((a, b) => a.order - b.order)
-            setContent(auxArray)
-            setCounter(auxArray.length + 1)
+            currentPost.orderedContent.forEach(elm => auxIdsArray.push(elm._id))
         }
+        let auxArray = []
+        const postContent = currentPost.content
+        for (const content in postContent) {
+            postContent[content].forEach(elm => {
+                if (!auxIdsArray.includes(elm._id)) {
+                    auxArray.push(elm)
+                }
+            })
+        }
+        auxArray.sort((a, b) => a.order - b.order)
+        setPreviousContent(auxArray)
 
-    }, [setCounter])
+    }, [])
 
 
     useEffect(() => {
         setPostId(params.postID)
         findCurrentPost(params.postID)
         orderPreviousContent(params.postID)
+
     }, [params.postID, orderPreviousContent])
+
+    useEffect(() => {
+        if (previousContent && previousContent.length > 0) {
+            setCounter((previousContent.length) + (selectedPost.orderedContent.length) + 1)
+        }
+    })
 
 
 
@@ -75,7 +83,12 @@ const EditPostScreen = () => {
     }
 
     const handleSaveContent = () => {
-        setSelectedPost({ ...selectedPost, orderedContent: [...selectedPost.orderedContent, content] })
+        previousContent.forEach(elm => {
+            setSelectedPost({ ...selectedPost, orderedContent: [...selectedPost.orderedContent, elm] })
+        })
+        content.forEach(elm => {
+            setSelectedPost({ ...selectedPost, orderedContent: [...selectedPost.orderedContent, elm] })
+        })
         Swal.fire('¡Bien!', 'Orden Guardado', 'success')
         setToDefault()
     }
@@ -93,8 +106,7 @@ const EditPostScreen = () => {
                     setContent(c => [...c, element])
                     setToDefault()
                 } else {
-                    const contentCopy = [element]
-                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, text: contentCopy } })
+                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, text: element } })
                     setContent(c => [...c, element])
                     setToDefault()
                 }
@@ -106,8 +118,7 @@ const EditPostScreen = () => {
                     setContent(c => [...c, element])
                     setToDefault()
                 } else {
-                    const contentCopy = [element]
-                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, image: contentCopy } })
+                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, image: element } })
                     setContent(c => [...c, element])
                     setToDefault()
                 }
@@ -119,8 +130,7 @@ const EditPostScreen = () => {
                     setContent(c => [...c, element])
                     setToDefault()
                 } else {
-                    const contentCopy = [element]
-                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, gallery: contentCopy } })
+                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, gallery: element } })
                     setContent(c => [...c, element])
                     setToDefault()
                 }
@@ -132,8 +142,7 @@ const EditPostScreen = () => {
                     setContent(c => [...c, element])
                     setToDefault()
                 } else {
-                    const contentCopy = [element]
-                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, video: contentCopy } })
+                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, video: element } })
                     setContent(c => [...c, element])
                     setToDefault()
                 }
@@ -145,8 +154,7 @@ const EditPostScreen = () => {
                     setContent(c => [...c, element])
                     setToDefault()
                 } else {
-                    const contentCopy = [element]
-                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, slider: contentCopy } })
+                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, slider: element } })
                     setContent(c => [...c, element])
                     setToDefault()
                 }
@@ -190,7 +198,6 @@ const EditPostScreen = () => {
         const tag = e.dataTransfer.getData('card_id')
         const card = document.getElementById(tag)
         const cardType = e.dataTransfer.getData('card_type')
-        console.log(tag);
 
         card.style.display = 'block'
         card.className = 'preview'
@@ -206,15 +213,14 @@ const EditPostScreen = () => {
                 const updatedText = await findTextAndUpdateReturn(tag, { order: spaceId })
                 filteredArray = content.filter((elm) => elm._id !== tag)
                 orderedNew = [...filteredArray, updatedText.text].sort((a, b) => a.order - b.order)
-                setContent(orderedNew)
-
+                setPreviousContent(p => [...p, orderedNew])
                 break
             case 'imagen':
                 await findImageAndUpdate(tag, { order: spaceId })
                 const updatedImage = await findImageAndUpdateReturn(tag, { order: spaceId })
                 filteredArray = content.filter((elm) => elm._id !== tag)
                 orderedNew = [...filteredArray, updatedImage.image].sort((a, b) => a.order - b.order)
-                setContent(orderedNew)
+                setPreviousContent(p => [...p, orderedNew])
 
                 break
             case 'galeria':
@@ -222,24 +228,24 @@ const EditPostScreen = () => {
                 const updatedGallery = await findGalleryAndUpdateReturn(tag, { order: spaceId })
                 filteredArray = content.filter((elm) => elm._id !== tag)
                 orderedNew = [...filteredArray, updatedGallery.gallery].sort((a, b) => a.order - b.order)
-                setContent(orderedNew)
 
+                setPreviousContent(p => [...p, orderedNew])
                 break
             case 'video':
                 await findVideoAndUpdate(tag, { order: spaceId })
                 const updatedVideo = await findVideoAndUpdateReturn(tag, { order: spaceId })
                 filteredArray = content.filter((elm) => elm._id !== tag)
                 orderedNew = [...filteredArray, updatedVideo.video].sort((a, b) => a.order - b.order)
-                setContent(orderedNew)
 
+                setPreviousContent(p => [...p, orderedNew])
                 break
             case 'slider':
                 await findSliderAndUpdate(tag, { order: spaceId })
                 const updatedSlider = await findSliderAndUpdateReturn(tag, { order: spaceId })
                 filteredArray = content.filter((elm) => elm._id !== tag)
                 orderedNew = [...filteredArray, updatedSlider.slider].sort((a, b) => a.order - b.order)
-                setContent(orderedNew)
 
+                setPreviousContent(p => [...p, orderedNew])
                 break
             default:
                 break
@@ -265,7 +271,11 @@ const EditPostScreen = () => {
                     <article className="content-to-order" onDrop={ drop } onDragOver={ dragOverReceptor }>
                         <h6>Contenido generado para ordenar</h6>
                         {
+                            previousContent.length > 0 && <RenderContentByType content={ previousContent } setContent={ setPreviousContent } dragStart={ dragStart } dragOver={ dragOver } decrement={ decrement } />
+                        }
+                        {
                             content.length > 0 && <RenderContentByType content={ content } setContent={ setContent } dragStart={ dragStart } dragOver={ dragOver } decrement={ decrement } />
+
                         }
                     </article>
                 </div>
