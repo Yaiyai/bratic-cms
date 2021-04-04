@@ -1,7 +1,6 @@
 import React from 'react'
-import ReceivingContainer from './ReceivingContainer'
 
-const ViewArea = ({ selectedPost, dragOverReceptor, drop, counter, handleSaveContent }) => {
+const ViewArea = ({ selectedPost, handleSaveContent }) => {
     return (
         <div className="view-area">
             <div className="titles-btn">
@@ -17,12 +16,6 @@ const ViewArea = ({ selectedPost, dragOverReceptor, drop, counter, handleSaveCon
             </div>
             <hr />
             <h6>Arrastra elementos para ordenarlos como quieras que aparezcan en la web :)</h6>
-            {[...Array(counter)].map((elm, idx) => (
-                idx !== 0 && (
-                    <ReceivingContainer key={ `er-contenedo-${idx}` } dragOverReceptor={ dragOverReceptor } drop={ drop } idx={ idx } />
-                )
-            ))
-            }
 
         </div>
 

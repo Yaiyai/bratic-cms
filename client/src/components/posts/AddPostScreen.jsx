@@ -18,7 +18,6 @@ import { dragOver, dragOverReceptor, dragStart } from '../../helpers/dranAndDrop
 import PostState from './content/_ui/PostState';
 import RenderContentByType from './content/_ui/RenderContentByType';
 import WhatToAdd from './content/_ui/WhatToAdd';
-import ViewArea from './content/_ui/ViewArea';
 import TitlesArea from './content/_ui/TitlesArea';
 
 //Dependencias
@@ -235,17 +234,39 @@ const AddPostScreen = () => {
                 <div className="edit-area">
                     <PostState savePostState={ savePostState } postState={ selectedPost.status } />
                     <TitlesArea selectedPost={ setSelectedPost } handleInputChange={ handleInputChange } saveTitles={ saveTitles } />
-                    <WhatToAdd auxContent={ auxContent } setAuxContent={ setAuxContent } select={ select } postId={ postId } saveElement={ saveElement } increment={ increment } />
+                    <WhatToAdd counter={ counter } auxContent={ auxContent } setAuxContent={ setAuxContent } select={ select } postId={ postId } saveElement={ saveElement } increment={ increment } />
 
-                    <article className="content-to-order" onDrop={ drop } onDragOver={ dragOverReceptor }>
-                        <h6>Contenido generado para ordenar</h6>
-                        {
-                            content.length > 0 && <RenderContentByType content={ content } setContent={ setContent } dragStart={ dragStart } dragOver={ dragOver } decrement={ decrement } />
-                        }
-                    </article>
                 </div>
 
-                <ViewArea selectedPost={ selectedPost } dragOverReceptor={ dragOverReceptor } drop={ drop } counter={ counter } handleSaveContent={ handleSaveContent } />
+                <div className="view-area">
+                    <div className="titles-btn">
+                        <div>
+                            {
+                                selectedPost.title && <h1>{ selectedPost.title }</h1>
+                            }
+                            {
+                                selectedPost.subtitle && <h2>{ selectedPost.subtitle }</h2>
+                            }
+                        </div>
+                        <button className="my-btn mini" onClick={ () => handleSaveContent() }>Guardar Contenido Ordenado</button>
+                    </div>
+                    <hr />
+                    <h6>Arrastra elementos para ordenarlos como quieras que aparezcan en la web</h6>
+                    {
+                        content.length > 0 &&
+                        <RenderContentByType
+                            content={ content }
+                            setContent={ setContent }
+                            dragStart={ dragStart }
+                            dragOver={ dragOver }
+                            decrement={ decrement }
+                            counter={ counter }
+                            dragOverReceptor={ dragOverReceptor }
+                            drop={ drop }
+                        />
+                    }
+                </div>
+
             </section>
         </section>
 

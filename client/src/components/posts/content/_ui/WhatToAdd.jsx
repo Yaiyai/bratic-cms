@@ -5,7 +5,7 @@ import AddSlider from '../AddSlider'
 import AddText from '../AddText'
 import AddVideo from '../AddVideo'
 
-const WhatToAdd = ({ auxContent, setAuxContent, select, postId, saveElement, increment }) => {
+const WhatToAdd = ({ auxContent, setAuxContent, select, postId, saveElement, increment, counter }) => {
 
     const addThis = ({ target }) => {
         switch (target.value) {
@@ -46,7 +46,7 @@ const WhatToAdd = ({ auxContent, setAuxContent, select, postId, saveElement, inc
 
             <article className='add-post'>
                 { auxContent === 'default' && <p>Añadir elemento al post</p> }
-                { auxContent === 'text' && <AddText saveElement={ saveElement } postID={ postId } increment={ increment } /> }
+                { auxContent === 'text' && <AddText saveElement={ saveElement } postID={ postId } increment={ increment } order={ counter } /> }
                 { auxContent === 'image' && <AddImage saveElement={ saveElement } postID={ postId } increment={ increment } /> }
                 { auxContent === 'gallery' && <AddGallery saveElement={ saveElement } postID={ postId } increment={ increment } /> }
                 { auxContent === 'video' && <AddVideo saveElement={ saveElement } postID={ postId } increment={ increment } /> }
