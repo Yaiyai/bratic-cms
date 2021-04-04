@@ -75,7 +75,7 @@ const AppRouter = () => {
 
 									<Modal dialogClassName='modal-width' centered className='my-modals' show={ show } onHide={ handleClose }>
 										<Modal.Header>
-											<h1>Añadir Sección a la web</h1>
+											<h4>Añadir Sección a la web</h4>
 										</Modal.Header>
 										<Modal.Body>
 											<AddSection handleClose={ handleClose } />

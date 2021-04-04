@@ -15,6 +15,10 @@
 		display: flex;
 		justify-content: space-between;
 	}
+	.modal-width {
+		width: 70%;
+		max-width: none !important;
+	}
 }
 .modal-backdrop.show {
 	background-color: map-get($theme-colors, 'dark-primary');

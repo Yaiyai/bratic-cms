@@ -10,7 +10,7 @@ import { SectionContext } from '../reducers/sections/sectionsContext'
 import { FaTimesCircle } from "react-icons/fa";
 
 import { fileUpload } from '../helpers/uploadFiles'
-import TextEditor from '../ui/TextEditor'
+import TextEditorSections from '../ui/TextEditorSections'
 
 export const SectionScreen = () => {
 	const { user } = useContext(AuthContext)
@@ -167,6 +167,7 @@ export const SectionScreen = () => {
 		} else {
 			Swal.fire('¡Chachi!', 'Los cambios han sido guardados', 'success')
 			dispatchSections({ type: types.sectionUpdate, payload: sectionUpdated })
+			history.push('/bratic')
 		}
 	}
 
@@ -275,7 +276,7 @@ export const SectionScreen = () => {
 							<p>Texto:</p>
 							<div dangerouslySetInnerHTML={ parsedText }></div>
 						</section>
-						<TextEditor setQuill={ setQuill } handleQuill={ handleQuill } setParsed={ setParsed } />
+						<TextEditorSections setQuill={ setQuill } handleQuill={ handleQuill } setParsed={ setParsed } />
 					</>
 				) }
 			</section>

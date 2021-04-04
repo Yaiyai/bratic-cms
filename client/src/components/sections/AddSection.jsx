@@ -5,8 +5,8 @@ import useForm from '../../hooks/useForm'
 import { addSection } from '../../actions/sections.action'
 import { SectionContext } from '../../reducers/sections/sectionsContext'
 import { types } from '../../types/types'
-import TextEditor from '../../ui/TextEditor'
 import Swal from 'sweetalert2'
+import TextEditorSections from '../../ui/TextEditorSections';
 
 export const AddSection = ({ handleClose }) => {
 	const { dispatchSections } = useContext(SectionContext)
@@ -187,7 +187,7 @@ export const AddSection = ({ handleClose }) => {
 
 				<div className='right-side'>
 					<label>Texto </label>
-					<TextEditor setQuill={ setQuill } handleQuill={ handleQuill } setParsed={ setParsed } />
+					<TextEditorSections setQuill={ setQuill } handleQuill={ handleQuill } setParsed={ setParsed } />
 
 					<label htmlFor=''>Características</label>
 					<div className='features'>
