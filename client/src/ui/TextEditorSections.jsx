@@ -13,8 +13,9 @@ const TextEditorSections = ({ setQuill, handleQuill, setParsed }) => {
 	const modules = {
 		toolbar: {
 			container: [
-				[{ header: '1' }, { header: '2' }, { font: [] }],
-				[{ size: [] }],
+				[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+				[{ font: [] }],
+				[{ 'color': ['#dd4124', '#f38b2e'] }, { 'background': ['#dd4124', '#f38b2e'] }],
 				['bold', 'italic', 'underline', 'strike', 'blockquote'],
 				[{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
 				['link'],
