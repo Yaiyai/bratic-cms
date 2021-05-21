@@ -3,6 +3,9 @@
 	background-position: top center;
 	background-size: cover;
 	background-repeat: no-repeat;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	padding: calc(#{$module} * 2) 0;
 	h1 {
 		@include font-line-height(48px);
@@ -10,10 +13,11 @@
 		font-weight: $titles-bold;
 	}
 	h2 {
-		@include font-line-height(32px);
+		@include font-line-height(30px);
+		color: map-get($theme-colors, 'primary');
+		font-style: italic;
+		font-weight: 300;
 		text-align: center;
-		font-weight: $titles-semibold;
-		margin-bottom: calc(#{$module} * 1);
 	}
 	.main-image {
 		margin: calc(#{$module} * 3) 0;
@@ -54,56 +58,10 @@
 			object-position: center;
 		}
 	}
-	.video-preview {
-		width: 300px;
-		margin: calc(#{$module} / 2) 0;
-	}
-	.swiper-container {
-		height: calc(#{$module} * 15);
-		width: 100%;
-		@include breakpoint(md-down) {
-			height: calc(#{$module} * 15);
-		}
-		.swiper-wrapper {
-			height: 100%;
-			width: 100%;
-			.swiper-slide {
-				height: 100%;
-				width: 100%;
-				overflow: hidden;
-				img {
-					height: 100%;
-					object-fit: cover;
-					object-position: center;
-				}
-			}
-		}
-	}
-
-	.gallery {
-		display: flex;
-		flex-wrap: wrap;
-		margin: calc(#{$module} / 2) 0;
-		.each-picture {
-			@include items-grid(8, calc(#{$module} / 6));
-			height: 100px;
-			overflow: hidden;
-			background-color: map-get($theme-colors, 'light-grey');
-			position: relative;
-			img {
-				height: 100%;
-				object-fit: cover;
-				object-position: center;
-			}
-			.close-icon {
-				position: absolute;
-				top: 0;
-				right: 0;
-				cursor: pointer;
-				width: 15px;
-				height: 15px;
-				color: map-get($theme-colors, 'primary');
-			}
+	.btn-group {
+		justify-self: center;
+		> * {
+			margin-right: calc(#{$module} / 3);
 		}
 	}
 }

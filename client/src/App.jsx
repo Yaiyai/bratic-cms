@@ -16,6 +16,7 @@ const init = () => {
 	return JSON.parse(localStorage.getItem('bratic-user')) || { logged: false }
 }
 
+
 const App = () => {
 	const isMounted = useRef(true)
 	const [user, dispatch] = useReducer(AuthReducer, {}, init)

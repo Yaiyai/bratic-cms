@@ -15,9 +15,11 @@ form {
 		border: none;
 		outline: none;
 		@include font-line-height($font-xs);
-		border-bottom: 1px solid map-get($theme-colors, 'primary');
-		margin-bottom: calc(#{$module} / 3);
+		border: 1px solid map-get($theme-colors, 'light-grey');
+		margin-bottom: calc(#{$module} / 1);
 		height: 25px;
+		border-radius: 5px;
+		padding: calc(#{$module} / 2) calc(#{$module} / 3);
 		&::placeholder {
 			@include font-line-height($font-xs);
 			padding: calc(#{$module} / 2);

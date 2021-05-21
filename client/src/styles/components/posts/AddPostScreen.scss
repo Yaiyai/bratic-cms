@@ -15,9 +15,9 @@
 		.edit-area {
 			width: calc((100% / 12) * 6);
 			overflow: scroll;
-
+			padding-right: calc(#{$module} * 1);
 			select {
-				width: 100%;
+				width: 200px;
 			}
 			.add-post {
 				display: flex;
@@ -63,7 +63,15 @@
 		.view-area {
 			width: calc((100% / 12) * 6);
 			overflow: scroll;
-			background-color: pink;
+			padding: calc(#{$module} * 2);
+			border-radius: 10px;
+			background-color: map-get($theme-colors, 'light-grey');
+			h1 {
+				@include font-line-height(24px);
+			}
+			h2 {
+				@include font-line-height(20px);
+			}
 		}
 	}
 }

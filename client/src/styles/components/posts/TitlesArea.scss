@@ -3,5 +3,6 @@
 	margin-bottom: calc(#{$module} * 2);
 	.my-btn {
 		margin-top: calc(#{$module} / 2);
+		max-width: 200px;
 	}
 }

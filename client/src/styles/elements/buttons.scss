@@ -9,39 +9,36 @@
 .my-btn {
 	font-weight: $text-semibold;
 	font-size: $font-sm;
-	background-color: map-get($theme-colors, 'primary');
+	background-color: #52b3d9;
 	border: none;
-	border-bottom: 3px solid map-get($theme-colors, 'secondary');
 	color: white;
-	padding: calc(#{$module} / 2) calc(#{$module} / 1);
+	border-radius: 5px;
+	padding: $module;
 	text-transform: uppercase;
 
 	&:hover {
-		border-bottom: 3px solid map-get($theme-colors, 'primary');
-		background-color: map-get($theme-colors, 'secondary');
+		background-color: #5c97bf;
 		color: white;
 		text-decoration: none;
 	}
 	&.secondary {
 		background-color: white;
-		color: map-get($theme-colors, 'primary');
-		border: 1px solid map-get($theme-colors, 'primary');
-		border-bottom: 3px solid map-get($theme-colors, 'primary');
+		color: #52b3d9;
+		border: 1px solid #52b3d9;
 		&:hover {
-			color: map-get($theme-colors, 'secondary');
-			border-bottom: 3px solid map-get($theme-colors, 'secondary');
+			color: white;
+			background-color: #5c97bf;
+			border-color: #5c97bf;
 		}
 	}
 	&.third {
 		background-color: white;
-		color: map-get($theme-colors, 'secondary');
-		border: 1px solid map-get($theme-colors, 'secondary');
-		border-bottom: 3px solid map-get($theme-colors, 'secondary');
+		color: map-get($theme-colors, 'grey');
+		border: 1px solid map-get($theme-colors, 'grey');
 
 		&:hover {
-			color: map-get($theme-colors, 'primary');
-			border: 1px solid map-get($theme-colors, 'primary');
-			border-bottom: 3px solid map-get($theme-colors, 'primary');
+			color: #5c97bf;
+			border: 1px solid #5c97bf;
 		}
 	}
 	&.mini {

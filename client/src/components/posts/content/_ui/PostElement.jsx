@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom/cjs/react-router-dom.min'
+import { Link } from 'react-router-dom'
 
 const PostElement = ({ askIfDelete, post }) => {
 	const [date, setDate] = useState()
