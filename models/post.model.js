@@ -11,14 +11,9 @@ const postModel = new Schema(
 		subtitle: String,
 		author: { type: Schema.Types.ObjectId, ref: 'User' },
 		content: {
-			gallery: [{ type: Schema.Types.ObjectId, ref: 'Gallery' }],
-			slider: [{ type: Schema.Types.ObjectId, ref: 'Slider' }],
-			video: [{ type: Schema.Types.ObjectId, ref: 'Video' }],
 			text: [{ type: Schema.Types.ObjectId, ref: 'Text' }],
 			image: [{ type: Schema.Types.ObjectId, ref: 'Image' }],
-			download: [{ type: Schema.Types.ObjectId, ref: 'Download' }],
 		},
-		orderedContent: Array,
 	},
 	{
 		timestamps: true,

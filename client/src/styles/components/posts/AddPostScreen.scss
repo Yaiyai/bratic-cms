@@ -13,7 +13,7 @@
 		display: flex;
 		width: 100%;
 		.edit-area {
-			width: calc((100% / 12) * 3);
+			width: calc((100% / 12) * 6);
 			overflow: scroll;
 
 			select {
@@ -59,14 +59,11 @@
 					}
 				}
 			}
-			.content-to-order {
-				margin-top: calc(#{$module} * 2);
-				display: flex;
-				flex-direction: column;
-				padding: calc(#{$module} / 2);
-				border: 1px map-get($theme-colors, 'primary') solid;
-				border-radius: 10px;
-			}
+		}
+		.view-area {
+			width: calc((100% / 12) * 6);
+			overflow: scroll;
+			background-color: pink;
 		}
 	}
 }

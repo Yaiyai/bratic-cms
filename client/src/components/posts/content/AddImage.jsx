@@ -3,12 +3,11 @@ import { addImage } from '../../../actions/post-content/image.action'
 import useForm from '../../../hooks/useForm'
 import Loader from '../../../ui/Loader'
 
-const AddImage = ({ saveElement, postID, increment }) => {
+const AddImage = ({ saveElement, postID }) => {
 	const { values, handleFileChange, loading } = useForm()
 	const saveImage = async () => {
 		const theImage = await addImage({ image: values.image }, postID)
 		saveElement('image', theImage)
-		increment()
 	}
 
 	return (

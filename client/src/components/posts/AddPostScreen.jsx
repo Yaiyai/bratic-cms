@@ -3,38 +3,28 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import useForm from '../../hooks/useForm';
-import useCounter from '../../hooks/useCounter';
 
 //Actions
 import { deletePost, getThisPost, updatePost } from '../../actions/posts.action'
-import { findVideoAndUpdate, findVideoAndUpdateReturn } from '../../actions/post-content/video.action';
-import { findImageAndUpdate, findImageAndUpdateReturn } from '../../actions/post-content/image.action';
-import { findTextAndUpdate, findTextAndUpdateReturn } from '../../actions/post-content/text.action';
-import { findSliderAndUpdate, findSliderAndUpdateReturn } from '../../actions/post-content/slider.action';
-import { findGalleryAndUpdate, findGalleryAndUpdateReturn } from '../../actions/post-content/gallery.action';
-import { dragOver, dragOverReceptor, dragStart } from '../../helpers/dranAndDrop';
 
 //Componentes
 import PostState from './content/_ui/PostState';
-import RenderContentByType from './content/_ui/RenderContentByType';
 import WhatToAdd from './content/_ui/WhatToAdd';
 import TitlesArea from './content/_ui/TitlesArea';
+import { deleteText } from '../../actions/post-content/text.action';
+import { deleteImage } from '../../actions/post-content/image.action';
 
-//Dependencias
-import Swal from 'sweetalert2';
 
 const AddPostScreen = () => {
     let history = useHistory();
     let params = useParams()
     const select = useRef()
 
-    const { counter, increment, decrement } = useCounter(1)
     const { values, handleInputChange } = useForm()
     const [postId, setPostId] = useState()
 
     const [auxContent, setAuxContent] = useState('default')
     const [selectedPost, setSelectedPost] = useState({ title: 'Sin título', subtitle: '', content: { slider: [], image: [], text: [], video: [], gallery: [] } })
-    const [content, setContent] = useState([])
 
     useEffect(() => {
         setPostId(params.postID)
@@ -48,12 +38,6 @@ const AddPostScreen = () => {
         setSelectedPost(currentPost)
     }
 
-    const handleSaveContent = () => {
-        setSelectedPost({ ...selectedPost, orderedContent: content })
-        Swal.fire('¡Bien!', 'Orden Guardado', 'success')
-        setToDefault()
-    }
-
     const savePostState = (status) => {
         setSelectedPost({ ...selectedPost, status: status })
     }
@@ -64,12 +48,10 @@ const AddPostScreen = () => {
                 if (selectedPost.content.text.length > 0) {
                     const contentCopy = [...selectedPost.content.text, element]
                     setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, text: contentCopy } })
-                    setContent(c => [...c, element])
                     setToDefault()
                 } else {
                     const contentCopy = [element]
                     setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, text: contentCopy } })
-                    setContent(c => [...c, element])
                     setToDefault()
                 }
                 break
@@ -77,51 +59,10 @@ const AddPostScreen = () => {
                 if (selectedPost.content.image.length > 0) {
                     const contentCopy = [...selectedPost.content.image, element]
                     setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, image: contentCopy } })
-                    setContent(c => [...c, element])
                     setToDefault()
                 } else {
                     const contentCopy = [element]
                     setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, image: contentCopy } })
-                    setContent(c => [...c, element])
-                    setToDefault()
-                }
-                break
-            case 'gallery':
-                if (selectedPost.content.gallery.length > 0) {
-                    const contentCopy = [...selectedPost.content.gallery, element]
-                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, gallery: contentCopy } })
-                    setContent(c => [...c, element])
-                    setToDefault()
-                } else {
-                    const contentCopy = [element]
-                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, gallery: contentCopy } })
-                    setContent(c => [...c, element])
-                    setToDefault()
-                }
-                break
-            case 'video':
-                if (selectedPost.content.video.length > 0) {
-                    const contentCopy = [...selectedPost.content.video, element]
-                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, video: contentCopy } })
-                    setContent(c => [...c, element])
-                    setToDefault()
-                } else {
-                    const contentCopy = [element]
-                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, video: contentCopy } })
-                    setContent(c => [...c, element])
-                    setToDefault()
-                }
-                break
-            case 'slider':
-                if (selectedPost.content.slider.length > 0) {
-                    const contentCopy = [...selectedPost.content.slider, element]
-                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, slider: contentCopy } })
-                    setContent(c => [...c, element])
-                    setToDefault()
-                } else {
-                    const contentCopy = [element]
-                    setSelectedPost({ ...selectedPost, content: { ...selectedPost.content, slider: contentCopy } })
-                    setContent(c => [...c, element])
                     setToDefault()
                 }
                 break
@@ -158,63 +99,15 @@ const AddPostScreen = () => {
         history.goBack()
     }
 
-
-    //Drop Method
-    const drop = async (e) => {
-        e.preventDefault()
-        const tag = e.dataTransfer.getData('card_id')
-        const card = document.getElementById(tag)
-        const cardType = e.dataTransfer.getData('card_type')
-        console.log(tag);
-
-        card.style.display = 'block'
-        card.className = 'preview'
-
-        e.target.appendChild(card)
-        const spaceId = card.parentElement.id
-        let filteredArray = []
-        let orderedNew = []
-
-        switch (cardType) {
-            case 'texto':
-                await findTextAndUpdate(tag, { order: spaceId })
-                const updatedText = await findTextAndUpdateReturn(tag, { order: spaceId })
-                filteredArray = content.filter((elm) => elm._id !== tag)
-                orderedNew = [...filteredArray, updatedText.text].sort((a, b) => a.order - b.order)
-                setContent(orderedNew)
-
+    const deleteThis = async (type, id) => {
+        switch (type) {
+            case 'text':
+                await deleteText(id)
+                setSelectedPost(prevState => ({ ...prevState, content: { ...prevState.content, text: prevState.content.text.filter(text => text._id !== id) } }))
                 break
-            case 'imagen':
-                await findImageAndUpdate(tag, { order: spaceId })
-                const updatedImage = await findImageAndUpdateReturn(tag, { order: spaceId })
-                filteredArray = content.filter((elm) => elm._id !== tag)
-                orderedNew = [...filteredArray, updatedImage.image].sort((a, b) => a.order - b.order)
-                setContent(orderedNew)
-
-                break
-            case 'galeria':
-                await findGalleryAndUpdate(tag, { order: spaceId })
-                const updatedGallery = await findGalleryAndUpdateReturn(tag, { order: spaceId })
-                filteredArray = content.filter((elm) => elm._id !== tag)
-                orderedNew = [...filteredArray, updatedGallery.gallery].sort((a, b) => a.order - b.order)
-                setContent(orderedNew)
-
-                break
-            case 'video':
-                await findVideoAndUpdate(tag, { order: spaceId })
-                const updatedVideo = await findVideoAndUpdateReturn(tag, { order: spaceId })
-                filteredArray = content.filter((elm) => elm._id !== tag)
-                orderedNew = [...filteredArray, updatedVideo.video].sort((a, b) => a.order - b.order)
-                setContent(orderedNew)
-
-                break
-            case 'slider':
-                await findSliderAndUpdate(tag, { order: spaceId })
-                const updatedSlider = await findSliderAndUpdateReturn(tag, { order: spaceId })
-                filteredArray = content.filter((elm) => elm._id !== tag)
-                orderedNew = [...filteredArray, updatedSlider.slider].sort((a, b) => a.order - b.order)
-                setContent(orderedNew)
-
+            case 'image':
+                await deleteImage(id)
+                setSelectedPost(prevState => ({ ...prevState, content: { ...prevState.content, image: prevState.content.image.filter(image => image._id !== id) } }))
                 break
             default:
                 break
@@ -234,8 +127,7 @@ const AddPostScreen = () => {
                 <div className="edit-area">
                     <PostState savePostState={ savePostState } postState={ selectedPost.status } />
                     <TitlesArea selectedPost={ setSelectedPost } handleInputChange={ handleInputChange } saveTitles={ saveTitles } />
-                    <WhatToAdd counter={ counter } auxContent={ auxContent } setAuxContent={ setAuxContent } select={ select } postId={ postId } saveElement={ saveElement } increment={ increment } />
-
+                    <WhatToAdd auxContent={ auxContent } setAuxContent={ setAuxContent } select={ select } postId={ postId } saveElement={ saveElement } />
                 </div>
 
                 <div className="view-area">
@@ -248,22 +140,27 @@ const AddPostScreen = () => {
                                 selectedPost.subtitle && <h2>{ selectedPost.subtitle }</h2>
                             }
                         </div>
-                        <button className="my-btn mini" onClick={ () => handleSaveContent() }>Guardar Contenido Ordenado</button>
                     </div>
                     <hr />
-                    <h6>Arrastra elementos para ordenarlos como quieras que aparezcan en la web</h6>
                     {
-                        content.length > 0 &&
-                        <RenderContentByType
-                            content={ content }
-                            setContent={ setContent }
-                            dragStart={ dragStart }
-                            dragOver={ dragOver }
-                            decrement={ decrement }
-                            counter={ counter }
-                            dragOverReceptor={ dragOverReceptor }
-                            drop={ drop }
-                        />
+                        selectedPost.content.text.length > 0 && selectedPost.content.text.map(text => (
+                            <div key={ text._id } >
+                                <div dangerouslySetInnerHTML={ text.parsedText } >
+                                </div>
+                                <button className="my-btn mini" onClick={ () => deleteThis('text', text._id) }>Borrar</button>
+                            </div>
+
+                        ))
+                    }
+                    {
+                        selectedPost.content.image.length > 0 && selectedPost.content.image.map(image => (
+                            <div key={ image._id } >
+                                <figure>
+                                    <img src={ image.image } alt="" />
+                                </figure>
+                                <button className="my-btn mini" onClick={ () => deleteThis('image', image._id) }>Borrar</button>
+                            </div>
+                        ))
                     }
                 </div>
 

@@ -3,7 +3,7 @@ import { addText } from '../../../actions/post-content/text.action'
 import useForm from '../../../hooks/useForm'
 import TextEditor from '../../../ui/TextEditor'
 
-const AddText = ({ saveElement, postID, increment, order }) => {
+const AddText = ({ saveElement, postID }) => {
 	const isMounted = useRef(true)
 	const [quill, setQuill] = useState()
 	const { values, setValues } = useForm()
@@ -11,7 +11,6 @@ const AddText = ({ saveElement, postID, increment, order }) => {
 	const saveText = async () => {
 		const theText = await addText(values, postID)
 		saveElement('text', theText)
-		increment()
 	}
 
 	useEffect(() => {
@@ -25,10 +24,9 @@ const AddText = ({ saveElement, postID, increment, order }) => {
 			setValues({
 				text: quill,
 				parsedText: { __html: quill },
-				order: order
 			})
 		}
-	}, [quill, setValues, order])
+	}, [quill, setValues])
 
 	return (
 		<div>

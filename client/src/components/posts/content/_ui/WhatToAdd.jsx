@@ -1,11 +1,8 @@
 import React from 'react'
-import AddGallery from '../AddGallery'
 import AddImage from '../AddImage'
-import AddSlider from '../AddSlider'
 import AddText from '../AddText'
-import AddVideo from '../AddVideo'
 
-const WhatToAdd = ({ auxContent, setAuxContent, select, postId, saveElement, increment, counter }) => {
+const WhatToAdd = ({ auxContent, setAuxContent, select, postId, saveElement }) => {
 
     const addThis = ({ target }) => {
         switch (target.value) {
@@ -14,15 +11,6 @@ const WhatToAdd = ({ auxContent, setAuxContent, select, postId, saveElement, inc
                 break
             case 'image':
                 setAuxContent('image')
-                break
-            case 'gallery':
-                setAuxContent('gallery')
-                break
-            case 'video':
-                setAuxContent('video')
-                break
-            case 'slider':
-                setAuxContent('slider')
                 break
             default:
                 setAuxContent('default')
@@ -38,19 +26,13 @@ const WhatToAdd = ({ auxContent, setAuxContent, select, postId, saveElement, inc
                 <option value='default' defaultValue> Añadir... </option>
                 <option value='text'>Texto</option>
                 <option value='image'>Imagen única</option>
-                <option value='gallery'>Galería de imágenes</option>
-                <option value='slider'>Slider</option>
-                <option value='video'>Vídeo</option>
             </select>
 
 
             <article className='add-post'>
                 { auxContent === 'default' && <p>Añadir elemento al post</p> }
-                { auxContent === 'text' && <AddText saveElement={ saveElement } postID={ postId } increment={ increment } order={ counter } /> }
-                { auxContent === 'image' && <AddImage saveElement={ saveElement } postID={ postId } increment={ increment } /> }
-                { auxContent === 'gallery' && <AddGallery saveElement={ saveElement } postID={ postId } increment={ increment } /> }
-                { auxContent === 'video' && <AddVideo saveElement={ saveElement } postID={ postId } increment={ increment } /> }
-                { auxContent === 'slider' && <AddSlider saveElement={ saveElement } postID={ postId } increment={ increment } /> }
+                { auxContent === 'text' && <AddText saveElement={ saveElement } postID={ postId } /> }
+                { auxContent === 'image' && <AddImage saveElement={ saveElement } postID={ postId } /> }
             </article>
         </>
     )

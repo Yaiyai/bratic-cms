@@ -39,9 +39,9 @@ export const DashboardNav = ({ handleShow }) => {
 								<li>
 									<Link to='/bratic/empresa'>Datos de empresa</Link>
 								</li>
-								{/* <li>
+								<li>
 									<Link to='/bratic/blog'>Blog</Link>
-								</li> */}
+								</li>
 								<li className='dropdown'>
 									<p data-toggle='dropdown'>
 										Secciones de la web <FaChevronDown />
