@@ -7,16 +7,26 @@
 	height: 100vh;
 	position: relative;
 	padding: $module;
-	min-width: 100px;
-	max-width: 100px;
+	padding-left: calc(#{$module} / 2);
+	figure {
+		width: 80px;
+	}
 	svg {
-		width: 30px;
-		height: 30px;
+		width: 100%;
+		height: 50px;
 		margin: 0 auto;
+		padding: calc(#{$module} / 4);
 		color: map-get($theme-colors, 'ds-back');
 		&:hover {
 			text-decoration: none;
 			color: map-get($theme-colors, 'ds-focus');
+		}
+		&.active {
+			background-color: map-get($theme-colors, 'ds-focus');
+			border-radius: 6px;
+			&:hover {
+				color: map-get($theme-colors, 'ds-main');
+			}
 		}
 	}
 
@@ -31,9 +41,6 @@
 		li {
 			padding: calc(#{$module} / 3) 0;
 			width: 100%;
-			a {
-				width: 100%;
-			}
 		}
 	}
 	.btn-group {
