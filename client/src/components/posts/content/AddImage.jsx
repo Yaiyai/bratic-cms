@@ -11,7 +11,7 @@ const AddImage = ({ saveElement, postID }) => {
 	}
 
 	return (
-		<div>
+		<section className="add-image">
 			<div className='file-group'>
 				<input type='file' className='file-input' name='image' id='image' onChange={ handleFileChange } />
 			</div>
@@ -19,15 +19,17 @@ const AddImage = ({ saveElement, postID }) => {
 				<Loader loading={ true } />
 			) : (
 				values?.image && (
-					<>
-						<img className='unique-image' src={ values.image } alt='' />
-						<button className='my-btn mini' onClick={ () => saveImage() }> Añadir Imagen a la Entrada</button>
-					</>
+					<div className="muestra">
+						<figure>
+							<img className='unique-image' src={ values.image } alt='' />
+						</figure>
+						<button className='my-btn mini third' onClick={ () => saveImage() }> Añadir Imagen a la Entrada</button>
+					</div>
 				)
 
 			)
 			}
-		</div>
+		</section>
 	)
 }
 

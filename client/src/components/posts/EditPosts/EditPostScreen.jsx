@@ -14,6 +14,7 @@ import PostState from '../../_ui/Posts/PostState/PostState';
 import WhatToAdd from '../../_ui/WhatToAdd/WhatToAdd';
 import TitlesArea from '../../_ui/TitlesArea/TitlesArea';
 import SectionTitle from '../../_ui/SectionTitle/SectionTitle';
+import Swal from 'sweetalert2';
 
 
 const EditPostScreen = () => {
@@ -94,6 +95,24 @@ const EditPostScreen = () => {
     const handleExit = (id) => {
         history.goBack()
     }
+    const checkIfSaved = () => {
+        Swal.fire({
+            title: '¿Seguro?',
+            text: 'No has guardado, si sales sin guardar, se perderán los cambios',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Si, salir!',
+            cancelButtonText: '¡Uy, no!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleExit()
+            }
+        })
+
+    }
+
 
     const handleDeletePost = async (id) => {
         await deletePost(id)
@@ -131,7 +150,7 @@ const EditPostScreen = () => {
 
             <article className="post-btn-group">
                 <button className="my-btn mini" onClick={ () => handleUpdatePost(postId, selectedPost) }>Guardar Entrada</button>
-                <button className="my-btn mini third" onClick={ () => handleExit() }>Salir</button>
+                <button className="my-btn mini third" onClick={ () => checkIfSaved() }>Salir</button>
                 <button className="my-btn mini danger" onClick={ () => handleDeletePost(postId) }>Borrar Entrada</button>
             </article>
             <section className="edit-post">

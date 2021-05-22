@@ -10,6 +10,7 @@ form {
 select {
 	margin-bottom: calc(#{$module} / 2);
 }
+
 input,
 select,
 textarea {
@@ -31,7 +32,8 @@ textarea {
 		border: 1px solid map-get($theme-colors, 'ds-main');
 	}
 	&.file-input {
-		width: 50%;
+		width: 100%;
+		background-color: white;
 		outline: none;
 		color: map-get($theme-colors, 'text');
 		font-weight: $text-light;
@@ -39,6 +41,7 @@ textarea {
 		margin-bottom: calc(#{$module} / 2);
 		border-bottom: none;
 		overflow: hidden;
+		border: none;
 		&::-webkit-file-upload-button {
 			visibility: hidden;
 		}
@@ -57,6 +60,7 @@ textarea {
 			cursor: pointer;
 			font-size: 10px;
 			width: 100%;
+			border-radius: 5px;
 		}
 		&:hover {
 			&::before {

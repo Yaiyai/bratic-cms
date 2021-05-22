@@ -23,14 +23,13 @@ const WhatToAdd = ({ auxContent, setAuxContent, select, postId, saveElement }) =
         <>
             <label>Tienes que añadir obligatoriamente, por lo menos, una imagen</label>
             <select ref={ select } onChange={ addThis } name='content' placeholder='Añadir...'>
-                <option value='default' defaultValue> Añadir... </option>
+                <option value='default' defaultValue> Añadir Elemento a la entrada... </option>
                 <option value='text'>Texto</option>
                 <option value='image'>Imagen</option>
             </select>
 
 
             <article className='add-post'>
-                { auxContent === 'default' && <p>Añadir elemento al post</p> }
                 { auxContent === 'text' && <AddText saveElement={ saveElement } postID={ postId } /> }
                 { auxContent === 'image' && <AddImage saveElement={ saveElement } postID={ postId } /> }
             </article>
