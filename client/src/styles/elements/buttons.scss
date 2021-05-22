@@ -12,39 +12,24 @@
 	font-size: $font-sm;
 	background-color: #52b3d9;
 	border: none;
-	color: white;
+	color: map-get($theme-colors, 'ds-back');
 	border-radius: 5px;
 	padding: $module;
 	text-transform: uppercase;
 
 	&:hover {
-		background-color: #5c97bf;
-		color: white;
+		color: map-get($theme-colors, 'ds-main');
 		text-decoration: none;
 	}
 	&.secondary {
-		background-color: white;
-		color: #52b3d9;
-		border: 1px solid #52b3d9;
-		&:hover {
-			color: white;
-			background-color: #5c97bf;
-			border-color: #5c97bf;
-		}
+		background-color: map-get($theme-colors, 'ds-btn-secondary');
 	}
 	&.third {
-		background-color: white;
-		color: map-get($theme-colors, 'grey');
-		border: 1px solid map-get($theme-colors, 'grey');
-
-		&:hover {
-			color: #5c97bf;
-			border: 1px solid #5c97bf;
-		}
+		background-color: map-get($theme-colors, 'ds-btn-third');
 	}
 	&.mini {
 		font-size: 10px;
-		padding: calc(#{$module} / 6) calc(#{$module} / 4);
+		padding: calc(#{$module} / 4) calc(#{$module} / 3);
 	}
 	&.underlined {
 		font-size: 10px;

@@ -17,7 +17,7 @@
 
 	.all-posts {
 		display: flex;
-		flex-direction: column;
+		flex-wrap: wrap;
 		width: 100%;
 		margin-top: calc(#{$module} * 2);
 	}

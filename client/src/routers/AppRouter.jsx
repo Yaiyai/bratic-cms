@@ -23,6 +23,7 @@ import { AddSection } from '../components/sections/AddSection'
 import LoginScreen from '../components/auth/LoginScreen/LoginScreen'
 import SignupScreen from '../components/auth/SignupScreen/SignupScreen'
 import { NavBar } from '../components/_ui/NavBar/NavBar'
+import AllSections from '../components/sections/AllSections'
 
 const AppRouter = () => {
 	const isMounted = useRef(true)
@@ -72,6 +73,7 @@ const AppRouter = () => {
 										<Route exact path='/bratic/blog/nueva-entrada/:postID' component={ AddPostScreen } />
 										<Route exact path='/bratic/blog/:postID' component={ Post } />
 										<Route exact path='/bratic/blog/editar-entrada/:postID' component={ EditPostScreen } />
+										<Route exact path='/bratic/seccion' component={ AllSections } />
 										<Route exact path='/bratic/seccion/:id' component={ (props) => <SectionScreen { ...props } /> } />
 										<Redirect to='/bratic' />
 									</Switch>

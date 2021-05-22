@@ -1,0 +1,14 @@
+.dashboard-container {
+	display: flex;
+	justify-content: space-between;
+	width: 98vw;
+	height: 98vh;
+	overflow: hidden;
+
+	main {
+		flex-grow: 1;
+		overflow: scroll;
+		background-color: map-get($theme-colors, 'ds-back');
+		border-radius: 30px;
+	}
+}

@@ -1,11 +1,15 @@
-import React, { useContext } from 'react'
-import { AuthContext } from '../../reducers/auth/AuthContext'
+import React from 'react'
+import SectionTitle from '../_ui/SectionTitle/SectionTitle'
 
 const DashboardScreen = () => {
-	const { user } = useContext(AuthContext)
 	return (
 		<section id="dashboard-screen">
-			<h3>¡Bienvenid@ { user.name }!</h3>
+			<SectionTitle
+				image='https://res.cloudinary.com/bratic-app/image/upload/v1621696920/web/dashboard2_zwjqif.svg'
+				title="Dashboard"
+				instructions="Éste es el dashboard de gestión de contenido de tu web :)"
+			/>
+
 		</section>
 	)
 }

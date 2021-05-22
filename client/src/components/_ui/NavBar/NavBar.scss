@@ -24,8 +24,8 @@
 		align-items: center;
 		a {
 			display: flex;
-			color: white;
-			font-family: $font-titles;
+			color: map-get($theme-colors, 'ds-back');
+			font-family: $font-text;
 			margin: 0 0 0 calc(#{$module} / 3);
 			&:hover {
 				text-decoration: none;

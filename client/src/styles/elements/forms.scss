@@ -17,16 +17,16 @@ form {
 		@include font-line-height($font-xs);
 		border: 1px solid map-get($theme-colors, 'light-grey');
 		margin-bottom: calc(#{$module} / 1);
-		height: 25px;
 		border-radius: 5px;
 		padding: calc(#{$module} / 2) calc(#{$module} / 3);
 		&::placeholder {
 			@include font-line-height($font-xs);
 			padding: calc(#{$module} / 2);
 			padding-left: 0;
+			color: map-get($theme-colors, 'light-grey');
 		}
 		&:focus {
-			border: 1px solid map-get($theme-colors, 'secondary');
+			border: 1px solid map-get($theme-colors, 'ds-main');
 		}
 		&.file-input {
 			width: 50%;
@@ -52,7 +52,6 @@ form {
 				padding: calc(#{$module} / 6) calc(#{$module} / 4);
 				outline: none;
 				white-space: nowrap;
-				-webkit-user-select: none;
 				cursor: pointer;
 				font-size: 10px;
 				width: 100%;
@@ -73,6 +72,7 @@ form {
 	label {
 		@include font-line-height($font-xs);
 		margin-right: calc(#{$module} / 3);
-		font-weight: $text-semibold;
+		font-weight: $text-normal;
+		color: map-get($theme-colors, 'ds-main');
 	}
 }

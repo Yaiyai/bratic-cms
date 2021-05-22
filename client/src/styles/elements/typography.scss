@@ -12,7 +12,8 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: $font-titles;
+	font-family: $font-text;
+	margin: 0;
 }
 
 h1 {
@@ -37,6 +38,7 @@ h5 {
 	font-size: ($h5-size);
 }
 p {
+	margin: 0;
 	@include font-line-height($font-base);
 	font-weight: $text-normal;
 	@include breakpoint(lg-down) {

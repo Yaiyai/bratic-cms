@@ -1,0 +1,10 @@
+.each-section {
+	@include items-grid(4, $module);
+	background-color: white;
+	padding: $module;
+	border-radius: 20px;
+	box-shadow: 0px 0px 5px 0px transparentize($color: map-get($theme-colors, 'ds-main'), $amount: 0.9);
+	&:hover {
+		box-shadow: 0px 0px 8px 0px transparentize($color: map-get($theme-colors, 'ds-main'), $amount: 0.7);
+	}
+}

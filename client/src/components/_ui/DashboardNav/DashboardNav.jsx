@@ -1,18 +1,15 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 import { types } from '../../../types/types'
-import { SectionContext } from '../../../reducers/sections/sectionsContext';
 import { AuthContext } from '../../../reducers/auth/AuthContext';
 
-import { CgArrowBottomLeftR, CgArrowTopRightR } from "react-icons/cg";
-import { FaChevronDown } from 'react-icons/fa';
+import { FaRegPlusSquare, FaSuitcase } from 'react-icons/fa';
+import { AiOutlineComment } from 'react-icons/ai';
+import { MdExitToApp, MdWeb } from 'react-icons/md';
 
 export const DashboardNav = ({ handleShow }) => {
 	const { dispatch, user } = useContext(AuthContext)
-	const [show, setShow] = useState(true)
-	const { sections } = useContext(SectionContext)
-
 
 	const handleLogout = async () => {
 		await dispatch({ type: types.logout })
@@ -22,63 +19,33 @@ export const DashboardNav = ({ handleShow }) => {
 
 	return (
 		<>
-			{
-				show ? (
-					<nav className='dash-nav open'>
-						<>
-							<div className="close-nav">
-								<CgArrowBottomLeftR className='close-icon' onClick={ () => setShow(false) } />
-							</div>
+			<nav className='dash-nav '>
 
-							<ul>
-								<li>
-									<Link to='/bratic'>
-										<figure>
-											<img src='https://res.cloudinary.com/bratic-app/image/upload/v1609866461/logoBN_ujpbti.svg' alt='' />
-										</figure>
-									</Link>
-								</li>
-								<li>
-									<Link to='/bratic/empresa'>Datos de empresa</Link>
-								</li>
-								<li>
-									<Link to='/bratic/blog'>Blog</Link>
-								</li>
-								<li className='dropdown'>
-									<p data-toggle='dropdown'>
-										Secciones de la web <FaChevronDown />
-									</p>
-									{ sections.length > 0 && (
-										<ul className='dropdown-menu'>
-											{sections.map((st) => (
-												<li key={ st._id }>
-													<Link to={ `/bratic/seccion/${st._id}` }>{ st.sectionName }</Link>
-												</li>
-											)) }
-										</ul>
-									) }
-								</li>
-							</ul>
-							<div className='btn-group'>
-								<small>Made with &hearts; by Yai</small>
-								<small>&copy; Bratic S.L.</small>
-								{ user.email === 'admin@yai.com' && (
-									<button className='my-btn third mini' onClick={ handleShow }>
-										Añadir Sección
-									</button>
-								) }
-								<button className='my-btn secondary mini' onClick={ handleLogout }>Cerrar Sesión</button>
-							</div>
-						</>
-					</nav>
-				) : (
-					<nav className='dash-nav'>
-						<div className="close-nav">
-							<CgArrowTopRightR className='close-icon' onClick={ () => setShow(true) } />
-						</div>
-					</nav>
-				)
-			}
+				<ul>
+					<li>
+						<Link to='/bratic'>
+							<figure>
+								<img src='https://res.cloudinary.com/bratic-app/image/upload/v1609866461/logoBN_ujpbti.svg' alt='' />
+							</figure>
+						</Link>
+					</li>
+					<li>
+						<Link to='/bratic/empresa'><FaSuitcase /></Link>
+					</li>
+					<li>
+						<Link to='/bratic/blog'><AiOutlineComment /></Link>
+					</li>
+					<li>
+						<Link to='/bratic/seccion'><MdWeb /></Link>
+					</li>
+				</ul>
+				<div className='btn-group'>
+					{ user.email === 'admin@yai.com' && (
+						<FaRegPlusSquare onClick={ handleShow } />
+					) }
+					<MdExitToApp onClick={ handleLogout } />
+				</div>
+			</nav>
 		</>
 	)
 }

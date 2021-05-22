@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 import { addPost, deletePost, getUserPosts } from '../../../actions/posts.action'
 import { AuthContext } from '../../../reducers/auth/AuthContext'
 import PostElement from '../../_ui/Posts/PostElement/PostElement';
+import SectionTitle from '../../_ui/SectionTitle/SectionTitle';
 
 const PostsScreen = () => {
 	let history = useHistory();
@@ -63,8 +64,12 @@ const PostsScreen = () => {
 
 	return (
 		<div id="posts-screen">
-			<h2>Entradas del Blog</h2>
-			<p>Estás viendo las entradas del blog que <strong className="user">{ user.name }</strong> (tú, señor@) ha creado</p>
+			<SectionTitle
+				image='https://res.cloudinary.com/bratic-app/image/upload/v1621695842/web/blog_vadvsn.svg'
+				title="Entradas del Blog"
+				instructions={ `Estás viendo las entradas del blog que ${user.name} (tú, señor@) ha creado` }
+			/>
+
 			<button className="my-btn primary mini" onClick={ handleAdd }>Añadir entrada del blog</button>
 
 			{posts?.length > 0 ? (
