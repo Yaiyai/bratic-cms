@@ -28,13 +28,13 @@ export const DashboardNav = ({ handleShow }) => {
 
 				<ul>
 					<li>
-						<Link to='/bratic/empresa' onClick={ () => setCurrentNav('empresa') }><AiOutlineBank className={ currentNav === 'empresa' ? 'active' : null } /></Link>
+						<Link to='/bratic/empresa' onClick={ () => setCurrentNav('empresa') }><AiOutlineBank className={ currentNav === 'empresa' ? 'active' : null } /><span>Empresa</span></Link>
 					</li>
 					<li>
-						<Link to='/bratic/blog' onClick={ () => setCurrentNav('blog') }><AiOutlineComment className={ currentNav === 'blog' ? 'active' : null } /></Link>
+						<Link to='/bratic/blog' onClick={ () => setCurrentNav('blog') }><AiOutlineComment className={ currentNav === 'blog' ? 'active' : null } /><span>Blog</span></Link>
 					</li>
 					<li>
-						<Link to='/bratic/seccion' onClick={ () => setCurrentNav('secciones') }><AiOutlineLayout className={ currentNav === 'secciones' ? 'active' : null } /></Link>
+						<Link to='/bratic/seccion' onClick={ () => setCurrentNav('secciones') }><AiOutlineLayout className={ currentNav === 'secciones' ? 'active' : null } /><span>Secciones</span></Link>
 					</li>
 				</ul>
 				<div className='btn-group'>
