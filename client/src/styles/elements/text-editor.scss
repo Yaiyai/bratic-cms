@@ -1,4 +1,17 @@
 .text-editor {
-	margin-bottom: calc(#{$module} * 2);
+	margin-bottom: calc(#{$module} * 1);
 	z-index: -1;
+	background-color: white;
+	border-radius: 5px;
+	border: 1px solid map-get($theme-colors, 'light-grey');
+	.quill {
+		min-height: 250px;
+	}
+	.ql-toolbar.ql-snow {
+		border: none;
+		border-bottom: 1px solid map-get($theme-colors, 'light-grey');
+	}
+	.ql-container.ql-snow {
+		border: none;
+	}
 }

@@ -9,7 +9,6 @@ const DashboardScreen = () => {
 				title="Dashboard"
 				instructions="Éste es el dashboard de gestión de contenido de tu web :)"
 			/>
-
 		</section>
 	)
 }

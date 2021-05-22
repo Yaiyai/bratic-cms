@@ -13,6 +13,7 @@ import { deleteImage } from '../../../actions/post-content/image.action';
 import PostState from '../../_ui/Posts/PostState/PostState';
 import WhatToAdd from '../../_ui/WhatToAdd/WhatToAdd';
 import TitlesArea from '../../_ui/TitlesArea/TitlesArea';
+import SectionTitle from '../../_ui/SectionTitle/SectionTitle';
 
 
 const EditPostScreen = () => {
@@ -122,16 +123,21 @@ const EditPostScreen = () => {
 
     return (
         <section id="add-posts-screen">
+            <SectionTitle
+                image='https://res.cloudinary.com/bratic-app/image/upload/v1621695842/web/blog-single_zvpet3.svg'
+                title="Estás editando esta entrada:"
+                instructions={ selectedPost.title }
+            />
+
             <article className="post-btn-group">
-                <h3>Editar entrada : { selectedPost.title }</h3>
-                <button className="my-btn mini secondary" onClick={ () => handleDeletePost(postId) }>Borrar Entrada</button>
-                <button className="my-btn mini third" onClick={ () => handleUpdatePost(postId, selectedPost) }>Guardar Entrada</button>
-                <button className="my-btn mini" onClick={ () => handleExit() }>Salir</button>
+                <button className="my-btn mini" onClick={ () => handleUpdatePost(postId, selectedPost) }>Guardar Entrada</button>
+                <button className="my-btn mini third" onClick={ () => handleExit() }>Salir</button>
+                <button className="my-btn mini danger" onClick={ () => handleDeletePost(postId) }>Borrar Entrada</button>
             </article>
             <section className="edit-post">
                 <div className="edit-area">
-                    <PostState savePostState={ savePostState } postState={ selectedPost.status } />
                     <TitlesArea selectedPost={ setSelectedPost } handleInputChange={ handleInputChange } saveTitles={ saveTitles } />
+                    <PostState savePostState={ savePostState } postState={ selectedPost.status } />
                     <WhatToAdd auxContent={ auxContent } setAuxContent={ setAuxContent } select={ select } postId={ postId } saveElement={ saveElement } />
                 </div>
                 <div className="view-area">
@@ -151,7 +157,7 @@ const EditPostScreen = () => {
                             <div key={ text._id } >
                                 <div dangerouslySetInnerHTML={ text.parsedText } >
                                 </div>
-                                <button className="my-btn mini" onClick={ () => deleteThis('text', text._id) }>Borrar</button>
+                                <button className="my-btn mini danger" onClick={ () => deleteThis('text', text._id) }>Borrar este texto</button>
                             </div>
 
                         ))
@@ -162,7 +168,7 @@ const EditPostScreen = () => {
                                 <figure>
                                     <img src={ image.image } alt="" />
                                 </figure>
-                                <button className="my-btn mini" onClick={ () => deleteThis('image', image._id) }>Borrar</button>
+                                <button className="my-btn mini danger" onClick={ () => deleteThis('image', image._id) }>Borrar esta imagen</button>
                             </div>
                         ))
                     }

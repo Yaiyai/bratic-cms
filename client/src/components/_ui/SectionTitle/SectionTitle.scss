@@ -17,6 +17,9 @@
 		right: 0;
 		bottom: calc(#{$module} / 2);
 	}
+	p {
+		max-width: 70%;
+	}
 }
 .dashboard-user {
 	color: map-get($theme-colors, 'ds-main');

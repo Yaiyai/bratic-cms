@@ -1,10 +1,13 @@
 #add-posts-screen {
 	.post-btn-group {
-		padding: 0 0 calc(#{$module} * 1);
-		border-bottom: 1px solid black;
 		margin-bottom: calc(#{$module} * 1);
+		display: flex;
+		width: 100%;
 		button {
 			margin-right: calc(#{$module} / 2);
+			&.danger {
+				justify-self: flex-end;
+			}
 		}
 	}
 	.edit-post {
@@ -16,9 +19,6 @@
 			width: calc((100% / 12) * 6);
 			overflow: scroll;
 			padding-right: calc(#{$module} * 1);
-			select {
-				width: 200px;
-			}
 			.add-post {
 				display: flex;
 				align-items: stretch;
@@ -63,9 +63,9 @@
 		.view-area {
 			width: calc((100% / 12) * 6);
 			overflow: scroll;
-			padding: calc(#{$module} * 2);
-			border-radius: 10px;
-			background-color: map-get($theme-colors, 'light-grey');
+			padding: calc(#{$module} * 1);
+			border-radius: 20px;
+			background-color: white;
 			h1 {
 				@include font-line-height(24px);
 			}

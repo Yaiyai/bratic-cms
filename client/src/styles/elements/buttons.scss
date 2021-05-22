@@ -18,14 +18,27 @@
 	text-transform: uppercase;
 
 	&:hover {
-		color: map-get($theme-colors, 'ds-main');
+		color: map-get($theme-colors, 'ds-back');
 		text-decoration: none;
+		background-color: map-get($theme-colors, 'ds-focus');
 	}
 	&.secondary {
 		background-color: map-get($theme-colors, 'ds-btn-secondary');
+		&:hover {
+			background-color: map-get($theme-colors, 'ds-focus');
+		}
 	}
 	&.third {
 		background-color: map-get($theme-colors, 'ds-btn-third');
+		&:hover {
+			background-color: map-get($theme-colors, 'ds-focus');
+		}
+	}
+	&.danger {
+		background-color: map-get($theme-colors, 'ds-btn-danger');
+		&:hover {
+			background-color: map-get($theme-colors, 'ds-focus');
+		}
 	}
 	&.mini {
 		font-size: 10px;
