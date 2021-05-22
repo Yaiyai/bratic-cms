@@ -21,7 +21,7 @@ const AllSections = () => {
             <SectionTitle
                 image='https://res.cloudinary.com/bratic-app/image/upload/v1621695842/web/sections_r2ejno.svg'
                 title="Secciones de tu web"
-                instructions="Aquí verás todas las secciones que componen tu web. Pincha en cualquiera para editarla :)."
+                instructions="Aquí verás todas las secciones que componen tu web. Pincha en cualquiera para editarla :). Si necesitas añadir una nueva sección, ponte en contacto con el webmaster."
             />
             {
                 sections?.length > 0 && (

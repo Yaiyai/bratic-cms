@@ -58,7 +58,7 @@ const Post = () => {
 	return (
 		<>
 			<SectionTitle
-				image='https://res.cloudinary.com/bratic-app/image/upload/v1621695842/web/blog-single_zvpet3.svg'
+				image='https://res.cloudinary.com/bratic-app/image/upload/v1621696886/web/dashboard_jrqf3g.svg'
 				title="Muestra de la entrada"
 				instructions="Así es como se verá la entrada en la web :)"
 			/>

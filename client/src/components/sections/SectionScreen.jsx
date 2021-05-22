@@ -16,6 +16,7 @@ import { EditGroupSection } from './EditGroupSection'
 import Swal from 'sweetalert2'
 import { FaTimesCircle } from "react-icons/fa";
 import TextEditorSections from '../_ui/TextEditor/TextEditorSections'
+import SectionTitle from '../_ui/SectionTitle/SectionTitle'
 
 export const SectionScreen = () => {
 	const { user } = useContext(AuthContext)
@@ -179,16 +180,18 @@ export const SectionScreen = () => {
 	return (
 		<>
 			<section className='section-screen'>
-				<h1>
-					Sección <span>{ values?.sectionName }</span>
-				</h1>
+				<SectionTitle
+					image='https://res.cloudinary.com/bratic-app/image/upload/v1621687077/web/blog-login-image_n0ocyy.svg'
+					title="Estás editando esta sección"
+					instructions={ values?.sectionName }
+				/>
 
 				<button className='my-btn mini' onClick={ saveChanges }>
 					Guardar Cambios
 				</button>
 
 				{ user.email === 'admin@yai.com' && (
-					<button className='my-btn secondary mini' onClick={ handleDelete }>
+					<button className='my-btn mini danger' onClick={ handleDelete }>
 						Borrar esta sección
 					</button>
 				) }

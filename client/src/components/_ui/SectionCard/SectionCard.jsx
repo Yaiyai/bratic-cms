@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 
 const SectionCard = ({ section }) => {
     return (
-        <article className="each-section" >
-            <Link to={ `/bratic/seccion/${section._id}` }>{ section.sectionName }</Link>
-        </article>
+
+        <Link className="each-section" to={ `/bratic/seccion/${section._id}` }>{ section.sectionName }</Link>
+
     )
 }
 

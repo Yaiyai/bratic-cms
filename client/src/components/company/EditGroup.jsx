@@ -13,22 +13,22 @@ export const EditGroup = ({ nameValue, deleteField, inputType, editLabel, editAc
 				<div className='edit-group'>
 					{imageEdit ? (
 						<div>
-							<p>{editLabel}: </p>
+							<p>{ editLabel }: </p>
 
 							<figure>
-								<img src={editValue} alt={nameValue} />
+								<img src={ editValue } alt={ nameValue } />
 							</figure>
 						</div>
 					) : (
 						<p>
-							{editLabel}: <strong>{editValue}</strong>
+							{editLabel }: <strong>{ editValue }</strong>
 						</p>
-					)}
+					) }
 					<div>
-						<button className='my-btn mini secondary' onClick={() => deleteField(nameValue)}>
+						<button className='my-btn mini danger' onClick={ () => deleteField(nameValue) }>
 							Borrar
 						</button>
-						<button className='my-btn mini' onClick={handleShow}>
+						<button className='my-btn mini' onClick={ handleShow }>
 							Editar
 						</button>
 					</div>
@@ -36,28 +36,28 @@ export const EditGroup = ({ nameValue, deleteField, inputType, editLabel, editAc
 			) : (
 				<div className='edit-group'>
 					<p>
-						{editLabel}: <small>Sin datos</small>
+						{ editLabel }: <small>Sin datos</small>
 					</p>
-					<button className='my-btn mini' onClick={handleShow}>
+					<button className='my-btn mini' onClick={ handleShow }>
 						Añadir
 					</button>
 				</div>
-			)}
+			) }
 
-			<Modal className='edit-modal my-modals' show={show} onHide={handleClose}>
+			<Modal className='edit-modal my-modals' show={ show } onHide={ handleClose }>
 				<Modal.Header>
-					<Modal.Title>{editValue}</Modal.Title>
+					<Modal.Title>{ editValue }</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<form className='edit-form' onSubmit={submitEdit}>
-						<input name={nameValue} type={inputType} onChange={editAction} placeholder={editValue} />
-						<button className='my-btn' type='submit' onClick={handleClose}>
+					<form className='edit-form' onSubmit={ submitEdit }>
+						<input name={ nameValue } type={ inputType } onChange={ editAction } placeholder={ editValue } />
+						<button className='my-btn mini' type='submit' onClick={ handleClose }>
 							Guardar
 						</button>
 					</form>
 				</Modal.Body>
 				<Modal.Footer>
-					<button className='my-btn' onClick={handleClose}>
+					<button className='my-btn mini danger' onClick={ handleClose }>
 						cerrar
 					</button>
 				</Modal.Footer>
