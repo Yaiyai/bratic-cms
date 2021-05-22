@@ -6,7 +6,7 @@ export const Navbar = () => {
 		<nav className='login-nav'>
 			<div className='container'>
 				<figure>
-					<img src='https://res.cloudinary.com/bratic-app/image/upload/v1609866461/logoBN_ujpbti.svg' alt='' />
+					<img src={ process.env.REACT_APP_COMPANY_LOGO_BN } alt='' />
 				</figure>
 				<ul>
 					<li>

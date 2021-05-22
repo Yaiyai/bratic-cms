@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
-import { addPost, deletePost, getUserPosts } from '../actions/posts.action'
-import { AuthContext } from '../reducers/auth/AuthContext'
-import PostElement from './posts/content/_ui/PostElement'
+import { addPost, deletePost, getUserPosts } from '../../../actions/posts.action'
+import { AuthContext } from '../../../reducers/auth/AuthContext'
+import PostElement from '../content/_ui/PostElement'
 
 const PostsScreen = () => {
 	let history = useHistory();

@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { deleteSection, updateSection } from '../actions/sections.action'
-import useForm from '../hooks/useForm'
+import { deleteSection, updateSection } from '../../actions/sections.action'
+import useForm from '../../hooks/useForm'
 import Swal from 'sweetalert2'
-import { AuthContext } from '../reducers/auth/AuthContext'
-import { types } from '../types/types'
-import { EditGroupSection } from './sections/EditGroupSection'
-import { SectionContext } from '../reducers/sections/sectionsContext'
+import { AuthContext } from '../../reducers/auth/AuthContext'
+import { types } from '../../types/types'
+import { EditGroupSection } from './EditGroupSection'
+import { SectionContext } from '../../reducers/sections/sectionsContext'
 import { FaTimesCircle } from "react-icons/fa";
 
-import { fileUpload } from '../helpers/uploadFiles'
+import { fileUpload } from '../../helpers/uploadFiles'
 import TextEditorSections from '../ui/TextEditorSections'
 
 export const SectionScreen = () => {

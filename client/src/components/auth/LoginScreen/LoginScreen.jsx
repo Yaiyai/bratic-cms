@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import { startLogin } from '../../actions/auth.action'
-import { AuthContext } from './../../reducers/auth/AuthContext'
-import useForm from '../../hooks/useForm'
+import { startLogin } from '../../../actions/auth.action'
+import { AuthContext } from '../../../reducers/auth/AuthContext'
+import useForm from '../../../hooks/useForm'
 import { Link } from 'react-router-dom'
-import { types } from '../../types/types'
+import { types } from '../../../types/types'
 
 const LoginScreen = () => {
 	const { values, handleInputChange } = useForm({})
@@ -19,17 +19,17 @@ const LoginScreen = () => {
 	return (
 		<>
 			<section className='login'>
-				<form onSubmit={handleLogin}>
+				<form onSubmit={ handleLogin }>
 					<label>Email</label>
-					<input type='email' onChange={handleInputChange} placeholder='Tu email' name='email' />
+					<input type='email' onChange={ handleInputChange } placeholder='Tu email' name='email' />
 					<label>Contraseña</label>
-					<input type='password' onChange={handleInputChange} placeholder='Contraseña' name='password' />
+					<input type='password' onChange={ handleInputChange } placeholder='Contraseña' name='password' />
 					<button type='submit' className='my-btn mini'>
 						Entrar
 					</button>
 				</form>
 				<small>
-					¿No tienes cuenta? Crea una <Link to='/registro'>aquí</Link>{' '}
+					¿No tienes cuenta? Crea una <Link to='/registro'>aquí</Link>{ ' ' }
 				</small>
 			</section>
 		</>

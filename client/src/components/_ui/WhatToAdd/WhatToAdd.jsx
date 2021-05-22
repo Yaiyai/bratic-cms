@@ -1,6 +1,6 @@
 import React from 'react'
-import AddImage from '../AddImage'
-import AddText from '../AddText'
+import AddImage from '../../posts/content/AddImage'
+import AddText from '../../posts/content/AddText'
 
 const WhatToAdd = ({ auxContent, setAuxContent, select, postId, saveElement }) => {
 

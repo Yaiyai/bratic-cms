@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, useParams, useHistory } from 'react-router-dom'
 
-import { deletePost, getThisPost } from '../../actions/posts.action'
+import { deletePost, getThisPost } from '../../../actions/posts.action'
 //Swiper
 import Swal from 'sweetalert2'
 import dayjs from 'dayjs'
