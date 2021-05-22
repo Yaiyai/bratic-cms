@@ -33,7 +33,7 @@
 			object-position: center;
 		}
 	}
-	.container {
+	.app-container {
 		width: calc((100% / 12) * 10);
 		margin: calc(#{$module} * 1) auto;
 		.post-text {

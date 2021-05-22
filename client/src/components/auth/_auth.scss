@@ -1,19 +1,39 @@
-.login {
-	width: 30%;
-	margin: 0 auto;
-	height: 500px;
+.login-container {
+	background-color: map-get($theme-colors, 'ds-back');
+	border-radius: 30px;
+	height: 90vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-	form {
-		input {
-			height: 25px;
-			margin-bottom: calc(#{$module} * 1.5);
+	justify-content: space-between;
+	figure {
+		width: 200px;
+		height: 200px;
+		overflow: hidden;
+		position: relative;
+		margin-top: calc(#{$module} * 3);
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			object-fit: contain;
+			object-position: center;
+			width: 100%;
+			height: 100%;
 		}
+	}
+	.login {
+		width: 350px;
+		margin: 0 auto;
+		height: 500px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		.my-btn {
-			margin-top: calc(#{$module} / 2);
+			margin: calc(#{$module} / 2) auto;
 		}
-		margin-bottom: calc(#{$module} * 1);
+	}
+	.copyright {
+		justify-self: flex-end;
 	}
 }

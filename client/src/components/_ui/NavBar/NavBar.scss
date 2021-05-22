@@ -1,34 +1,35 @@
 .login-nav {
-	background-color: map-get($theme-colors, 'third');
 	padding: calc(#{$module} / 4) calc(#{$module} * 1);
-	.container {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		figure {
-			height: 50px;
-			width: 120px;
-			overflow: hidden;
-			margin: 0;
-			img {
-				height: 100%;
-				object-fit: contain;
-				object-position: left;
-			}
+	border-radius: 10px;
+	height: 8vh;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	figure {
+		height: 50px;
+		width: 120px;
+		overflow: hidden;
+		margin: 0;
+		img {
+			height: 100%;
+			object-fit: contain;
+			object-position: left;
 		}
-		ul {
-			margin: 0;
-			padding: 0;
+	}
+	ul {
+		margin: 0;
+		padding: 0;
+		display: flex;
+		align-items: center;
+		a {
 			display: flex;
-			align-items: center;
-			a {
-				display: flex;
-				color: white;
-				margin: 0 calc(#{$module} / 3) 0 0;
-				&:hover {
-					text-decoration: none;
-					color: map-get($theme-colors, 'secondary');
-				}
+			color: white;
+			font-family: $font-titles;
+			margin: 0 0 0 calc(#{$module} / 3);
+			&:hover {
+				text-decoration: none;
+				color: map-get($theme-colors, 'secondary');
 			}
 		}
 	}

@@ -4,7 +4,9 @@
 body {
 	font-family: $font-text;
 	margin: 0;
+	padding: calc(#{$module} / 3);
 	color: map-get($theme-colors, 'text');
+	background-color: map-get($theme-colors, 'ds-main');
 }
 nav {
 	ul {
@@ -30,4 +32,25 @@ small {
 	@include font-line-height(10px);
 	text-align: center;
 	display: block;
+}
+
+.app-container {
+	max-width: 1400px;
+	padding-left: 0;
+	padding-right: 0;
+	margin: 0 auto;
+	@include breakpoint(xl) {
+		max-width: 1140px;
+	}
+	@include breakpoint(lg) {
+		max-width: 960px;
+	}
+	@include breakpoint(md) {
+		max-width: 700px;
+	}
+	@include breakpoint(sm-down) {
+		padding-left: 15px;
+		padding-right: 15px;
+		max-width: 540px;
+	}
 }

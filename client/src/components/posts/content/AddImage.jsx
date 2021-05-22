@@ -1,7 +1,7 @@
 import React from 'react'
 import { addImage } from '../../../actions/post-content/image.action'
 import useForm from '../../../hooks/useForm'
-import Loader from '../../../ui/Loader'
+import Loader from '../../_ui/Loader/Loader'
 
 const AddImage = ({ saveElement, postID }) => {
 	const { values, handleFileChange, loading } = useForm()

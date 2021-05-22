@@ -6,7 +6,7 @@ import { addSection } from '../../actions/sections.action'
 import { SectionContext } from '../../reducers/sections/sectionsContext'
 import { types } from '../../types/types'
 import Swal from 'sweetalert2'
-import TextEditorSections from '../../ui/TextEditorSections';
+import TextEditorSections from '../_ui/TextEditor/TextEditorSections';
 
 export const AddSection = ({ handleClose }) => {
 	const { dispatchSections } = useContext(SectionContext)

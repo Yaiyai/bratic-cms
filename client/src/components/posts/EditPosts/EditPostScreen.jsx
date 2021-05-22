@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 //Hooks
 import { useHistory } from "react-router-dom";
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useParams } from 'react-router-dom';
 import useForm from '../../../hooks/useForm';
 
 //Actions
 import { deletePost, getThisPost, updatePost } from '../../../actions/posts.action'
-
-//Componentes
-import PostState from '../content/_ui/PostState';
-import WhatToAdd from '../content/_ui/WhatToAdd';
-import TitlesArea from '../content/_ui/TitlesArea';
 import { deleteText } from '../../../actions/post-content/text.action';
 import { deleteImage } from '../../../actions/post-content/image.action';
+
+//Componentes
+import PostState from '../../_ui/Posts/PostState/PostState';
+import WhatToAdd from '../../_ui/WhatToAdd/WhatToAdd';
+import TitlesArea from '../../_ui/TitlesArea/TitlesArea';
 
 
 const EditPostScreen = () => {

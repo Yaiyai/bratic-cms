@@ -1,25 +1,28 @@
 import React, { useContext, useEffect, useReducer, useRef, useState } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import LoginScreen from '../components/auth/LoginScreen'
-import SignupScreen from '../components/auth/SignupScreen'
-import CompanyScreen from '../components/CompanyScreen'
-import DashboardScreen from '../components/DashboardScreen'
+
+import { Modal } from 'react-bootstrap'
 import { fetchSinToken } from '../helpers/fetch'
+
 import { AuthContext } from '../reducers/auth/AuthContext'
 import { CompanyContext } from '../reducers/CompanyContext'
 import { CompanyReducer } from '../reducers/CompanyReducer'
-import { DashboardNav } from '../ui/DashboardNav'
-import { Navbar } from '../ui/Navbar'
-import { types } from '../types/types'
-import PostsScreen from '../components/PostsScreen'
-import Post from '../components/posts/Post'
-import AddPostScreen from '../components/posts/AddPostScreen'
-import EditPostScreen from '../components/posts/EditPostScreen'
-import { SectionScreen } from '../components/SectionScreen'
-import { Modal } from 'react-bootstrap'
-import { AddSection } from '../components/sections/AddSection'
 import { SectionContext } from '../reducers/sections/sectionsContext'
 import { SectionsReducer } from '../reducers/sections/SectionsReducer'
+import { types } from '../types/types'
+
+import CompanyScreen from '../components/company/CompanyScreen'
+import DashboardScreen from '../components/DashboardScreen/DashboardScreen'
+import { DashboardNav } from '../components/_ui/DashboardNav/DashboardNav'
+import PostsScreen from '../components/posts/PostsScreen/PostsScreen'
+import AddPostScreen from '../components/posts/AddPosts/AddPostScreen'
+import Post from '../components/posts/Post/Post'
+import EditPostScreen from '../components/posts/EditPosts/EditPostScreen'
+import { SectionScreen } from '../components/sections/SectionScreen'
+import { AddSection } from '../components/sections/AddSection'
+import LoginScreen from '../components/auth/LoginScreen/LoginScreen'
+import SignupScreen from '../components/auth/SignupScreen/SignupScreen'
+import { NavBar } from '../components/_ui/NavBar/NavBar'
 
 const AppRouter = () => {
 	const isMounted = useRef(true)
@@ -92,18 +95,23 @@ const AppRouter = () => {
 						</SectionContext.Provider>
 					</CompanyContext.Provider>
 				) : (
-					<>
-						<Navbar />
-						<main className='container'>
+					<section>
+						<NavBar />
+						<main className='login-container'>
+							<figure>
+								<img src={ process.env.REACT_APP_LOGIN_IMAGE } alt="" />
+							</figure>
 							<Switch>
 								<Route exact path='/' component={ LoginScreen } />
 								<Route path='/registro' component={ SignupScreen } />
 								<Redirect to='/' />
 							</Switch>
-							<small>Made with &hearts; by Yai</small>
-							<small>&copy; Bratic S.L.</small>
+							<div className="copyright">
+								<small>Made with &hearts; by Yai</small>
+								<small>&copy; Bratic S.L.</small>
+							</div>
 						</main>
-					</>
+					</section>
 				) }
 			</div>
 		</Router>

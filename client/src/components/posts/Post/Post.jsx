@@ -63,7 +63,7 @@ const Post = () => {
 					<img key={ post?.content.image[0]._id } src={ post?.content.image[0].image } alt='' />
 				</figure>
 			) }
-			<div className="container">
+			<div className="app-container">
 				{ post?.subtitle && <h2>{ post?.subtitle }</h2> }
 				{ post?.content?.text?.length > 0 && (
 					post?.content?.text?.map((txt, idx) => (

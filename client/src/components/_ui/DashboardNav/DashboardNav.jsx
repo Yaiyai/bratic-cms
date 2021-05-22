@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AuthContext } from '../reducers/auth/AuthContext'
-import { types } from '../types/types'
+
+import { types } from '../../../types/types'
+import { SectionContext } from '../../../reducers/sections/sectionsContext';
+import { AuthContext } from '../../../reducers/auth/AuthContext';
+
 import { CgArrowBottomLeftR, CgArrowTopRightR } from "react-icons/cg";
-import { SectionContext } from '../reducers/sections/sectionsContext';
 import { FaChevronDown } from 'react-icons/fa';
 
 export const DashboardNav = ({ handleShow }) => {

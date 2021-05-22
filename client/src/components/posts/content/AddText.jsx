@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { addText } from '../../../actions/post-content/text.action'
 import useForm from '../../../hooks/useForm'
-import TextEditor from '../../../ui/TextEditor'
+import TextEditor from '../../_ui/TextEditor/TextEditor'
 
 const AddText = ({ saveElement, postID }) => {
 	const isMounted = useRef(true)
@@ -29,12 +29,12 @@ const AddText = ({ saveElement, postID }) => {
 	}, [quill, setValues])
 
 	return (
-		<div>
+		<>
 			<TextEditor setQuill={ setQuill } />
 			<button className='my-btn mini' onClick={ () => saveText() }>
 				Añadir Texto a la entrada
 			</button>
-		</div>
+		</>
 	)
 }
 
