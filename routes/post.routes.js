@@ -4,11 +4,12 @@ const formValidator = require('../middlewares/formValidator')
 const tokenValidator = require('../middlewares/tokenValidator')
 const { check } = require('express-validator')
 
-const { getPosts, getPost, addPost, deletePost, updatePost, getUserPosts } = require('./controllers/post.controller')
+const { getPosts, getPost, addPost, deletePost, updatePost, getUserPosts, getPostBySlug } = require('./controllers/post.controller')
 // api/posts
 router.get('/', getPosts)
 router.get('/:userID', getUserPosts)
-router.get('/post/:postID', getPost)
+router.get('/post/id/:postID', getPost)
+router.get('/post/slug/:postSlug', getPostBySlug)
 
 //Solo usuarios logeados pueden añadir, borrar o editar la info de la empresa
 router.use(tokenValidator) //Poniendolo aqui, todas las rutas que estén por debajo, solo podrán accederse si se está validado

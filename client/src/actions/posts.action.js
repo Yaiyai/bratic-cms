@@ -10,7 +10,15 @@ export const getUserPosts = async (user) => {
 	}
 }
 export const getThisPost = async (id) => {
-	const resp = await fetchSinToken(`posts/post/${id}`, 'GET')
+	const resp = await fetchSinToken(`posts/post/id/${id}`, 'GET')
+	const body = await resp.json()
+	if (body.ok) {
+		const thePost = body.post
+		return thePost
+	}
+}
+export const getThisPostBySlug = async (slug) => {
+	const resp = await fetchSinToken(`posts/post/${slug}`, 'GET')
 	const body = await resp.json()
 	if (body.ok) {
 		const thePost = body.post

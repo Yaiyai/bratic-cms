@@ -16,6 +16,27 @@ const getPost = async (req, res) => {
 		.catch((err) => res.status(400).json({ ok: false, msg: 'Post no encontrado', err }))
 }
 
+const getPostBySlug = async (req, res) => {
+	const postSlug = req.params.postSlug
+	const checkExistence = await Post.find({ slug: postSlug })
+	if (!checkExistence.length) {
+		//Si no existe el string como slug principal, busco en el array de slugs a ver si existió en algun momento
+		Post.find({ slugArray: postSlug })
+			.populate('content.text')
+			.populate('content.image')
+			.populate('author')
+			.then((post) => res.status(201).json({ ok: true, msg: 'Post encontrado con ese slug', post }))
+			.catch((err) => res.status(400).json({ ok: false, msg: 'Post no encontrado con ese slug', err }))
+	} else {
+		Post.find({ slug: postSlug })
+			.populate('content.text')
+			.populate('content.image')
+			.populate('author')
+			.then((post) => res.status(201).json({ ok: true, msg: 'Post encontrado con ese slug', post }))
+			.catch((err) => res.status(400).json({ ok: false, msg: 'Post no encontrado con ese slug', err }))
+	}
+}
+
 const getUserPosts = async (req, res) => {
 	const userID = req.params.userID
 
@@ -55,4 +76,4 @@ const deletePost = async (req, res) => {
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha borrado nada', err }))
 }
 
-module.exports = { getPosts, getPost, getUserPosts, addPost, updatePost, deletePost }
+module.exports = { getPosts, getPost, getPostBySlug, getUserPosts, addPost, updatePost, deletePost }

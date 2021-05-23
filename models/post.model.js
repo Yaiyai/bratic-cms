@@ -22,6 +22,8 @@ const postModel = new Schema(
 			type: Boolean,
 			default: false,
 		},
+		slug: String,
+		slugArray: [String],
 	},
 	{
 		timestamps: true,

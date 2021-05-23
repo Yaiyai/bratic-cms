@@ -14,6 +14,7 @@ import PostState from '../../_ui/Posts/PostState/PostState';
 import SectionTitle from '../../_ui/SectionTitle/SectionTitle';
 import Swal from 'sweetalert2';
 import ImageType from '../../_ui/ImageType/ImageType';
+import { convertSlug } from '../../../helpers/convertSlug';
 
 //Componentes
 
@@ -28,13 +29,17 @@ const AddPostScreen = () => {
     const [postId, setPostId] = useState()
 
     const [auxContent, setAuxContent] = useState('default')
-    const [selectedPost, setSelectedPost] = useState({ title: 'Sin título', subtitle: '', content: { slider: [], image: [], text: [], video: [], gallery: [] } })
+    const [selectedPost, setSelectedPost] = useState({ title: 'Sin título', slug: '', slugArray: [], subtitle: '', content: { image: [], text: [] } })
 
     useEffect(() => {
         setPostId(params.postID)
         findCurrentPost(params.postID)
     }, [params.postID])
 
+    useEffect(() => {
+        let newSlug = convertSlug(selectedPost.title)
+        setSelectedPost(selectedPost => ({ ...selectedPost, slug: newSlug, slugArray: selectedPost.title === 'Entrada Sin Título' ? [...selectedPost.slugArray] : [...selectedPost.slugArray, newSlug] }))
+    }, [selectedPost.title])
 
     //Post Methods
     const findCurrentPost = async (id) => {

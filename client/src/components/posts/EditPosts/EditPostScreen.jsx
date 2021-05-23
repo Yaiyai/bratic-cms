@@ -16,6 +16,7 @@ import TitlesArea from '../../_ui/TitlesArea/TitlesArea';
 import SectionTitle from '../../_ui/SectionTitle/SectionTitle';
 import Swal from 'sweetalert2';
 import ImageType from '../../_ui/ImageType/ImageType';
+import { convertSlug } from '../../../helpers/convertSlug';
 
 
 const EditPostScreen = () => {
@@ -27,7 +28,7 @@ const EditPostScreen = () => {
     const [postId, setPostId] = useState()
 
     const [auxContent, setAuxContent] = useState('default')
-    const [selectedPost, setSelectedPost] = useState({ title: 'Sin título', subtitle: '', content: { slider: [], image: [], text: [], video: [], gallery: [] } })
+    const [selectedPost, setSelectedPost] = useState({ title: 'Sin título', subtitle: '', slugArray: [], content: { slider: [], image: [], text: [], video: [], gallery: [] } })
 
     //Edit Methods
 
@@ -37,6 +38,19 @@ const EditPostScreen = () => {
         findCurrentPost(params.postID)
 
     }, [params.postID])
+
+    useEffect(() => {
+        let newSlug = convertSlug(selectedPost.title)
+        let newSlugArray = [...selectedPost.slugArray]
+        if (!newSlugArray.includes(newSlug)) {
+
+            setSelectedPost(selectedPost => ({ ...selectedPost, slug: newSlug, slugArray: [...selectedPost.slugArray, newSlug] }))
+        } else {
+            setSelectedPost(selectedPost => ({ ...selectedPost, slug: newSlug }))
+
+        }
+    }, [selectedPost.title, selectedPost.slugArray])
+
 
 
     //Post Methods
