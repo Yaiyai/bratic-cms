@@ -14,6 +14,14 @@ const postModel = new Schema(
 			text: [{ type: Schema.Types.ObjectId, ref: 'Text' }],
 			image: [{ type: Schema.Types.ObjectId, ref: 'Image' }],
 		},
+		isSlider: {
+			type: Boolean,
+			default: false,
+		},
+		isGallery: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	{
 		timestamps: true,

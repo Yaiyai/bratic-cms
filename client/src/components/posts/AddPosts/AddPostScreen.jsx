@@ -13,6 +13,7 @@ import WhatToAdd from '../../_ui/WhatToAdd/WhatToAdd';
 import PostState from '../../_ui/Posts/PostState/PostState';
 import SectionTitle from '../../_ui/SectionTitle/SectionTitle';
 import Swal from 'sweetalert2';
+import ImageType from '../../_ui/ImageType/ImageType';
 
 //Componentes
 
@@ -136,6 +137,7 @@ const AddPostScreen = () => {
     }
 
 
+
     return (
         <section id="add-posts-screen">
             <SectionTitle
@@ -155,6 +157,7 @@ const AddPostScreen = () => {
                     <TitlesArea selectedPost={ setSelectedPost } handleInputChange={ handleInputChange } saveTitles={ saveTitles } />
                     <PostState savePostState={ savePostState } postState={ selectedPost.status } />
                     <WhatToAdd auxContent={ auxContent } setAuxContent={ setAuxContent } select={ select } postId={ postId } saveElement={ saveElement } />
+                    { selectedPost.content.image.length > 1 && <ImageType setSelectedPost={ setSelectedPost } /> }
                 </div>
 
                 <div className="view-area">
