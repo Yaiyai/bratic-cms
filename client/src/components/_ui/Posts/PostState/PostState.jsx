@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../../../../reducers/auth/AuthContext'
 
 const PostState = ({ postState, savePostState }) => {
+    const { user } = useContext(AuthContext)
 
 
     const selectThis = ({ target }) => {
@@ -14,6 +16,10 @@ const PostState = ({ postState, savePostState }) => {
                 <option value='default' defaultValue> { postState ? postState : 'Cambiar Estado de la publicación...' } </option>
                 { postState !== 'borrador' && <option value="borrador">Borrador</option> }
                 { postState !== 'publicado' && <option value="publicado">Publicada</option> }
+                { postState !== 'privada' && <option value="privada">Privada</option> }
+                { user.email === 'admin@yai.com' && (
+                    <option value="borrada">Borrada</option>
+                ) }
             </select>
         </>
     )

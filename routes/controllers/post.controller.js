@@ -25,14 +25,14 @@ const getPostBySlug = async (req, res) => {
 			.populate('content.text')
 			.populate('content.image')
 			.populate('author')
-			.then((post) => res.status(201).json({ ok: true, msg: 'Post encontrado con ese slug', post }))
+			.then((post) => res.status(201).json({ ok: true, msg: 'Post encontrado con ese slug', redirect: true, post }))
 			.catch((err) => res.status(400).json({ ok: false, msg: 'Post no encontrado con ese slug', err }))
 	} else {
 		Post.find({ slug: postSlug })
 			.populate('content.text')
 			.populate('content.image')
 			.populate('author')
-			.then((post) => res.status(201).json({ ok: true, msg: 'Post encontrado con ese slug', post }))
+			.then((post) => res.status(201).json({ ok: true, msg: 'Post encontrado con ese slug', redirect: false, post }))
 			.catch((err) => res.status(400).json({ ok: false, msg: 'Post no encontrado con ese slug', err }))
 	}
 }
@@ -40,7 +40,7 @@ const getPostBySlug = async (req, res) => {
 const getUserPosts = async (req, res) => {
 	const userID = req.params.userID
 
-	await Post.find({ author: userID })
+	await Post.find({ author: userID, status: { $in: ['borrador', 'publicado', 'privada'] } })
 		.then((posts) => res.status(201).json({ ok: true, msg: 'UserPosts encontrados', posts }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'UserPosts no encontrados', err }))
 }
@@ -71,7 +71,7 @@ const deletePost = async (req, res) => {
 		return res.status(400).json({ ok: true, msg: 'El post que intentas borrar no existe' })
 	}
 
-	await Post.findByIdAndDelete(postID)
+	await Post.findByIdAndUpdate(postID, { deletedAt: new Date(), status: 'borrada' })
 		.then(() => res.status(201).json({ ok: true, msg: 'Post Borrado' }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha borrado nada', err }))
 }

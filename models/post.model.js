@@ -5,7 +5,7 @@ const postModel = new Schema(
 		title: String,
 		status: {
 			type: String,
-			enum: ['borrador', 'publicado', 'privada'],
+			enum: ['borrador', 'publicado', 'privada', 'borrada'],
 			default: 'borrador',
 		},
 		subtitle: String,
@@ -24,6 +24,7 @@ const postModel = new Schema(
 		},
 		slug: String,
 		slugArray: [String],
+		deletedAt: Date,
 	},
 	{
 		timestamps: true,
