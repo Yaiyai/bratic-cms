@@ -36,7 +36,7 @@ const Post = () => {
 	})
 	useEffect(() => {
 		if (post?.isGallery) {
-			post?.content?.image.map((elm) => {
+			post?.content?.image.forEach((elm) => {
 				setItems(items => [...items, {
 					src: elm.image,
 					thumbnail: getThumbnails(elm.image),
@@ -132,13 +132,13 @@ const Post = () => {
 				<div className="btn-group">
 					<button className='my-btn mini third' onClick={ () => askIfDelete(post?._id) }>
 						Borrar
-				</button>
+					</button>
 					<Link className='my-btn mini secondary' to={ `/bratic/blog/editar-entrada/${post?._id}` }>
 						Editar
-				</Link>
+					</Link>
 					<Link className='my-btn mini thirsd' to={ `/bratic/blog/` }>
 						Volver al blog
-				</Link>
+					</Link>
 
 				</div>
 
