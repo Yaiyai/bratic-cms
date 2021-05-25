@@ -25,6 +25,7 @@ const postModel = new Schema(
 		slug: String,
 		slugArray: [String],
 		deletedAt: Date,
+		postDate: String,
 	},
 	{
 		timestamps: true,

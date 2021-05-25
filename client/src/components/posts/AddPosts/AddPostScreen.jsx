@@ -18,6 +18,11 @@ import { convertSlug } from '../../../helpers/convertSlug';
 
 //Componentes
 
+import dayjs from 'dayjs'
+import 'dayjs/locale/es' // load on demand
+import DateInput from '../../_ui/DateInput/DateInput';
+
+dayjs.locale('es')
 
 const AddPostScreen = () => {
     let history = useHistory();
@@ -29,7 +34,7 @@ const AddPostScreen = () => {
     const [postId, setPostId] = useState()
 
     const [auxContent, setAuxContent] = useState('default')
-    const [selectedPost, setSelectedPost] = useState({ title: 'Sin título', slug: '', slugArray: [], subtitle: '', content: { image: [], text: [] } })
+    const [selectedPost, setSelectedPost] = useState({ title: 'Sin título', slug: '', postDate: '', slugArray: [], subtitle: '', content: { image: [], text: [] } })
 
     useEffect(() => {
         setPostId(params.postID)
@@ -83,6 +88,10 @@ const AddPostScreen = () => {
     const saveTitles = (e) => {
         e.preventDefault()
         setSelectedPost({ ...selectedPost, title: values.title, subtitle: values.subtitle })
+    }
+    const saveDate = (e) => {
+        e.preventDefault()
+        setSelectedPost({ ...selectedPost, postDate: values.postDate })
     }
 
 
@@ -160,6 +169,7 @@ const AddPostScreen = () => {
             <section className="edit-post">
                 <div className="edit-area">
                     <TitlesArea selectedPost={ setSelectedPost } handleInputChange={ handleInputChange } saveTitles={ saveTitles } />
+                    <DateInput selectedPost={ setSelectedPost } handleInputChange={ handleInputChange } saveDate={ saveDate } />
                     <PostState savePostState={ savePostState } postState={ selectedPost.status } />
                     <WhatToAdd auxContent={ auxContent } setAuxContent={ setAuxContent } select={ select } postId={ postId } saveElement={ saveElement } />
                     { selectedPost.content.image.length > 1 && <ImageType setSelectedPost={ setSelectedPost } /> }
@@ -173,6 +183,9 @@ const AddPostScreen = () => {
                             }
                             {
                                 selectedPost.subtitle && <h2>{ selectedPost.subtitle }</h2>
+                            }
+                            {
+                                selectedPost.postDate ? <p>Publicada el: { dayjs(selectedPost.postDate).format('DD/MM/YYYY') }</p> : <p>Publicada el: { dayjs(selectedPost.createdAt).format('DD/MM/YYYY') }</p>
                             }
                         </div>
                     </div>

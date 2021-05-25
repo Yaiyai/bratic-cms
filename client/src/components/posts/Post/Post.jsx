@@ -3,11 +3,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link, useParams, useHistory } from 'react-router-dom'
 
 import { deletePost, getThisPost } from '../../../actions/posts.action'
+import SectionTitle from '../../_ui/SectionTitle/SectionTitle'
 //Swiper
 import Swal from 'sweetalert2'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es' // load on demand
-import SectionTitle from '../../_ui/SectionTitle/SectionTitle'
 
 dayjs.locale('es')
 const Post = () => {

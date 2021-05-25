@@ -17,6 +17,11 @@ import SectionTitle from '../../_ui/SectionTitle/SectionTitle';
 import Swal from 'sweetalert2';
 import ImageType from '../../_ui/ImageType/ImageType';
 import { convertSlug } from '../../../helpers/convertSlug';
+import dayjs from 'dayjs'
+import 'dayjs/locale/es' // load on demand
+import DateInput from '../../_ui/DateInput/DateInput';
+
+dayjs.locale('es')
 
 
 const EditPostScreen = () => {
@@ -97,7 +102,10 @@ const EditPostScreen = () => {
         e.preventDefault()
         setSelectedPost({ ...selectedPost, title: values.title, subtitle: values.subtitle })
     }
-
+    const saveDate = (e) => {
+        e.preventDefault()
+        setSelectedPost({ ...selectedPost, postDate: values.postDate })
+    }
 
     //Select Methods
     const setToDefault = () => {
@@ -171,6 +179,7 @@ const EditPostScreen = () => {
             <section className="edit-post">
                 <div className="edit-area">
                     <TitlesArea selectedPost={ setSelectedPost } handleInputChange={ handleInputChange } saveTitles={ saveTitles } />
+                    <DateInput selectedPost={ setSelectedPost } handleInputChange={ handleInputChange } saveDate={ saveDate } />
                     <PostState savePostState={ savePostState } postState={ selectedPost.status } />
                     <WhatToAdd auxContent={ auxContent } setAuxContent={ setAuxContent } select={ select } postId={ postId } saveElement={ saveElement } />
                     { selectedPost.content.image.length > 1 && <ImageType setSelectedPost={ setSelectedPost } /> }
@@ -183,6 +192,9 @@ const EditPostScreen = () => {
                             }
                             {
                                 selectedPost.subtitle && <h2>{ selectedPost.subtitle }</h2>
+                            }
+                            {
+                                selectedPost.postDate ? <p>Publicada el: { dayjs(selectedPost.postDate).format('DD/MM/YYYY') }</p> : <p>Publicada el: { dayjs(selectedPost.createdAt).format('DD/MM/YYYY') }</p>
                             }
                         </div>
                     </div>
