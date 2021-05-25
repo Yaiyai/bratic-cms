@@ -5,9 +5,13 @@ import { Link, useParams, useHistory } from 'react-router-dom'
 import { deletePost, getThisPost } from '../../../actions/posts.action'
 import SectionTitle from '../../_ui/SectionTitle/SectionTitle'
 //Swiper
+import SwiperCore, { Autoplay, Pagination } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import Swal from 'sweetalert2'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es' // load on demand
+import { PhotoSwipeGallery } from 'react-photoswiper'
+SwiperCore.use([Autoplay, Pagination])
 
 dayjs.locale('es')
 const Post = () => {
@@ -16,7 +20,7 @@ const Post = () => {
 	let history = useHistory();
 
 	const [post, setPost] = useState()
-
+	const [items, setItems] = useState([])
 	const getPost = async () => {
 		const thePost = await getThisPost(postID)
 		setPost(thePost)
@@ -30,6 +34,18 @@ const Post = () => {
 			isMounted.current = false
 		}
 	})
+	useEffect(() => {
+		if (post?.isGallery) {
+			post?.content?.image.map((elm) => {
+				setItems(items => [...items, {
+					src: elm.image,
+					thumbnail: getThumbnails(elm.image),
+					w: 1200,
+					h: 900,
+				}])
+			})
+		}
+	}, [post])
 
 	const askIfDelete = (id) => {
 		Swal.fire({
@@ -52,6 +68,17 @@ const Post = () => {
 	const handleDeletePost = async (id) => {
 		await deletePost(id)
 		history.push('/bratic/blog')
+	}
+	const getThumbnails = (str) => {
+		let splitStr = str.split('upload/')
+		let newStr = 'upload/w_200/'
+		return `${splitStr[0]}${newStr}${splitStr[1]}`
+	}
+
+	const getThumbnailContent = (item) => {
+		return (
+			<img src={ item.thumbnail } alt='' />
+		)
 	}
 
 
@@ -77,6 +104,29 @@ const Post = () => {
 							<div className='post-text' key={ txt._id } dangerouslySetInnerHTML={ txt.parsedText }></div>
 						))
 					) }
+					{ post?.isSlider && (
+						<Swiper
+							spaceBetween={ 16 }
+							autoplay={ {
+								delay: 2500,
+							} }
+							slidesPerView={ 3 }
+						>
+							{ post?.content?.image.map((picture, idx) => (
+								<SwiperSlide key={ idx }>
+									<img src={ picture.image } alt='' />
+								</SwiperSlide>
+							)) }
+						</Swiper>
+					) }
+					{
+						post?.isGallery && (
+							items?.length > 0 && (
+								<PhotoSwipeGallery items={ items } thumbnailContent={ getThumbnailContent } />
+							)
+						)
+					}
+
 
 				</div>
 				<div className="btn-group">
