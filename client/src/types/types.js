@@ -13,6 +13,7 @@ export const types = {
 	getThisPost: '[post] getThisPost',
 	addPost: '[post] addPost',
 	postUpdate: '[post] postUpdate',
+	postCategoriesUpdate: '[post] postCategoriesUpdate',
 
 	addSection: '[Section] addSection',
 	getSections: '[Section] getSections',

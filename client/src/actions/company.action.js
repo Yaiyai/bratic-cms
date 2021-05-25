@@ -1,6 +1,14 @@
 import Swal from 'sweetalert2'
 import { fetchConToken } from '../helpers/fetch'
 
+export const fetchCompany = async () => {
+	const resp = await fetchConToken(`companies/`, 'GET')
+	const body = await resp.json()
+	if (body.ok) {
+		const companyFetched = body.company
+		return companyFetched
+	}
+}
 export const addCompany = async (company) => {
 	const resp = await fetchConToken(`companies/`, company, 'POST')
 	const body = await resp.json()

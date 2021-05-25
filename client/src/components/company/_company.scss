@@ -41,18 +41,30 @@
 	}
 	&.categories {
 		flex-direction: column;
+		> * {
+			width: 100%;
+		}
+
 		.maq-cat-title {
 			text-align: left;
 			font-weight: $text-semibold;
+			margin: 0;
 		}
 		.features {
+			display: flex;
+			flex-wrap: wrap;
+			padding: 12px 0;
+
 			.each-feat {
+				@include items-grid(4, $module);
+				padding: 8px;
+				border-radius: 10px;
+				background-color: map-get($theme-colors, 'ds-btn-secondary');
+				color: white;
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				font-size: 10px;
-				background-color: map-get($theme-colors, 'light-grey');
-				margin-bottom: calc(#{$module} / 6);
+				font-size: 12px;
 				svg {
 					align-self: flex-end;
 					cursor: pointer;

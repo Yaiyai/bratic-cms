@@ -37,6 +37,9 @@ const companyModel = new Schema(
 		secondaryLogo: {
 			type: String,
 		},
+		categories: {
+			type: Array,
+		},
 	},
 	{
 		timestamps: true,

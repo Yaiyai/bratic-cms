@@ -45,6 +45,14 @@ const getUserPosts = async (req, res) => {
 		.catch((err) => res.status(400).json({ ok: false, msg: 'UserPosts no encontrados', err }))
 }
 
+const getPostsByCategory = async (req, res) => {
+	const theCategory = req.params.category
+
+	await Post.find({ categories: { $in: [theCategory] } })
+		.then((posts) => res.status(201).json({ ok: true, msg: 'Posts por Categoría encontrados', posts }))
+		.catch((err) => res.status(400).json({ ok: false, msg: 'Posts por Categoría no encontrados', err }))
+}
+
 const addPost = async (req, res) => {
 	const newPost = req.body
 	Post.create(newPost)
@@ -76,4 +84,4 @@ const deletePost = async (req, res) => {
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha borrado nada', err }))
 }
 
-module.exports = { getPosts, getPost, getPostBySlug, getUserPosts, addPost, updatePost, deletePost }
+module.exports = { getPosts, getPost, getPostsByCategory, getPostBySlug, getUserPosts, addPost, updatePost, deletePost }
