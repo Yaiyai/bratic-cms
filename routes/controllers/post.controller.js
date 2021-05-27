@@ -1,4 +1,22 @@
+const convertSlug = require('../../helpers/createSlug')
 const Post = require('./../../models/post.model')
+
+const sluggingIt = async (post) => {
+	if (!post.slug) {
+		let newSlug = convertSlug(post.title)
+		await Post.findByIdAndUpdate(post._id, { slug: newSlug, slugArray: [newSlug] }, { new: true }).catch((err) =>
+			res.status(400).json({ ok: false, msg: 'No se ha actualizado el slug del post', err })
+		)
+	}
+	return
+}
+
+const createSlugs = async (req, res) => {
+	await Post.find()
+		.then((posts) => posts.forEach((post) => sluggingIt(post)))
+		.then(() => res.status(201).json({ ok: true, msg: 'Slugs Creados en posts sin slugs' }))
+		.catch((err) => res.status(400).json({ ok: false, msg: 'No se han podido crear slugs', err }))
+}
 
 const getPosts = async (req, res) => {
 	await Post.find()
@@ -84,4 +102,4 @@ const deletePost = async (req, res) => {
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha borrado nada', err }))
 }
 
-module.exports = { getPosts, getPost, getPostsByCategory, getPostBySlug, getUserPosts, addPost, updatePost, deletePost }
+module.exports = { getPosts, getPost, getPostsByCategory, getPostBySlug, getUserPosts, addPost, updatePost, deletePost, createSlugs }

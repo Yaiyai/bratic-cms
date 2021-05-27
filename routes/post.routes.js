@@ -4,7 +4,7 @@ const formValidator = require('../middlewares/formValidator')
 const tokenValidator = require('../middlewares/tokenValidator')
 const { check } = require('express-validator')
 
-const { getPosts, getPost, addPost, deletePost, updatePost, getUserPosts, getPostBySlug, getPostsByCategory } = require('./controllers/post.controller')
+const { getPosts, getPost, addPost, deletePost, updatePost, getUserPosts, getPostBySlug, getPostsByCategory, createSlugs } = require('./controllers/post.controller')
 // api/posts
 router.get('/', getPosts)
 router.get('/category/:category', getPostsByCategory)
@@ -16,6 +16,7 @@ router.get('/post/slug/:postSlug', getPostBySlug)
 router.use(tokenValidator) //Poniendolo aqui, todas las rutas que estén por debajo, solo podrán accederse si se está validado
 
 router.post('/', addPost)
+router.put('/createSlugs', createSlugs)
 router.put('/:postID', updatePost)
 router.delete('/:postID', deletePost)
 
