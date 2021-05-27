@@ -23,6 +23,24 @@
 		font-weight: 300;
 		text-align: center;
 	}
+	.date-cat {
+		display: flex;
+		align-items: center;
+		padding: calc(#{$module} / 2) 0;
+		@include font-line-height(14px);
+		small {
+			@include font-line-height(14px);
+			margin-right: calc(#{$module} / 2);
+			text-transform: uppercase;
+		}
+
+		.separator {
+			margin: 0 calc(#{$module} / 6);
+		}
+		.categories {
+			display: flex;
+		}
+	}
 	.main-image {
 		margin: calc(#{$module} * 3) 0;
 		border-top: 5px solid map-get($theme-colors, 'primary');

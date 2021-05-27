@@ -91,12 +91,27 @@ const Post = () => {
 			/>
 			<section id="post-preview">
 				<h1>{ post?.title }</h1>
-				{ post?.createdAt && <small>Publicada el { dayjs(post?.createdAt).format('DD/MM/YYYY') }</small> }
+				<div className="date-cat">
+					{ post?.categories.length > 0 && (
+						<div className="categories">
+							{
+								post?.categories?.map(cat => (
+									<small key={ cat }>{ cat }</small>
+								))
+							}
+						</div>
+					) }
+					{ post?.categories.length > 0 && <span className="separator"> · </span> }
+					{
+						post?.postDate ? <small>{ dayjs(post?.postDate).format('DD/MM/YYYY') }</small> : <small>{ dayjs(post?.createdAt).format('DD/MM/YYYY') }</small>
+					}
+				</div>
 				{ post?.content?.image.length > 0 && (
 					<figure className="main-image">
 						<img key={ post?.content.image[0]._id } src={ post?.content.image[0].image } alt='' />
 					</figure>
 				) }
+				{ }
 				<div className="app-container">
 					{ post?.subtitle && <h2>{ post?.subtitle }</h2> }
 					{ post?.content?.text?.length > 0 && (
