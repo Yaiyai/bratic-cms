@@ -1,22 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
+import dayjs from 'dayjs'
+import 'dayjs/locale/es' // load on demand
+dayjs.locale('es')
 
 const PostElement = ({ askIfDelete, post }) => {
-    const [date, setDate] = useState()
-    const [updateDate, setUpdateDate] = useState()
-
-    useEffect(() => {
-        setDate(new Date(post.createdAt).toLocaleString())
-        setUpdateDate(new Date(post.updatedAt).toLocaleString())
-    }, [date, setDate, post])
 
     return (
         <>
             <article className='each-post-prev'>
                 <div className='info'>
                     <h5>{ post.title }</h5>
-                    { date && <p>Fecha de la publicación: <strong>{ date }</strong></p> }
-                    { updateDate && <p>Fecha de la última edición: <strong>{ updateDate }</strong></p> }
+                    { post?.postDate ? <p>Fecha de publicación: <strong>{ dayjs(post?.postDate).format('DD/MM/YYYY') }</strong></p> : <p>Fecha de publicación: <strong>{ dayjs(post?.createdAt).format('DD/MM/YYYY') }</strong></p> }
+                    <p>Fecha de la última edición: <strong>{ dayjs(post?.updatedAt).format('DD/MM/YYYY') }</strong></p>
                     <p className="status">Estado de la publicación: <strong>{ post.status }</strong></p>
                 </div>
                 <div className='btn-group'>

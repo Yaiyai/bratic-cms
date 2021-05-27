@@ -18,12 +18,12 @@ import { convertSlug } from '../../../helpers/convertSlug';
 
 //Componentes
 
-import dayjs from 'dayjs'
-import 'dayjs/locale/es' // load on demand
 import DateInput from '../../_ui/DateInput/DateInput';
 import PostCategories from '../../_ui/Posts/PostCategories/PostCategories';
 import { FaTimesCircle } from 'react-icons/fa';
 
+import dayjs from 'dayjs'
+import 'dayjs/locale/es' // load on demand
 dayjs.locale('es')
 
 const AddPostScreen = () => {
