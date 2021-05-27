@@ -1,4 +1,10 @@
 #add-posts-screen {
+	.features {
+		padding: calc(#{$module} / 2) 0;
+		.each-feat {
+			@include items-grid(3, $module);
+		}
+	}
 	.post-btn-group {
 		margin-bottom: calc(#{$module} * 1);
 		display: flex;

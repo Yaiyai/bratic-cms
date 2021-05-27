@@ -21,6 +21,8 @@ import { convertSlug } from '../../../helpers/convertSlug';
 import dayjs from 'dayjs'
 import 'dayjs/locale/es' // load on demand
 import DateInput from '../../_ui/DateInput/DateInput';
+import PostCategories from '../../_ui/Posts/PostCategories/PostCategories';
+import { FaTimesCircle } from 'react-icons/fa';
 
 dayjs.locale('es')
 
@@ -55,6 +57,18 @@ const AddPostScreen = () => {
     const savePostState = (status) => {
         setSelectedPost({ ...selectedPost, status: status })
     }
+
+    const saveCategory = (category) => {
+        if (!selectedPost.categories.includes(category)) {
+            setSelectedPost(prevState => ({ ...prevState, categories: [...prevState.categories, category] }))
+        }
+    }
+
+    const deleteCategory = (category) => {
+        const categoryCopy = [...selectedPost.categories].filter(cat => cat !== category)
+        setSelectedPost(prevState => ({ ...prevState, categories: categoryCopy }))
+    }
+
 
     const saveElement = (type, element) => {
         switch (type) {
@@ -171,6 +185,7 @@ const AddPostScreen = () => {
                     <TitlesArea selectedPost={ setSelectedPost } handleInputChange={ handleInputChange } saveTitles={ saveTitles } />
                     <DateInput selectedPost={ setSelectedPost } handleInputChange={ handleInputChange } saveDate={ saveDate } />
                     <PostState savePostState={ savePostState } postState={ selectedPost.status } />
+                    <PostCategories saveCategory={ saveCategory } deleteCategory={ deleteCategory } />
                     <WhatToAdd auxContent={ auxContent } setAuxContent={ setAuxContent } select={ select } postId={ postId } saveElement={ saveElement } />
                     { selectedPost.content.image.length > 1 && <ImageType setSelectedPost={ setSelectedPost } /> }
                 </div>
@@ -187,6 +202,16 @@ const AddPostScreen = () => {
                             {
                                 selectedPost.postDate ? <p>Publicada el: { dayjs(selectedPost.postDate).format('DD/MM/YYYY') }</p> : <p>Publicada el: { dayjs(selectedPost.createdAt).format('DD/MM/YYYY') }</p>
                             }
+                            { selectedPost.categories.length > 0 && (
+                                <>
+                                    <p>Categorías de la publicación</p>
+                                    <div className="features">
+                                        {
+                                            selectedPost.categories.map(cat => <div className="each-feat" key={ cat }>{ cat } <FaTimesCircle onClick={ () => deleteCategory(cat) } /> </div>)
+                                        }
+                                    </div>
+                                </>
+                            ) }
                         </div>
                     </div>
                     {
