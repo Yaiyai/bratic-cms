@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ImageType = ({ setSelectedPost }) => {
+const ImageType = ({ setSelectedPost, selectedPost }) => {
     const handleImagesType = ({ target }) => {
 
         switch (target.value) {
@@ -20,8 +20,8 @@ const ImageType = ({ setSelectedPost }) => {
     return (
         <>
             <label>Has añadido más de una imagen, ¿Cómo quieres que aparezcan en la entrada?</label>
-            <select name='images-view' onChange={ handleImagesType } placeholder='Galería/Slider'>
-                <option value='default' defaultValue> Galería/Slider </option>
+            <select name='images-view' onChange={ handleImagesType }>
+                <option value='default' defaultValue> { selectedPost.isSlider ? 'Slider' : selectedPost.isGallery ? 'Galería' : 'Galería/Slider' } </option>
                 <option value='slider'>Slider</option>
                 <option value='galeria'>Galería</option>
             </select>

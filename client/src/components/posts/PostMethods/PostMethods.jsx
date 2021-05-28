@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 //Hooks
 import { useHistory } from "react-router-dom";
-import useForm from '../../../hooks/useForm';
 
 //Actions
 import { deletePost, updatePost } from '../../../actions/posts.action'
@@ -31,7 +30,6 @@ const PostMethods = ({ selectedPost, setSelectedPost }) => {
 
     const [auxContent, setAuxContent] = useState('default')
 
-    const { values, handleInputChange } = useForm()
 
     useEffect(() => {
         setPostId(selectedPost?._id)
@@ -46,20 +44,7 @@ const PostMethods = ({ selectedPost, setSelectedPost }) => {
         }
     }, [selectedPost?.title, selectedPost?.slugArray, setSelectedPost, selectedPost?._id])
 
-    const savePostState = (status) => {
-        setSelectedPost({ ...selectedPost, status: status })
-    }
 
-    const saveCategory = (category) => {
-        if (!selectedPost?.categories.includes(category)) {
-            setSelectedPost(prevState => ({ ...prevState, categories: [...prevState.categories, category] }))
-        }
-    }
-
-    const deleteCategory = (category) => {
-        const categoryCopy = [...selectedPost?.categories].filter(cat => cat !== category)
-        setSelectedPost(prevState => ({ ...prevState, categories: categoryCopy }))
-    }
 
 
     const saveElement = (type, element) => {
@@ -91,14 +76,6 @@ const PostMethods = ({ selectedPost, setSelectedPost }) => {
         }
     }
 
-    const saveTitles = (e) => {
-        e.preventDefault()
-        setSelectedPost({ ...selectedPost, title: values.title, subtitle: values.subtitle })
-    }
-    const saveDate = (e) => {
-        e.preventDefault()
-        setSelectedPost({ ...selectedPost, postDate: values.postDate })
-    }
 
     //Select Methods
     const setToDefault = () => {
@@ -154,6 +131,11 @@ const PostMethods = ({ selectedPost, setSelectedPost }) => {
                 break
         }
     }
+    const deleteCategory = (category) => {
+        const categoryCopy = [...selectedPost?.categories].filter(cat => cat !== category)
+        setSelectedPost(prevState => ({ ...prevState, categories: categoryCopy }))
+    }
+
 
     return (
         <>
@@ -164,38 +146,36 @@ const PostMethods = ({ selectedPost, setSelectedPost }) => {
             </article>
             <section className="edit-post">
                 <div className="edit-area">
-                    <TitlesArea selectedPost={ setSelectedPost } handleInputChange={ handleInputChange } saveTitles={ saveTitles } />
-                    <DateInput selectedPost={ setSelectedPost } handleInputChange={ handleInputChange } saveDate={ saveDate } />
-                    <PostState savePostState={ savePostState } postState={ selectedPost?.status } />
-                    <PostCategories saveCategory={ saveCategory } deleteCategory={ deleteCategory } />
+                    <TitlesArea selectedPost={ selectedPost } setSelectedPost={ setSelectedPost } />
+                    <DateInput selectedPost={ selectedPost } setSelectedPost={ setSelectedPost } />
+                    <PostState selectedPost={ selectedPost } setSelectedPost={ setSelectedPost } />
+                    <PostCategories selectedPost={ selectedPost } setSelectedPost={ setSelectedPost } />
 
                     <WhatToAdd auxContent={ auxContent } setAuxContent={ setAuxContent } select={ select } postId={ postId } saveElement={ saveElement } />
-                    { selectedPost?.content.image.length > 1 && <ImageType setSelectedPost={ setSelectedPost } /> }
+                    { selectedPost?.content.image.length > 1 && <ImageType setSelectedPost={ setSelectedPost } selectedPost={ selectedPost } /> }
                 </div>
                 <div className="view-area">
                     <div className="titles-btn">
-                        <div>
-                            {
-                                selectedPost?.title && <h1>Título: { selectedPost?.title }</h1>
-                            }
-                            {
-                                selectedPost?.subtitle && <h2>Subtítulo: { selectedPost?.subtitle }</h2>
-                            }
-                            {
-                                selectedPost?.postDate ? <p>Publicada el: { dayjs(selectedPost?.postDate).format('DD/MM/YYYY') }</p> : <p>Publicada el: { dayjs(selectedPost?.createdAt).format('DD/MM/YYYY') }</p>
-                            }
-                            { selectedPost?.categories?.length > 0 && (
-                                <div className="features-view">
-                                    <p>Categorías de la publicación</p>
-                                    <div className="features">
-                                        {
-                                            selectedPost?.categories?.map(cat => <div className="each-feat" key={ cat }>{ cat } <FaTimesCircle onClick={ () => deleteCategory(cat) } /> </div>)
-                                        }
-                                    </div>
+                        {
+                            selectedPost?.title && <h1>Título: { selectedPost?.title }</h1>
+                        }
+                        {
+                            selectedPost?.subtitle && <h2>Subtítulo: { selectedPost?.subtitle }</h2>
+                        }
+                        {
+                            selectedPost?.postDate ? <p>Publicada el: { dayjs(selectedPost?.postDate).format('DD/MM/YYYY') }</p> : <p>Publicada el: { dayjs(selectedPost?.createdAt).format('DD/MM/YYYY') }</p>
+                        }
+                        { selectedPost?.categories?.length > 0 && (
+                            <div className="features-view">
+                                <p>Categorías de la publicación</p>
+                                <div className="features">
+                                    {
+                                        selectedPost?.categories?.map(cat => <div className="each-feat" key={ cat }>{ cat } <FaTimesCircle onClick={ () => deleteCategory(cat) } /> </div>)
+                                    }
                                 </div>
-                            ) }
+                            </div>
+                        ) }
 
-                        </div>
                     </div>
 
                     {

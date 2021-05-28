@@ -1,16 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { EditGroup } from './EditGroup'
 import useForm from './../../hooks/useForm'
 import { deleteCompany, fetchCompany, updateCompany } from './../../actions/company.action'
 import Swal from 'sweetalert2'
 import SectionTitle from '../_ui/SectionTitle/SectionTitle'
 import { FaTimesCircle } from "react-icons/fa";
+import { CompanyContext } from '../../reducers/CompanyContext'
+import { types } from '../../types/types'
 
 export const UpdateCompany = () => {
+	const { dispatchCompany } = useContext(CompanyContext)
 	const [auxValue, setAuxValue] = useState()
 	const { values: myCompany, setValues, handleInputChange, handleFileChange } = useForm()
-
-	// const [myCompany, setValues] = useState()
 
 	const getMyCompany = useCallback(async () => {
 		let company = await fetchCompany()
@@ -84,6 +85,7 @@ export const UpdateCompany = () => {
 
 	const saveChanges = async () => {
 		await updateCompany(myCompany._id, myCompany)
+		dispatchCompany({ type: types.updateCompany, payload: myCompany })
 	}
 
 	return (
