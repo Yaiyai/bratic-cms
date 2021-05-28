@@ -35,13 +35,14 @@ const PostMethods = ({ selectedPost, setSelectedPost }) => {
 
     useEffect(() => {
         setPostId(selectedPost?._id)
-        let newSlug = convertSlug(selectedPost?.title)
-        let newSlugArray = [...selectedPost?.slugArray]
-        if (!newSlugArray.includes(newSlug)) {
-            setSelectedPost(selectedPost => ({ ...selectedPost, slug: newSlug, slugArray: [...selectedPost?.slugArray, newSlug] }))
-        } else {
-            setSelectedPost(selectedPost => ({ ...selectedPost, slug: newSlug }))
-
+        if (selectedPost?.title) {
+            let newSlug = convertSlug(selectedPost?.title)
+            let newSlugArray = [...selectedPost?.slugArray]
+            if (!newSlugArray.includes(newSlug)) {
+                setSelectedPost(selectedPost => ({ ...selectedPost, slug: newSlug, slugArray: [...selectedPost?.slugArray, newSlug] }))
+            } else {
+                setSelectedPost(selectedPost => ({ ...selectedPost, slug: newSlug }))
+            }
         }
     }, [selectedPost?.title, selectedPost?.slugArray, setSelectedPost, selectedPost?._id])
 

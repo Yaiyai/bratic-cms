@@ -34,7 +34,7 @@ const PostsScreen = () => {
 	})
 
 	const handleAdd = async () => {
-		const newPost = await addPost({ title: 'Entrada Sin Título', postDate: new Date(), author: user.id })
+		const newPost = await addPost({ postDate: new Date(), author: user.id })
 		history.push(`/bratic/blog/nueva-entrada/${newPost._id}`)
 	}
 
