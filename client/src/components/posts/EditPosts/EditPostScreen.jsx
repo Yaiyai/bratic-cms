@@ -37,9 +37,6 @@ const EditPostScreen = () => {
     const [auxContent, setAuxContent] = useState('default')
     const [selectedPost, setSelectedPost] = useState({ title: 'Sin título', subtitle: '', slugArray: [], content: { slider: [], image: [], text: [], video: [], gallery: [] } })
 
-    //Edit Methods
-
-
     useEffect(() => {
         setPostId(params.postID)
         findCurrentPost(params.postID)
@@ -50,7 +47,6 @@ const EditPostScreen = () => {
         let newSlug = convertSlug(selectedPost.title)
         let newSlugArray = [...selectedPost.slugArray]
         if (!newSlugArray.includes(newSlug)) {
-
             setSelectedPost(selectedPost => ({ ...selectedPost, slug: newSlug, slugArray: [...selectedPost.slugArray, newSlug] }))
         } else {
             setSelectedPost(selectedPost => ({ ...selectedPost, slug: newSlug }))
@@ -75,9 +71,6 @@ const EditPostScreen = () => {
         const categoryCopy = [...selectedPost.categories].filter(cat => cat !== category)
         setSelectedPost(prevState => ({ ...prevState, categories: categoryCopy }))
     }
-
-
-
 
     const savePostState = (status) => {
         setSelectedPost({ ...selectedPost, status: status })
@@ -213,14 +206,14 @@ const EditPostScreen = () => {
                                 selectedPost.postDate ? <p>Publicada el: { dayjs(selectedPost.postDate).format('DD/MM/YYYY') }</p> : <p>Publicada el: { dayjs(selectedPost.createdAt).format('DD/MM/YYYY') }</p>
                             }
                             { selectedPost?.categories?.length > 0 && (
-                                <>
+                                <div className="features-view">
                                     <p>Categorías de la publicación</p>
                                     <div className="features">
                                         {
                                             selectedPost?.categories?.map(cat => <div className="each-feat" key={ cat }>{ cat } <FaTimesCircle onClick={ () => deleteCategory(cat) } /> </div>)
                                         }
                                     </div>
-                                </>
+                                </div>
                             ) }
 
                         </div>
@@ -228,21 +221,21 @@ const EditPostScreen = () => {
                     <hr />
                     {
                         selectedPost.content.text.length > 0 && selectedPost.content.text.map(text => (
-                            <div key={ text._id } >
+                            <div key={ text._id } className="each-text" >
                                 <div dangerouslySetInnerHTML={ text.parsedText } >
                                 </div>
-                                <button className="my-btn mini danger" onClick={ () => deleteThis('text', text._id) }>Borrar este texto</button>
+                                <button className="my-btn mini" onClick={ () => deleteThis('text', text._id) }>Borrar este texto</button>
                             </div>
 
                         ))
                     }
                     {
                         selectedPost.content.image.length > 0 && selectedPost.content.image.map(image => (
-                            <div key={ image._id } >
+                            <div key={ image._id } className="each-image">
                                 <figure>
                                     <img src={ image.image } alt="" />
                                 </figure>
-                                <button className="my-btn mini danger" onClick={ () => deleteThis('image', image._id) }>Borrar esta imagen</button>
+                                <button className="my-btn mini" onClick={ () => deleteThis('image', image._id) }>Borrar esta imagen</button>
                             </div>
                         ))
                     }

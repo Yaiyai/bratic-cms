@@ -72,11 +72,55 @@
 			padding: calc(#{$module} * 1);
 			border-radius: 20px;
 			background-color: white;
-			h1 {
-				@include font-line-height(24px);
+			.titles-btn {
+				background-color: map-get($theme-colors, 'ds-back');
+				padding: calc(#{$module} / 2);
+				border-radius: 10px;
+				color: map-get($theme-colors, 'ds-main');
+				h1 {
+					@include font-line-height(24px);
+				}
+				h2 {
+					@include font-line-height(20px);
+					color: map-get($theme-colors, 'ds-main');
+					margin-top: $module;
+					margin-bottom: 0;
+				}
 			}
-			h2 {
-				@include font-line-height(20px);
+			.features-view {
+				padding: calc(#{$module} * 1) 0;
+				// margin-top: $module;
+			}
+			.each-text {
+				background-color: map-get($theme-colors, 'ds-back');
+				padding: calc(#{$module} / 2);
+				border-radius: 10px;
+				color: map-get($theme-colors, 'ds-main');
+				margin-top: calc(#{$module} / 3);
+				button {
+					margin-top: calc(#{$module} / 2);
+				}
+			}
+			.each-image {
+				background-color: map-get($theme-colors, 'ds-back');
+				padding: calc(#{$module} / 2);
+				border-radius: 10px;
+				color: map-get($theme-colors, 'ds-main');
+				margin-top: calc(#{$module} / 3);
+				button {
+					margin-top: calc(#{$module} / 2);
+				}
+				figure {
+					width: 250px;
+					height: 250px;
+					overflow: hidden;
+					margin-bottom: 0;
+					border-radius: 5px;
+					img {
+						object-fit: cover;
+						object-position: center;
+					}
+				}
 			}
 		}
 	}

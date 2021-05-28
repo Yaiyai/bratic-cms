@@ -31,7 +31,6 @@ const AddPostScreen = () => {
     let params = useParams()
     const select = useRef()
 
-
     const { values, handleInputChange } = useForm()
     const [postId, setPostId] = useState()
 
@@ -194,43 +193,43 @@ const AddPostScreen = () => {
                     <div className="titles-btn">
                         <div>
                             {
-                                selectedPost.title && <h1>{ selectedPost.title }</h1>
+                                selectedPost.title && <h1>Titulo: { selectedPost.title }</h1>
                             }
                             {
-                                selectedPost.subtitle && <h2>{ selectedPost.subtitle }</h2>
+                                selectedPost.subtitle && <h2>Subtitulo: { selectedPost.subtitle }</h2>
                             }
                             {
                                 selectedPost.postDate ? <p>Publicada el: { dayjs(selectedPost.postDate).format('DD/MM/YYYY') }</p> : <p>Publicada el: { dayjs(selectedPost.createdAt).format('DD/MM/YYYY') }</p>
                             }
-                            { selectedPost.categories.length > 0 && (
-                                <>
+                            { selectedPost.categories?.length > 0 && (
+                                <div className="features-view">
                                     <p>Categorías de la publicación</p>
                                     <div className="features">
                                         {
-                                            selectedPost.categories.map(cat => <div className="each-feat" key={ cat }>{ cat } <FaTimesCircle onClick={ () => deleteCategory(cat) } /> </div>)
+                                            selectedPost?.categories?.map(cat => <div className="each-feat" key={ cat }>{ cat } <FaTimesCircle onClick={ () => deleteCategory(cat) } /> </div>)
                                         }
                                     </div>
-                                </>
+                                </div>
                             ) }
                         </div>
                     </div>
                     {
                         selectedPost.content.text.length > 0 && selectedPost.content.text.map(text => (
-                            <div key={ text._id } >
+                            <div key={ text._id } className="each-text" >
                                 <div dangerouslySetInnerHTML={ text.parsedText } >
                                 </div>
-                                <button className="my-btn mini" onClick={ () => deleteThis('text', text._id) }>Borrar</button>
+                                <button className="my-btn mini" onClick={ () => deleteThis('text', text._id) }>Borrar este texto</button>
                             </div>
 
                         ))
                     }
                     {
                         selectedPost.content.image.length > 0 && selectedPost.content.image.map(image => (
-                            <div key={ image._id } >
+                            <div key={ image._id } className="each-image">
                                 <figure>
                                     <img src={ image.image } alt="" />
                                 </figure>
-                                <button className="my-btn mini" onClick={ () => deleteThis('image', image._id) }>Borrar</button>
+                                <button className="my-btn mini" onClick={ () => deleteThis('image', image._id) }>Borrar esta imagen</button>
                             </div>
                         ))
                     }
