@@ -10,18 +10,24 @@
 	display: flex;
 	flex-direction: column;
 	.muestra {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
+		background-color: white;
+		padding: calc(#{$module} / 2);
+		border-radius: 10px;
+		color: map-get($theme-colors, 'ds-main');
+		margin-bottom: calc(#{$module} / 2);
+		width: fit-content;
+		button {
+			margin-top: calc(#{$module} / 2);
+		}
 		figure {
-			width: 50%;
+			width: 250px;
 			height: 250px;
 			overflow: hidden;
+			margin-bottom: 0;
+			border-radius: 5px;
 			img {
-				width: 100%;
-				height: 100%;
-				object-fit: contain;
-				object-position: top;
+				object-fit: cover;
+				object-position: center;
 			}
 		}
 	}

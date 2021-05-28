@@ -12,9 +12,6 @@ const AddImage = ({ saveElement, postID }) => {
 
 	return (
 		<section className="add-image">
-			<div className='file-group'>
-				<input type='file' className='file-input' name='image' id='image' onChange={ handleFileChange } />
-			</div>
 			{loading ? (
 				<Loader loading={ true } />
 			) : (
@@ -29,6 +26,9 @@ const AddImage = ({ saveElement, postID }) => {
 
 			)
 			}
+			<div className='file-group'>
+				<input type='file' className='file-input' name='image' id='image' onChange={ handleFileChange } />
+			</div>
 		</section>
 	)
 }
