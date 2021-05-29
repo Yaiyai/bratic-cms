@@ -19,12 +19,27 @@ const createSlugs = async (req, res) => {
 }
 
 const getPosts = async (req, res) => {
-	await Post.find()
-		.populate('content.text')
-		.populate('content.image')
-		.populate('author')
-		.then((posts) => res.status(201).json({ ok: true, msg: 'Posts encontrados', posts }))
-		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha encontrado nada', err }))
+	const pageOptions = {
+		page: parseInt(req.query.page, 10) || 0,
+		limit: parseInt(req.query.limit, 10) || 10,
+	}
+	if (req.query.page && req.query.limit) {
+		await Post.find()
+			.skip(pageOptions.page * pageOptions.limit)
+			.limit(pageOptions.limit)
+			.populate('content.text')
+			.populate('content.image')
+			.populate('author')
+			.then((posts) => res.status(201).json({ ok: true, msg: 'Posts paginados encontrados', posts }))
+			.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha encontrado nada', err }))
+	} else {
+		await Post.find()
+			.populate('content.text')
+			.populate('content.image')
+			.populate('author')
+			.then((posts) => res.status(201).json({ ok: true, msg: 'Posts encontrados', posts }))
+			.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha encontrado nada', err }))
+	}
 }
 
 const getPost = async (req, res) => {
