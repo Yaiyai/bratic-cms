@@ -23,7 +23,7 @@ const getPosts = async (req, res) => {
 		page: parseInt(req.query.page, 10) || 0,
 		limit: parseInt(req.query.limit, 10) || 10,
 	}
-	if (req.query.page && req.query.limit) {
+	if (req.query.page) {
 		await Post.find()
 			.skip(pageOptions.page * pageOptions.limit)
 			.limit(pageOptions.limit)
@@ -34,6 +34,7 @@ const getPosts = async (req, res) => {
 			.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha encontrado nada', err }))
 	} else {
 		await Post.find()
+			.limit(pageOptions.limit)
 			.populate('content.text')
 			.populate('content.image')
 			.populate('author')
