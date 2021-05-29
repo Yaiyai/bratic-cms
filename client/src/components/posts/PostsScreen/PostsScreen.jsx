@@ -57,7 +57,7 @@ const PostsScreen = () => {
 		}).then((result) => {
 			if (result.isConfirmed) {
 				handleDeletePost(id)
-				// Swal.fire('¡Entrada borrada!', 'Esta entrada se marchó para no volver', 'success')
+				Swal.fire('¡Entrada borrada!', 'Esta entrada se marchó para no volver', 'success')
 			}
 		})
 	}

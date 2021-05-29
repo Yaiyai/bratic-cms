@@ -34,6 +34,3 @@ const postModel = new Schema(
 )
 const Post = mongoose.model('Post', postModel)
 module.exports = Post
-
-//flexibleContent: [{ type: Schema.Types.ObjectId, ref: 'FlexContent' }]
-//FlexContent: type: [gallery, slider, video, text, image, download], [{ type: Schema.Types.ObjectId, ref: 'Whatever' }]

@@ -19,14 +19,10 @@ const createSlugs = async (req, res) => {
 }
 
 const getPosts = async (req, res) => {
-	const pageOptions = {
-		page: parseInt(req.query.page, 10) || 0,
-		limit: parseInt(req.query.limit, 10) || 10,
-	}
-	if (req.query.page) {
-		await Post.find()
-			.skip(pageOptions.page * pageOptions.limit)
-			.limit(pageOptions.limit)
+	const limit = parseInt(req.query.limit, 10)
+	if (req.query.from) {
+		await Post.find({ createdAt: { $lte: req.query.from } })
+			.limit(limit)
 			.populate('content.text')
 			.populate('content.image')
 			.populate('author')
@@ -34,7 +30,7 @@ const getPosts = async (req, res) => {
 			.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha encontrado nada', err }))
 	} else {
 		await Post.find()
-			.limit(pageOptions.limit)
+			.limit(limit)
 			.populate('content.text')
 			.populate('content.image')
 			.populate('author')
