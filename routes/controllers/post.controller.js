@@ -20,6 +20,9 @@ const createSlugs = async (req, res) => {
 
 const getPosts = async (req, res) => {
 	await Post.find()
+		.populate('content.text')
+		.populate('content.image')
+		.populate('author')
 		.then((posts) => res.status(201).json({ ok: true, msg: 'Posts encontrados', posts }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha encontrado nada', err }))
 }
@@ -67,6 +70,10 @@ const getPostsByCategory = async (req, res) => {
 	const theCategory = req.params.category
 
 	await Post.find({ categories: { $in: [theCategory] } })
+		.populate('content.text')
+		.populate('content.image')
+		.populate('author')
+
 		.then((posts) => res.status(201).json({ ok: true, msg: 'Posts por Categoría encontrados', posts }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'Posts por Categoría no encontrados', err }))
 }
