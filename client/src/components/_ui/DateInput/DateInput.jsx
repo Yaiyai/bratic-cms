@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import React from 'react'
 import useForm from '../../../hooks/useForm'
 
@@ -6,7 +7,7 @@ const DateInput = ({ setSelectedPost }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        setSelectedPost(prevState => ({ ...prevState, postDate: values.postDate }))
+        setSelectedPost(prevState => ({ ...prevState, postDate: dayjs(values.postDate).format('YYYY-MM-DD[T]HH:mm:ss.SSS[Z]') }))
         resetForm()
     }
 
