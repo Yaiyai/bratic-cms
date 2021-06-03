@@ -19,24 +19,14 @@ const createSlugs = async (req, res) => {
 }
 
 const getPosts = async (req, res) => {
-	const limit = parseInt(req.query.limit, 10)
-	if (req.query.from) {
-		await Post.find({ createdAt: { $lte: req.query.from } })
-			.limit(limit)
-			.populate('content.text')
-			.populate('content.image')
-			.populate('author')
-			.then((posts) => res.status(201).json({ ok: true, msg: 'Posts paginados encontrados', posts }))
-			.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha encontrado nada', err }))
-	} else {
-		await Post.find()
-			.limit(limit)
-			.populate('content.text')
-			.populate('content.image')
-			.populate('author')
-			.then((posts) => res.status(201).json({ ok: true, msg: 'Posts encontrados', posts }))
-			.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha encontrado nada', err }))
-	}
+	const limit = parseInt(req.query.limit, 10) ?? 5
+	await Post.find()
+		.limit(limit)
+		.populate('content.text')
+		.populate('content.image')
+		.populate('author')
+		.then((posts) => res.status(201).json({ ok: true, msg: 'Posts encontrados', posts }))
+		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha encontrado nada', err }))
 }
 
 const getPost = async (req, res) => {

@@ -9,6 +9,16 @@ export const getUserPosts = async (user) => {
 		return userPosts
 	}
 }
+
+export const getAllPosts = async () => {
+	const resp = await fetchSinToken(`posts/`, 'GET')
+	const body = await resp.json()
+	if (body.ok) {
+		const notDeletedPosts = body.posts.filter((post) => post.status !== 'borrada')
+		return notDeletedPosts
+	}
+}
+
 export const getThisPost = async (id) => {
 	const resp = await fetchSinToken(`posts/post/id/${id}`, 'GET')
 	const body = await resp.json()

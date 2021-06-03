@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
-import { addPost, deletePost, getUserPosts } from '../../../actions/posts.action'
+import { addPost, deletePost, getAllPosts } from '../../../actions/posts.action'
 import { AuthContext } from '../../../reducers/auth/AuthContext'
 import PostElement from '../../_ui/Posts/PostElement/PostElement';
 import SectionTitle from '../../_ui/SectionTitle/SectionTitle';
@@ -14,7 +14,7 @@ const PostsScreen = () => {
 
 
 	const allMyPosts = async () => {
-		const posts = await getUserPosts(user.id)
+		const posts = await getAllPosts()
 		setPosts(posts)
 	}
 

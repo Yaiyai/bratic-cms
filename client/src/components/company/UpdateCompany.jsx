@@ -67,7 +67,7 @@ export const UpdateCompany = () => {
 		categoriesCopy.splice(idx, 1)
 		setValues(company => ({
 			...company,
-			categories: [categoriesCopy],
+			categories: categoriesCopy,
 		}))
 	}
 
