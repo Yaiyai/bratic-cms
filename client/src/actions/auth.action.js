@@ -44,4 +44,3 @@ export const startSignup = async (name, email, password) => {
 		Swal.fire('Error', errorMsg, 'error')
 	}
 }
-

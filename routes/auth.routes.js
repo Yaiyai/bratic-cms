@@ -21,6 +21,6 @@ router.post(
 	addUser
 )
 
-router.get('/renew', tokenValidator, renewToken)
+router.get('/renew', renewToken)
 
 module.exports = router
